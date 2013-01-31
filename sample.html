@@ -1,0 +1,201 @@
+<html>
+<head>
+<script src="jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.flot.crosshair.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.flot.stack.js"></script>
+</head>
+<script type="text/javascript">
+
+(function () {
+
+    var $document = $(document),
+        plot,
+        onDocumentReady,
+        onHostfileChange,
+        onHostfileLoadSuccess,
+        onDataLoadSuccess,
+        createDataTable,
+        onHostChange;
+
+    onDocumentReady = function () {
+        $document.find('.hostfile').on('change', function () {
+            var $element = $(this),
+                value    = $element.val();
+
+            if (value) {
+                onHostfileChange(value);
+            }
+        });
+    };
+
+    onHostfileChange = function (hostfile) {
+        $.getJSON(
+            '/s/' + hostfile +'.json',
+            onHostfileLoadSuccess
+        );
+    };
+
+    onHostfileLoadSuccess = function (hosts) {
+        var index  = 0,
+        length = hosts.length;
+        var select = $document.find('.select_host');
+        select.text('');
+        select.append($('<option value="Please select a value">Please select a value</option>'));
+        $document.find('#container').text('');
+        for (; index < length; index++) {
+          select.append($('<option></option>').val(hosts[index]).html(hosts[index]))
+        }
+        select.on('change', function() {
+          var $element = $(this),
+          value = $element.val();
+          if (value) {
+            onHostChange(value);
+          }
+        });
+    };
+
+    onHostChange = function (host)
+    {
+        $document.find('#container').text('');
+        $('<h3>' + host + '</h3>').appendTo('#container');
+        if (host !== 'Please select a value') {
+          $.ajax({
+              url: "/q?start=7d-ago&m=sum:10m-avg:df{host=" + host + ",name=used}&o=&m=sum:10m-avg:df{host=" + host + ",name=free}&o=&yrange=[0:]&wxh=1260x743&ascii",
+              cache: false,
+              async: false,
+              method: 'GET',
+              success: onDataLoadSuccess
+            });
+        }
+      
+    }
+
+    onDataLoadSuccess = function (data, textStatus, jqXHR) {
+        var lines     = data.split("\n"),
+            datatable = createDataTable(lines),
+            data      = datatable.data,
+            placeholder;
+
+        placeholder = $('<div class="placeholder" style="width: 600px; height: 300px"/>');
+
+        placeholder.appendTo('#container');
+        var tdiv = $('<div id="tdiv">&nbsp;</div>');
+        tdiv.appendTo('#container');
+
+        plot = $.plot(
+            placeholder,
+            [
+                { data: data.used, label: 'used = 00000' },
+                { data: data.free, label: 'free = 00000' }
+            ],
+            {
+                xaxis: { mode: "time", show: false },
+                grid: { hoverable: true, autoHighlight: false },
+                legend: { show: true, position: "sw" },
+                crosshair: { mode: "x" },
+                series: {
+                    stack: true,
+                    lines: { fill: true, show: true }
+                }
+            }
+        );
+
+        placeholder.bind('plothover', onPlotHover);
+    }
+
+    createDataTable = function (lines) {
+        var index  = 0,
+            length = lines.length,
+            datapoint,
+            point,
+            data,
+            type,
+            host;
+
+        data = {
+            used:    [],
+            free: []
+        };
+
+        for (; index < length; index++) {
+            datapoint = lines[index].split(' ');
+            var set = parseDataPoint(datapoint,new Array('used','free'));                        
+            if (undefined != set) {
+              data[set[0]].push(set[1]);
+            }
+        }
+
+        return {
+            data: data
+        };
+    };
+
+    function parseDataPoint(datapoint,fields) {
+      var length = fields.length, dlength = datapoint.length;
+      for (dindex = 3; dindex < dlength; dindex++) {
+        var item = datapoint[dindex].split('=');
+        for (var index = 0; index < length; index++) {
+          if (item[1] == fields[index]) {
+            var point = [ datapoint[1]*1000, datapoint[2]/1024/1024/1024];
+            return new Array(item[1],point);
+          }
+        }
+      }
+    }
+
+    onPlotHover = function (event, pos, item) {
+        var placeholder = $(event.target).closest('.placeholder'),
+            legends     = placeholder.find('.legendLabel'),
+            axes        = plot.getAxes(),
+            data        = plot.getData(),
+            iIndex      = 0,
+            iLength     = data.length,
+            jIndex      = 0,
+            jLength,
+            series,
+            value,
+            p1, p2;
+
+        var date = new Date();
+        date.setTime(pos.x.toFixed(0));
+        $document.find('#tdiv').text(date.toLocaleDateString() + ' ' + date.toLocaleTimeString());
+
+
+        if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max || pos.y < axes.yaxis.min || pos.y > axes.yaxis.max) {
+            return;
+        }
+
+        for (; iIndex < iLength; iIndex++) {
+            series = data[iIndex];
+            // Find nearest point, x-wise
+            for (jIndex = 0, jLength = series.data.length; jIndex < jLength; jIndex++) {
+                if (series.data[jIndex][0] > pos.x) {
+                    break;
+                }
+            }
+
+            value = (new Number(series.data[jIndex][1])).toFixed(0);
+
+            legends.eq(iIndex).text(series.label.replace(/=.*/, "= " + value));
+        }
+    };
+
+    $document.ready(onDocumentReady);
+
+})();
+</script>
+<body>
+<form>
+  <select class="hostfile">
+    <option value="">Please select a cluster</option>
+    <option value="riakhosts">Riak</option>
+  </select>
+  <select class="select_host">
+    <option value=""Select a cluster first">Select a cluster first</option>
+  </select>
+</form>
+<h1>Disk Utilization (GBs, last 7 days)</h1>
+<div id="container"></div>
+</body>
+</html>
