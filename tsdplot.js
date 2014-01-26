@@ -56,7 +56,7 @@ function plotchart(div,opts) {
 
     //rate
     var rate = false;
-    if(ds.hasOwnProperty("linewidth")){
+    if(ds.hasOwnProperty("rate")){
       rate = ds["rate"];
     };
     if(rate){ terms.push("rate") };
@@ -107,8 +107,9 @@ function plotchart(div,opts) {
           var series = {};
           var dps =  new Array();
 
+          console.log(query_data);
           if (!ytag){
-            series['label'] = s;
+            series['label'] = query_data[s]['metric'];
           } else {
             series['label'] = query_data[s]['tags'][ytag];
           }
