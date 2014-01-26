@@ -1,0 +1,10 @@
+{
+  "title": "Load Average",
+  "units": "load",
+    "dss": [{"metric": "proc.loadavg.1min",
+               "rate": false },
+            {"metric": "proc.loadavg.5min",
+               "rate": false },
+            {"metric": "proc.loadavg.15min",
+               "rate": false }]
+}

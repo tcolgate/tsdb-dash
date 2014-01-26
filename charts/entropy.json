@@ -1,0 +1,6 @@
+{
+  "title": "Entropy Pool Size",
+  "units": "bytes",
+    "dss": [{"metric": "proc.kernel.entropy_avail", 
+               "rate": false }]
+}

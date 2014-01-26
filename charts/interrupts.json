@@ -1,0 +1,8 @@
+{
+  "title": "Interrupts",
+  "units": "int/s",
+    "dss": [{"metric": "proc.interrupts",
+               "tags": ["type=*"],
+               "rate": true }],
+   "ytag": "type"
+}

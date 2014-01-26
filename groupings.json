@@ -1,0 +1,109 @@
+{
+  "0": {
+    "name": "PostgreSQL",
+    "regex": "postgresql\\..*"
+  },
+  "1": {
+    "name": "NUMA",
+    "regex": "sys\\.numa\\..*"
+  },
+  "2": {
+    "name": "HBase",
+    "regex": "hbase\\..*"
+  },
+  "3": {
+    "name": "SMART",
+    "regex": "smart\\..*"
+  },
+  "4": {
+    "name": "OpenTSDB",
+    "regex": "tsd\\..*"
+  },
+  "5": {
+    "name": "Interrupts",
+    "regex": "proc\\.interrupts",
+    "charts": [ "interrupts" ]
+  },
+  "6": {
+    "name": "Entropy",
+    "regex": "proc\\.kernel\\.entropy_avail",
+    "charts": [ "entropy" ]
+  },
+  "7": {
+    "name": "Load",
+    "regex": "proc\\.loadavg\\..*",
+    "charts": [ "load" ]
+  },
+  "8": {
+    "name": "Meminfo",
+    "regex": "proc\\.meminfo\\..*"
+  },
+  "9": {
+    "name": "IOStat",
+    "regex": "iostat\\..*"
+  },
+  "10": {
+    "name": "DIskSpace",
+    "regex": "df\\..*"
+  },
+  "11": {
+    "name": "SocketStats",
+    "regex": "net\\.sockstat\\..*"
+  },
+  "12": {
+    "name": "IPv4",
+    "regex": "net\\.stat\\.(tc|ud)p.*"
+  },
+  "13": {
+    "name": "NFSClient",
+    "regex": "nfs\\.client\\..*"
+  },
+  "14": {
+    "name": "VMStat",
+    "regex": "proc\\.vmstat\\..*"
+  },
+  "15": {
+    "name": "NetStat",
+    "regex": "proc\\.net\\..*"
+  },
+  "16": {
+    "name": "Uptime",
+    "regex": "proc\\.uptime\\..*"
+  },
+  "17": {
+    "name": "ProcessStats",
+    "regex": "proc\\.stat\\..*"
+  },
+  "18": {
+    "name": "HadoopRegionServer",
+    "regex": "hadoop\\.regionserver\\..*"
+  },
+  "19": {
+    "name": "Mysql",
+    "regex": "mysql\\..*"
+  },
+  "20": {
+    "name": "MemCacheD",
+    "regex": "memcache\\..*"
+  },
+  "21": {
+    "name": "PoundLogs",
+    "regex": "poundlogs\\..*"
+  },
+  "22": {
+    "name": "CpuFreq",
+    "regex": "proc\\.scaling\\..*"
+  },
+  "23": {
+    "name": "Tomcat",
+    "regex": "tomcat\\..*"
+  },
+  "24": {
+    "name": "Voldemort",
+    "regex": "voldemort\\..*"
+  },
+  "25": {
+    "name": "Streams",
+    "regex": "streams\\..*"
+  }
+}
