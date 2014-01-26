@@ -6,12 +6,27 @@ function plotchart(div,opts) {
       onHostChange;
 
   var ylabel = null;
-  if(opts && opts['ylabel']){
-    ylabel = opts['ylabel'];
+  if(opts.hasOwnProperty("units")){
+    ylabel = opts['units'];
   }
   var ytag = null;
-  if(opts && opts['ytag']){
-    ylabel = opts['ytag'];
+  if(opts.hasOwnProperty("ytag")){
+    ytag = opts['ytag'];
+  }
+
+  var stack = false;
+  if(opts.hasOwnProperty("stack")){
+    stack = opts['stack'];
+  }
+
+  var fill = 0;
+  if(opts.hasOwnProperty("fill")){
+    fill = opts['fill'];
+  }
+
+  var linewidth = 0;
+  if(opts.hasOwnProperty("linewidth")){
+    linewidth = opts['linewidth'];
   }
 
   var dss = opts["dss"];
@@ -40,7 +55,10 @@ function plotchart(div,opts) {
     terms[0] = "sum" ;
 
     //rate
-    var rate = ds["rate"];
+    var rate = false;
+    if(ds.hasOwnProperty("linewidth")){
+      rate = ds["rate"];
+    };
     if(rate){ terms.push("rate") };
 
     //downsample
@@ -111,7 +129,7 @@ function plotchart(div,opts) {
       //var yaxisLabel = $("<div class='axisLabel yaxisLabel'></div>")
       //  .text("Response Time (ms)")
       //  .appendTo(div);
-
+      
       plot = $.plot(
         div,
         allseries,
@@ -123,8 +141,8 @@ function plotchart(div,opts) {
         // crosshair: { mode: "x" },
         // selection: { mode: "x" },
         series: {
-          stack: true,
-          lines: { fill: 1, show: true , lineWidth: 0}
+          stack: stack,
+          lines: { fill: fill, show: true , lineWidth: linewidth}
         }
       }
     );

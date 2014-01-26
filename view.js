@@ -78,6 +78,8 @@
                   'ylabel': spec_data['units'],
                     'ytag': spec_data['ytag'],
                      "dss": spec_data['dss'],
+                    "fill": spec_data['fill'],
+               "linewidth": spec_data['linewidth'],
                     "tags": {"host": host} 
                 })
               }
