@@ -1,6 +1,9 @@
 This is a pure JavaScript implelemtation of a dashboard for 
 opentsdb.
 
+To install, simple move this directory into the "static" directory of your
+OpenTSDB install.
+
 We make use of
   jQuery
   simple-dtpicker
@@ -11,18 +14,18 @@ A TSDB tree is needed on the server side.
 
 It can be created as follows....
 
-<code sh>
+```sh
 curl -X POST 'http://localhost:4242/api/tree?name=DashByHosts'
 curl -X POST 'http://localhost:4242/api/tree/rule?treeid=1&level=1&order=0&type=TAGK&field=dc&description=Location'
 curl -X POST 'http://localhost:4242/api/tree/rule?treeid=1&level=2&order=0&type=TAGK&field=host&description=Host'
 curl -X POST 'http://localhost:4242/api/tree/rule?treeid=1&level=3&order=0&type=METRIC&description=Metric'
 curl -X PUT 'http://localhost:4242/api/tree?treeid=1&strict_match=true'
 curl -X PUT 'http://localhost:4242/api/tree?treeid=1&enabled=true'
-</code>
+```
 
 It shoudl look as follows
 
-<code json>
+```json
 {
    "treeId" : 1,
    "name" : "",
@@ -83,4 +86,4 @@ It shoudl look as follows
    "strictMatch" : false,
    "enabled" : true
 }
-</code>
+```
