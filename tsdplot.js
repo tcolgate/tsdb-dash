@@ -107,7 +107,6 @@ function plotchart(div,opts) {
           var series = {};
           var dps =  new Array();
 
-          console.log(query_data);
           if (!ytag){
             series['label'] = query_data[s]['metric'];
           } else {
