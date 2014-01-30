@@ -62,33 +62,44 @@
 
           for (g in groups){
             var group = groupings[g];
-            for (c in group["charts"]){
-              var spec ="charts/"+ group["charts"][c] + ".json" 
-              console.log("Will draw chart: " + spec);
-              $.getJSON(spec).done(function(spec_data){
-                var title    = spec_data['title'];
-                $("#container").append($("<h3 id=\"" + c + "\">" + title + "</h3>"));
-                var target = $("<div id=\"group_" + c + "\" style=\"width: 600px; height: 300px\"></div>");
-                $("#container").append(target);
+            var grtitle = group['name'];
+            if (group.hasOwnProperty("title")){
+              grtitle = group['title'];
+            }
 
-                plotchart(target, 
-                {
-                   "start": moment($("#start_date").val()).format("X"),
-                     "end": moment($("#end_date").val()).format("X"),
-                  'ylabel': spec_data['units'],
-                    'ytag': spec_data['ytag'],
-                     "dss": spec_data['dss'],
-                    "fill": spec_data['fill'],
-               "linewidth": spec_data['linewidth'],
-                   "units": spec_data['units'],
-                    "tags": {"host": host} 
+            var gritem = $("<h3 id=\"" + group['name'] + "\">" + grtitle + "</h3>");
+            $("#container").append(gritem);
+
+            console.log(group["charts"]);
+            for (c in group["charts"]){
+              (function(groupindex,chartindex){
+                var spec ="charts/"+ groupings[groupindex]["charts"][chartindex] + ".json" 
+                console.log("Will draw chart: " + spec);
+                $.getJSON(spec).done(function(spec_data){
+                  var title  = spec_data['title'];
+                  var cont = "#" + groupings[groupindex]["name"];
+                  $(cont).append($("<h4 id=\"" + chartindex + "\">" + title + "</h4>"));
+                  var target = $("<div id=\"group_" + chartindex + "\" style=\"width: 600px; height: 300px\"></div>");
+                  $(cont).append(target);
+  
+                  plotchart(target, 
+                  {
+                     "start": moment($("#start_date").val()).format("X"),
+                       "end": moment($("#end_date").val()).format("X"),
+                    'ylabel': spec_data['units'],
+                      'ytag': spec_data['ytag'],
+                       "dss": spec_data['dss'],
+                      "fill": spec_data['fill'],
+                 "linewidth": spec_data['linewidth'],
+                     "units": spec_data['units'],
+                      "tags": {"host": host} 
+                  })
                 })
-              }
-            )
+              })(g,c)
+            }
           }
         }
-      }
-    )
-  }
+      )
+    }
   $document.ready(onDocumentReady);
 })();
