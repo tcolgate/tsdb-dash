@@ -126,16 +126,18 @@ function plotchart(div,opts) {
         }
       }
 
-      //var yaxisLabel = $("<div class='axisLabel yaxisLabel'></div>")
-      //  .text("Response Time (ms)")
-      //  .appendTo(div);
-      
+      console.log(ylabel);
       plot = $.plot(
         div,
         allseries,
       {
         xaxis: { mode: "time", show: true },
-        yaxes: [{ axisLabel: ylabel }],
+      
+        yaxes: [{
+            position: 'left',
+            axisLabel: ylabel,
+            color: "#00000000"
+        }],
         grid: { hoverable: true, autoHighlight: false },
         legend: { show: true, position: "sw" },
         // crosshair: { mode: "x" },

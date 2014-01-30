@@ -80,6 +80,7 @@
                      "dss": spec_data['dss'],
                     "fill": spec_data['fill'],
                "linewidth": spec_data['linewidth'],
+                   "units": spec_data['units'],
                     "tags": {"host": host} 
                 })
               }
