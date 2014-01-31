@@ -86,7 +86,12 @@ function plotchart(div,opts) {
         cache: true,
         async: true,
         method: 'GET'
-      }))
+      }.done(
+        function(data, textStatus, jqXHR ) {
+          console.log(data);
+          console.log(jqXHR);
+          return jqXHR;
+        })))
   };
 
   $.when.apply($,proms).done( 
