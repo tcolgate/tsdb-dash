@@ -90,6 +90,7 @@
                     {
                        "start": moment($("#start_date").val()).format("X"),
                          "end": moment($("#end_date").val()).format("X"),
+                       'stack': spec_data['stack'],
                       'ylabel': spec_data['units'],
                         'ytag': spec_data['ytag'],
                          "dss": spec_data['dss'],

@@ -6,6 +6,16 @@
   "linewidth": 0,
         "dss": [{"metric": "proc.interrupts",
                    "tags": ["type=*"],
-                   "rate": true }],
+                   "rate": true,
+                   "labelmap": {
+                                 "RES": "Reschedulw",
+                                 "LOC": "Local Timer",
+                                 "TRM": "Thermal",
+                                 "ERR": "Error",
+                                 "MIS": "Misc",
+                                 "CAL": "Call",
+                                 "NMI": "Non-maskable",
+                                 "SPU": "Spurious"
+                               }}],
        "ytag": "type"
 }

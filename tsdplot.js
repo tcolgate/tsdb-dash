@@ -129,7 +129,15 @@ function plotchart(div,opts) {
               series['label'] = query_data[s]['metric'];
             }
           } else {
-            series['label'] = query_data[s]['tags'][ytag];
+            if (ds.hasOwnProperty("labelmap")){
+              if (ds["labelmap"].hasOwnProperty(query_data[s]['tags'][ytag])){
+                series['label'] = ds["labelmap"][query_data[s]['tags'][ytag]];
+              } else {
+                series['label'] = query_data[s]['tags'][ytag];
+              }
+            } else {
+              series['label'] = query_data[s]['tags'][ytag];
+            }
           }
 
           series['data'] = dps;
