@@ -105,5 +105,17 @@
   "25": {
     "name": "Streams",
     "regex": "streams\\..*"
+  },
+  "26": {
+    "name": "TCollector",
+    "regex": "tcollector\\..*"
+  },
+  "27": {
+    "name": "Varnish",
+    "regex": "varnish\\..*"
+  },
+  "28": {
+    "name": "Redis",
+    "regex": "redis\\..*"
   }
 }
