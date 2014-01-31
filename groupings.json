@@ -117,5 +117,9 @@
   "28": {
     "name": "Redis",
     "regex": "redis\\..*"
+  },
+  "29": {
+    "name": "ElasticSearch",
+    "regex": "elasticsearch\\..*"
   }
 }
