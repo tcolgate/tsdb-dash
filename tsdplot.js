@@ -86,12 +86,7 @@ function plotchart(div,opts) {
         cache: true,
         async: true,
         method: 'GET'
-      }.done(
-        function(data, textStatus, jqXHR ) {
-          console.log(data);
-          console.log(jqXHR);
-          return jqXHR;
-        })))
+      }));
   };
 
   $.when.apply($,proms).done( 
@@ -106,14 +101,22 @@ function plotchart(div,opts) {
       };
 
       for (var resp in responses){
+        // $.when promises to pass responses in the order
+        // they were requested in
         var query_data = responses[resp][0]; 
+        var ds = dss[resp]; 
+        console.log(ds);
         for (var s in query_data) {
           var dphash = query_data[s].dps;
           var series = {};
           var dps =  new Array();
 
           if (!ytag){
-            series['label'] = query_data[s]['metric'];
+            if (ds.hasOwnProperty("label")){
+              series['label'] = ds['label'];
+            } else {
+              series['label'] = query_data[s]['metric'];
+            }
           } else {
             series['label'] = query_data[s]['tags'][ytag];
           }

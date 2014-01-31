@@ -5,9 +5,12 @@
   "stack": "false",
   "units": "load",
     "dss": [{"metric": "proc.loadavg.1min",
-               "rate": false },
+               "rate": false ,
+              "label": "1 min"},
             {"metric": "proc.loadavg.5min",
-               "rate": false },
+               "rate": false ,
+              "label": "5 min"},
             {"metric": "proc.loadavg.15min",
-               "rate": false }]
+               "rate": false ,
+              "label": "15 min"}]
 }
