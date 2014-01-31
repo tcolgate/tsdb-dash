@@ -29,6 +29,11 @@ function plotchart(div,opts) {
     linewidth = opts['linewidth'];
   }
 
+  var legend = { show: true, position: "sw" };
+  if(opts.hasOwnProperty("legend")){
+    legend = opts['legend'];
+  }
+
   var dss = opts["dss"];
 
   var i = 0;
@@ -147,7 +152,7 @@ function plotchart(div,opts) {
             color: "#00000000"
         }],
         grid: { hoverable: true, autoHighlight: false },
-        legend: { show: true, position: "sw" },
+        legend: legend,
         // crosshair: { mode: "x" },
         // selection: { mode: "x" },
         series: {
