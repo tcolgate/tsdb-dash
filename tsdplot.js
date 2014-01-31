@@ -5,6 +5,7 @@ function plotchart(div,opts) {
       createDataTable,
       onHostChange;
 
+
   var ylabel = null;
   if(opts.hasOwnProperty("units")){
     ylabel = opts['units'];
@@ -42,14 +43,18 @@ function plotchart(div,opts) {
   var globaltags = new Array();
   $.each(opts["tags"],function(k,v){globaltags.push(k + "=" + v)});
 
+  var wpix = div.width();
+  var start = opts["start"]
+  var end = opts["end"]
+  var twidth = end - start;
+  var tperpix = Math.floor(twidth / wpix);
+  var downsample = "max";
+
   for(dsi in dss){
     var ds = dss[dsi]; 
     var args = new Array();
     var terms = new Array();
     var tags = globaltags;
-
-    var start = opts["start"]
-    var end = opts["end"]
 
     // We might want to add a lag factor to the time
     // to do "24 hours ago" 
@@ -67,7 +72,9 @@ function plotchart(div,opts) {
     if(rate){ terms.push("rate") };
 
     //downsample
-    terms.push("15m-max");
+    if(tperpix > 0){
+      terms.push("" + tperpix + "s-" + downsample);
+    }
 
     // metric
     terms.push(ds["metric"]);
@@ -110,7 +117,6 @@ function plotchart(div,opts) {
         // they were requested in
         var query_data = responses[resp][0]; 
         var ds = dss[resp]; 
-        console.log(ds);
         for (var s in query_data) {
           var dphash = query_data[s].dps;
           var series = {};
@@ -139,7 +145,6 @@ function plotchart(div,opts) {
         }
       }
 
-      console.log(ylabel);
       plot = $.plot(
         div,
         allseries,
