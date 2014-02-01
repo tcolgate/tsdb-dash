@@ -58,7 +58,7 @@
           if (Object.keys(groups).length > 0){
             $("#" + treediv).append( " [ " );
             for (var g in groups) {
-              $("#" + treediv).append( " <a href=\"view.html?branch=" + branchId + "#" + g + "\"> " + g + "</a> " );
+              $("#" + treediv).append( " <a href=\"view_host.html?branch=" + branchId + "#" + g + "\"> " + g + "</a> " );
             }
             $("#" + treediv).append( " ] " );
           }
@@ -69,7 +69,7 @@
             var childid = branch['branchId'];
             var childdiv = treediv + "_" + i;
             $("#" + treediv).append(
-               "<ul><div class='container' id='" + childdiv + "'><span>" + "<a href=\"view.html?branch=" + childid + "\">" + displayName + "</a></span></div></ul>"   
+               "<ul><div class='container' id='" + childdiv + "'><span>" + "<a href=\"view_host.html?branch=" + childid + "\">" + displayName + "</a></span></div></ul>"   
             );
             populateBranches(childdiv,childid,groupings);
           }
