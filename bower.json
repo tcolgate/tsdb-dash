@@ -1,0 +1,27 @@
+{
+  "name": "opentsdb-dash",
+  "main": "index.js",
+  "version": "0.2.0",
+  "homepage": "https://github.com/tcolgate/opentsdb-dash",
+  "authors": [
+    "Tristan Colgate-McFarlane <tcolgate@gmail.com>"
+  ],
+  "description": "A client side dashboard for opentsdb",
+  "keywords": [
+    "tsdb",
+    "dashboard"
+  ],
+  "license": "GPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "flot": "~0.8.2",
+    "polymer": "Polymer/polymer#~0.1.4"
+  }
+}
