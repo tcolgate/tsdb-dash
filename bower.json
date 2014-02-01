@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "flot": "~0.8.2",
-    "polymer": "Polymer/polymer#~0.1.4"
+    "polymer": "Polymer/polymer#~0.1.4",
+    "moment": "~2.5.1"
   }
 }
