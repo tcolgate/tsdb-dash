@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../elements/dash-tsdb-tree-branch.html">
+
+<polymer-element name="dash-tsdb-tree" attributes="tree_id">
+  <template>
+    <H2>TSDB Tree {{tree_id}}</h2>
+
+    <template if={{tree_id != 0 }}>
+      <polymer-ajax auto url="/api/tree" 
+        params='{"treeId": {{tree_id}}}'
+        handleAs="json"
+        on-polymer-response="{{gotTree}}">
+      </polymer-ajax>
+
+      <template repeat="{{ branch in branches }}">
+        <h2> Branch {{branch}} </h2>
+      </template>
+    </template>
+  </template>
+  <script>
+    Polymer('dash-tsdb-tree', {
+      tree_id: 1,
+     branches: [],
+      gotTree: function(ev,resp){
+                 var pad = function(n, width, z) {
+                   z = z || '0';
+                   n = n + '';
+                   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+                 };
+                 console.log("got here");
+                 this.bramches.push(pad(resp.response, 4));
+                 console.log(this.branches);
+               },
+        ready: function(){
+                 console.log(this.tree_id);
+               }
+    });
+  </script>
+</polymer-element>

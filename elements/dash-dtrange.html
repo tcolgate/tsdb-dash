@@ -1,0 +1,23 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="dash-dtpicker.html">
+
+<polymer-element name="dash-dtrange" attributes="start end">
+  <template>
+    <!--
+    <span>Start: </span> <dash-dtpicker  time="{{start}}"></dash-dtpicker>
+    <span>End: </span> <dash-dtpicker  time="{{end}}"></dash-dtpicker>
+    -->
+    <span>Start: </span>
+    <dash-dtpicker time="{{start}}"></dash-dtpicker>
+    <span>End: </span>
+    <dash-dtpicker time="{{end}}"></dash-dtpicker>
+  </template>
+  <script>
+    Polymer('dash-dtrange', {
+       end: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+     start: moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss")
+    });
+  </script>
+</polymer-element>
+
+

@@ -1,0 +1,19 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link type="text/css" href="../lib/jquery.simple-dtpicker.css" rel="stylesheet" />
+
+<polymer-element name="dash-dtpicker" attributes="time">
+  <template>
+    <span> This is some text with the time ({{time}}) in it </span>
+    <input id="dtInput" type="text" value="{{time}}">
+  </template>
+  <script>
+    Polymer('dash-dtpicker', {
+      time: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+     ready: function () {
+              $.fn.appendDtpicker(this.$.dtInput);
+            }
+    });
+  </script>
+</polymer-element>
+
+
