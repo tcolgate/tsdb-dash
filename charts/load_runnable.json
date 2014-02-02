@@ -1,0 +1,9 @@
+{
+  "title": "Runnable processes",
+  "fill": 0,
+  "linewidth": 1,
+  "stack": "false",
+  "units": "procs",
+    "dss": [{"metric": "proc.loadavg.runnable",
+               "rate": false }]
+}
