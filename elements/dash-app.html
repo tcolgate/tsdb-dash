@@ -16,23 +16,24 @@
       on-polymer-response="{{gotGroups}}">
     </polymer-ajax>
 
-    <template repeat="{{ tree in trees }}">
-      <dash-tsdb-tree tree_id={{tree.treeId}}></dash-tsdb-tree>
+    <template if="{{ groups != [] }}">
+      <template repeat="{{ tree in trees }}">
+        <dash-tsdb-tree tree_id="{{tree.treeId}}" groups="{{groups}}"></dash-tsdb-tree>
+      </template>
     </template>
 
   </template>
   <script>
     Polymer('dash-app', {
-        trees: [],
-       groups: [],
      gotTrees: function(ev,resp){
                  this.trees = resp.response;
-                 console.log(this.trees);
                },
     gotGroups: function(ev,resp){
-                 this.groups = resp;
+                 this.groups = resp.response;
                },
         ready: function(){
+                 this.trees = [];
+                 this.groups = [];
                }
     });
   </script>
