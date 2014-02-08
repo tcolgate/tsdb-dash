@@ -121,5 +121,17 @@
   "29": {
     "name": "ElasticSearch",
     "regex": "elasticsearch\\..*"
+  },
+  "30": {
+    "name": "Zookeeper",
+    "regex": "zookeeper\\..*"
+  },
+  "31": {
+    "name": "EventsApi",
+    "regex": "storm\\.topology\\.events_api\\..*"
+  },
+  "32": {
+    "name": "Storm",
+    "regex": "storm\\..*"
   }
 }
