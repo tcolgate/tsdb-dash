@@ -76,15 +76,16 @@
                   var spec ="charts/"+ groupings[groupindex]["charts"][chartindex] + ".json" 
                   console.log("Will draw chart: " + spec);
                   $.getJSON(spec).done(function(spec_data){
-                    var title  = spec_data['title'];
-                    var cont = "#" + groupings[groupindex]["name"];
+                    var title = spec_data['title'];
+                    var name  = groupings[groupindex]["name"];
+                    var cont  = "#" + name;
                     $(cont).append(
-                      $("<h4 id=\"" + chartindex + "\">" + title + "</h4>")
+                      $("<h4 class='graph' id=\"" + name + "\">" + title "</h4>")
                     );
-                    var target = $("<div id=\"group_" + chartindex + "\" style=\"width: 600px; height: 300px\"></div>");
-                    $(cont).append(target);
-                    var legcont = $("<div id=\"group_" + chartindex + "_legend\"></div>");
-                    $(cont).append(legcont);
+                    var target = $("<div class='plot' id=\"group_" + chartindex + "\" style=\"width: 600px; height: 300px\"></div>");
+                    var legcont = $("<div class='legend' id=\"group_" + chartindex + "_legend\"></div>");
+                    var enclose = $("<div class='graph'>").append(target).append(legcont).append($("</div>"));
+                    $(cont).append(enclose);
   
                     plotchart(target, 
                     {
