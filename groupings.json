@@ -32,7 +32,7 @@
   "7": {
     "name": "Load",
     "regex": "proc\\.loadavg\\..*",
-    "charts": [ "load", "load_threads", "load_runnable" ]
+    "charts": [ "load", "load_threads", "load_runnable", "load_lagged" ]
   },
   "8": {
     "name": "Meminfo",

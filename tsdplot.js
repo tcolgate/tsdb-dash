@@ -109,10 +109,12 @@ function plotchart(div,opts) {
     var terms = new Array();
     var tags = globaltags;
 
-    // We might want to add a lag factor to the time
-    // to do "24 hours ago" 
-    args.push("start=" + start);
-    args.push("end=" + end);
+    var lag = 0;
+    if(ds.hasOwnProperty("lag")){
+      lag = ds["lag"];
+    };
+    args.push("start=" + (parseInt(start) - lag));
+    args.push("end=" + (parseInt(end) - lag));
 
     // Agg
     terms[0] = "sum" ;
@@ -196,10 +198,16 @@ function plotchart(div,opts) {
 
           series['data'] = dps;
 
+          var lag = 0;
+          if (ds.hasOwnProperty("lag") ){
+            lag = ds['lag'];
+          } 
+          console.log("lag: " + lag);
+
           var item;
           for (var key in dphash) {
             item = new Array();
-            item[0] = key * 1000;
+            item[0] = (parseInt(key) + lag) * 1000 ;
             item[1] = dphash[key];
             dps.push(item);
           }

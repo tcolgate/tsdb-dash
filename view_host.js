@@ -99,6 +99,7 @@
                    "linewidth": spec_data['linewidth'],
                        "units": spec_data['units'],
                          "log": spec_data['log'],
+                     "logbase": spec_data['logbase'],
                       "format": spec_data['format'],
                         "tags": {"host": host},
                       "legend": {"show": true, "container": legcont}
