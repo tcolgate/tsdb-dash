@@ -15,7 +15,7 @@ function plotchart(div,opts) {
     ytag = opts['ytag'];
   }
 
-  var stack = false;
+  var stack = undefined;
   if(opts.hasOwnProperty("stack")){
     stack = opts['stack'];
   }
@@ -43,7 +43,6 @@ function plotchart(div,opts) {
   var format = "%f";
   if(opts.hasOwnProperty("format") && opts["format"]){
     format = opts["format"];
-    console.log("Setting format to " + format);
   }
 
   var ticks;
@@ -53,10 +52,6 @@ function plotchart(div,opts) {
       (function(fmt,lgb){
         return function (val,axis) {
           var ret = gprintf(fmt,lgb,'.',val);
-          console.log("val: " + val)
-          console.log("fmt: " + fmt)
-          console.log("lgb: " + lgb)
-          console.log("ret: " + ret)
           return ret;
         }
       })(format,logbase);
@@ -80,8 +75,6 @@ function plotchart(div,opts) {
             ++i;
           } while (i < max);
 
-          console.log("marks = " + res);
-
           return res;
         }})(logbase,tickformatter)
   }
@@ -101,7 +94,7 @@ function plotchart(div,opts) {
   var end = opts["end"]
   var twidth = end - start;
   var tperpix = Math.floor(twidth / wpix);
-  var downsample = "max";
+  var downsample = "avg";
 
   for(dsi in dss){
     var ds = dss[dsi]; 
@@ -199,18 +192,16 @@ function plotchart(div,opts) {
           series['data'] = dps;
 
           var lag = 0;
-          if (ds.hasOwnProperty("lag") ){
+          if (ds.hasOwnProperty("lag")){
             lag = ds['lag'];
-          } 
-          console.log("lag: " + lag);
+          };
 
-          var item;
           for (var key in dphash) {
-            item = new Array();
-            item[0] = (parseInt(key) + lag) * 1000 ;
+            var item = new Array();
+            item[0] = (lag + parseInt(key)) * 1000 ;
             item[1] = dphash[key];
             dps.push(item);
-          }
+          };
           allseries.push(series);
         }
       }
@@ -230,8 +221,7 @@ function plotchart(div,opts) {
         }],
         grid: { hoverable: true, autoHighlight: false },
         legend: legend,
-        // crosshair: { mode: "x" },
-        // selection: { mode: "x" },
+        selection: { mode: "x" },
         series: {
           stack: stack,
           lines: { fill: fill, show: true , lineWidth: linewidth}
