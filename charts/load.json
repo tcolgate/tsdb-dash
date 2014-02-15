@@ -2,6 +2,7 @@
   "title": "Load Average",
   "fill": 0,
   "linewidth": 1,
+  "format": "%.2f",
   "units": "load",
     "dss": [{"metric": "proc.loadavg.1min",
                "rate": false ,
