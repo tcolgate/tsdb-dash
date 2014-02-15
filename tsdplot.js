@@ -35,6 +35,59 @@ function plotchart(div,opts) {
     legend = opts['legend'];
   }
 
+  var logbase = 10.0; 
+  if(opts.hasOwnProperty("logbase")){
+    logbase = opts['logbase'];
+  }
+
+  var format = "%f";
+  if(opts.hasOwnProperty("format") && opts["format"]){
+    format = opts["format"];
+    console.log("Setting format to " + format);
+  }
+
+  var ticks;
+  var transform = function(x){return x};
+  if(opts.hasOwnProperty("log") && opts["log"]){
+    var tickformatter = 
+      (function(fmt,lgb){
+        return function (val,axis) {
+          var ret = gprintf(fmt,lgb,'.',val);
+          console.log("val: " + val)
+          console.log("fmt: " + fmt)
+          console.log("lgb: " + lgb)
+          console.log("ret: " + ret)
+          return ret;
+        }
+      })(format,logbase);
+
+    transform = 
+      (function(lgb){
+        return function(v){return Math.log(v+0.0001) / Math.log(lgb);}
+      })(logbase);
+
+    ticks = 
+      (function(lgb,tkf){
+        return function(axis) {
+          var res = [];
+          var max = Math.ceil(Math.log(axis.max) / Math.log(lgb));
+          var i = 0;
+
+          do {
+            var v   = Math.pow(lgb,i);
+            var txt = tkf(v, axis);
+            res.push([v,txt]);
+            ++i;
+          } while (i < max);
+
+          console.log("marks = " + res);
+
+          return res;
+        }})(logbase,tickformatter)
+  }
+
+
+
   var dss = opts["dss"];
 
   var i = 0;
@@ -88,6 +141,7 @@ function plotchart(div,opts) {
     if(tags.length > 0){
       tagstr = "{" + tags.join(",") + "}";
     };
+
 
     args.push("m=" + terms.join(":") + tagstr);
 
@@ -162,7 +216,9 @@ function plotchart(div,opts) {
         yaxes: [{
             position: 'left',
             axisLabel: ylabel,
-            color: "#00000000"
+            color: "#00000000",
+            transform: transform,
+            ticks: ticks
         }],
         grid: { hoverable: true, autoHighlight: false },
         legend: legend,

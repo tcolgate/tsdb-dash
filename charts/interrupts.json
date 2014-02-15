@@ -1,9 +1,10 @@
 {
       "title": "Interrupts",
       "units": "int/s",
-      "stack": true,
-       "fill": 1,
-  "linewidth": 0,
+       "fill": 0,
+  "linewidth": 1,
+        "log": true,
+     "format": "%.2s%c",
         "dss": [{"metric": "proc.interrupts",
                    "tags": ["type=*"],
                    "rate": true,

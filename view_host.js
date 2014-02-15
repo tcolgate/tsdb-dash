@@ -80,7 +80,7 @@
                     var name  = groupings[groupindex]["name"];
                     var cont  = "#" + name;
                     $(cont).append(
-                      $("<h4 class='graph' id=\"" + name + "\">" + title "</h4>")
+                      $("<h4 class='graph' id=\"" + name + "\">" + title + "</h4>")
                     );
                     var target = $("<div class='plot' id=\"group_" + chartindex + "\" style=\"width: 600px; height: 300px\"></div>");
                     var legcont = $("<div class='legend' id=\"group_" + chartindex + "_legend\"></div>");
@@ -98,6 +98,8 @@
                         "fill": spec_data['fill'],
                    "linewidth": spec_data['linewidth'],
                        "units": spec_data['units'],
+                         "log": spec_data['log'],
+                      "format": spec_data['format'],
                         "tags": {"host": host},
                       "legend": {"show": true, "container": legcont}
                     })
