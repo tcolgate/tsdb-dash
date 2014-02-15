@@ -2,7 +2,6 @@
   "title": "Total Threads",
   "fill": 0,
   "linewidth": 1,
-  "stack": "false",
   "units": "threads",
     "dss": [{"metric": "proc.loadavg.total_threads",
                "rate": false }]

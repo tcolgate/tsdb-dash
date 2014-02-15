@@ -1,8 +1,7 @@
 {
-  "title": "Load Average (1 day compare)",
+  "title": "Load Average (compare)",
   "fill": 0,
   "linewidth": 1,
-  "stack": "false",
   "units": "load",
     "dss": [{"metric": "proc.loadavg.5min",
                "rate": false ,
@@ -10,5 +9,10 @@
             {"metric": "proc.loadavg.5min",
                "rate": false,
                 "lag": 86400,
-              "label": "5 min (1 day ago)"}]
+              "label": "5 min (1 day ago)"},
+            {"metric": "proc.loadavg.5min",
+               "rate": false,
+                "lag": 604800,
+              "label": "5 min (1 week ago)"}
+  ]
 }
