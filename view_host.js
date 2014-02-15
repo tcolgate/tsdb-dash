@@ -72,30 +72,22 @@
               $("#container").append(gritem);
 
               for (c in group["charts"]){
-                (function(groupindex,chartindex){
-                  var spec ="charts/"+ groupings[groupindex]["charts"][chartindex] + ".json" 
+                (function(grdiv,groupindex,chartindex){
+                  var spec ="charts/"+ groupings[groupindex]["charts"][chartindex] + ".json" ;
                   console.log("Will draw chart: " + spec);
                   $.getJSON(spec).done(function(spec_data){
-                    var title = spec_data['title'];
-                    var name  = groupings[groupindex]["name"];
-                    var cont  = "#" + name;
-                    var target = $(
-                      "<div class='plot' id=\"group_" 
-                      + chartindex 
-                      + "\" style=\"width: 480px; height: 280px\">" 
-                      + "</div>");
-                    var legcont = $("<div class='legend' id=\"group_" + chartindex + "_legend\"></div>");
-                    var enclose = 
-                      $("<div style=\"width: 400px\" class='graph'>" 
-                        + "<h6 class='graph' id=\"" + name + "\">" 
-                        + title 
-                        + "</h6>").append(target).append(legcont).append($("</div>"));
-                    $(cont).append(enclose);
   
+                    var name   = groupings[groupindex]["name"];
+                    var target = $("<div id=\"" + name + "\"></div>");
+                    grdiv.append(target);
+
                     plotchart(target, 
                     {
                        "start": moment($("#start_date").val()).format("X"),
                          "end": moment($("#end_date").val()).format("X"),
+                       'width': "400px",
+                      'height': "280px",
+                       'title': spec_data['title'],
                        'stack': spec_data['stack'],
                       'ylabel': spec_data['units'],
                         'ytag': spec_data['ytag'],
@@ -107,10 +99,10 @@
                      "logbase": spec_data['logbase'],
                       "format": spec_data['format'],
                         "tags": {"host": host},
-                      "legend": {"show": true, "container": legcont}
+                      "legend": {"show": true}
                     })
                   })
-                })(g,c)
+                })(gritem,g,c)
               } 
             }
           }

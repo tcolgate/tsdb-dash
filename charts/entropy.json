@@ -3,5 +3,6 @@
   "units": "bytes",
    "fill": 1,
     "dss": [{"metric": "proc.kernel.entropy_avail", 
+              "label": "Bytes Available",
                "rate": false }]
 }

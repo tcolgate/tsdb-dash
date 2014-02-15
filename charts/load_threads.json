@@ -4,5 +4,6 @@
   "linewidth": 1,
   "units": "threads",
     "dss": [{"metric": "proc.loadavg.total_threads",
+              "label": "Threads",
                "rate": false }]
 }

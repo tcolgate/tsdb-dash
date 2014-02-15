@@ -4,5 +4,6 @@
   "linewidth": 1,
   "units": "procs",
     "dss": [{"metric": "proc.loadavg.runnable",
+              "label": "Runnable proc",
                "rate": false }]
 }

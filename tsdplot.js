@@ -5,6 +5,24 @@ function plotchart(div,opts) {
       createDataTable,
       onHostChange;
 
+  var title  = opts['title'];
+  var width  = opts['width'];
+  var height = opts['height'];
+
+  var target = $(
+    "<div class='plot' style=\"width: " + width +";"
+    + " height: " + height +";\">" 
+    + "</div>");
+
+  var legcont = $("<div class='legend'></div>");
+
+  var enclose = 
+    $("<div style=\"width: "+ width +"\" class='graph'>" 
+      + "<h6 class='graph'>" 
+      + title 
+      + "</h6>").append(target).append(legcont).append($("</div>"));
+
+  div.append(enclose);
 
   var ylabel = null;
   if(opts.hasOwnProperty("units")){
@@ -33,7 +51,8 @@ function plotchart(div,opts) {
   var legend = { show: true, position: "sw" };
   if(opts.hasOwnProperty("legend")){
     legend = opts['legend'];
-  }
+  };
+  legend['container'] = legcont;
 
   var logbase = 10.0; 
   if(opts.hasOwnProperty("logbase") && opts['logbase']){
@@ -207,7 +226,7 @@ function plotchart(div,opts) {
       }
 
       plot = $.plot(
-        div,
+        target,
         allseries,
       {
         xaxis: { mode: "time", show: true },
