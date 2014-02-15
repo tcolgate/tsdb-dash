@@ -36,7 +36,7 @@ function plotchart(div,opts) {
   }
 
   var logbase = 10.0; 
-  if(opts.hasOwnProperty("logbase")){
+  if(opts.hasOwnProperty("logbase") && opts['logbase']){
     logbase = opts['logbase'];
   }
 
@@ -94,7 +94,7 @@ function plotchart(div,opts) {
   var end = opts["end"]
   var twidth = end - start;
   var tperpix = Math.floor(twidth / wpix);
-  var downsample = "avg";
+  var downsample = "max";
 
   for(dsi in dss){
     var ds = dss[dsi]; 
