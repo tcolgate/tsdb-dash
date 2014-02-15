@@ -224,7 +224,8 @@ function plotchart(div,opts) {
         selection: { mode: "x" },
         series: {
           stack: stack,
-          lines: { fill: fill, show: true , lineWidth: linewidth}
+          lines: { fill: fill, show: true , lineWidth: linewidth},
+          shadowSize: 0
         }
       }
     );
