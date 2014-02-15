@@ -79,12 +79,17 @@
                     var title = spec_data['title'];
                     var name  = groupings[groupindex]["name"];
                     var cont  = "#" + name;
-                    $(cont).append(
-                      $("<h4 class='graph' id=\"" + name + "\">" + title + "</h4>")
-                    );
-                    var target = $("<div class='plot' id=\"group_" + chartindex + "\" style=\"width: 480px; height: 280px\"></div>");
+                    var target = $(
+                      "<div class='plot' id=\"group_" 
+                      + chartindex 
+                      + "\" style=\"width: 480px; height: 280px\">" 
+                      + "</div>");
                     var legcont = $("<div class='legend' id=\"group_" + chartindex + "_legend\"></div>");
-                    var enclose = $("<div class='graph'>").append(target).append(legcont).append($("</div>"));
+                    var enclose = 
+                      $("<div style=\"width: 400px\" class='graph'>" 
+                        + "<h6 class='graph' id=\"" + name + "\">" 
+                        + title 
+                        + "</h6>").append(target).append(legcont).append($("</div>"));
                     $(cont).append(enclose);
   
                     plotchart(target, 
