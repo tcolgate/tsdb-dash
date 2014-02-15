@@ -214,14 +214,41 @@ function plotchart(div,opts) {
           if (ds.hasOwnProperty("lag")){
             lag = ds['lag'];
           };
+          
+          var cur = 0;
+          var min = 1/0;
+          var max = 0;
+          var sum = 0;
 
           for (var key in dphash) {
             var item = new Array();
+            var val  = dphash[key]
             item[0] = (lag + parseInt(key)) * 1000 ;
-            item[1] = dphash[key];
+            item[1] = val;
+            cur = val;
+            if(val < min){min = val};
+            if(val > max){max = val};
+            sum += val;
+
             dps.push(item);
           };
-          allseries.push(series);
+
+          var avg = sum / dps.length;
+
+          series['cur'] = cur;
+          series['min'] = min;
+          series['max'] = max;
+          series['sum'] = sum;
+          series['avg'] = avg;
+
+          series['label'] = series['label'] 
+            + " cur: " + gprintf(format,logbase,'.',cur)
+            + " min: " + gprintf(format,logbase,'.',min)
+            + " avg: " + gprintf(format,logbase,'.',avg)
+            + " max: " + gprintf(format,logbase,'.',max)
+            + " sum: " + gprintf(format,logbase,'.',sum); 
+
+          allseries.push(series)
         }
       }
 
