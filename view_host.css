@@ -16,3 +16,16 @@ div.legend {
   page-break-inside: avoid;
 }
 
+table {
+  border-collapse: collapse;
+}
+
+tr { 
+  border: none;
+  border-width: 0 1px ;
+}
+
+td { 
+  border: solid;
+  border-width: 0 1px ;
+}

@@ -17,7 +17,7 @@ function plotchart(div,opts) {
   var legcont = $("<div class='legend'></div>");
 
   var enclose = 
-    $("<div style=\"overflow: auto; width: "+ width +"\" class='graph'>" 
+    $("<div style=\"overflow: visible; width: "+ width +"\" class='graph'>" 
       + "<h6 class='graph'>" 
       + title 
       + "</h6>").append(target).append(legcont).append($("</div>"));
