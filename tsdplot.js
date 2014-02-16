@@ -243,11 +243,11 @@ function plotchart(div,opts) {
           series['avg'] = avg;
 
           series['label'] = series['label'] 
-            + "<td>cur: " + gprintf(format,logbase,'.',cur) + "</td>"
-            + "<td>min: " + gprintf(format,logbase,'.',min) + "</td>"
-            + "<td>avg: " + gprintf(format,logbase,'.',avg) + "</td>"
-            + "<td>max: " + gprintf(format,logbase,'.',max) + "</td>"
-            + "<td>sum: " + gprintf(format,logbase,'.',sum) + "</td></tr><tr>"; 
+            + "<td>" + gprintf(format,logbase,'.',cur) + "</td>"
+            + "<td>" + gprintf(format,logbase,'.',min) + "</td>"
+            + "<td>" + gprintf(format,logbase,'.',avg) + "</td>"
+            + "<td>" + gprintf(format,logbase,'.',max) + "</td>"
+            + "<td>" + gprintf(format,logbase,'.',sum) + "</td></tr><tr>"; 
 
           allseries.push(series)
         }
@@ -256,65 +256,41 @@ function plotchart(div,opts) {
       plot = $.plot(
         target,
         allseries,
-      {
-        xaxis: { mode: "time", show: true },
-      
-        yaxes: [{
-            position: 'left',
-            axisLabel: ylabel,
-            color: "#00000000",
-            transform: transform,
-            ticks: ticks
-        }],
-        grid: { hoverable: true, autoHighlight: false },
-        legend: legend,
-        selection: { mode: "x" },
-        series: {
-          stack: stack,
-          lines: { fill: fill, show: true , lineWidth: linewidth},
-          shadowSize: 0
+        {
+          xaxis: { mode: "time", show: true },
+        
+          yaxes: [{
+              position: 'left',
+              axisLabel: ylabel,
+              color: "#00000000",
+              transform: transform,
+              ticks: ticks
+          }],
+          grid: { hoverable: true, autoHighlight: false },
+          legend: legend,
+          selection: { mode: "x" },
+          series: {
+            stack: stack,
+            lines: { fill: fill, show: true , lineWidth: linewidth},
+            shadowSize: 0
+          }
         }
-      }
-    );
+      );
+
+      // Populate the table columns
+      var table = legend['container'].children()[0];
+      var row = table.insertRow(0);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      var cell6 = row.insertCell(5);
+      var cell7 = row.insertCell(6);
+      cell3.innerHTML = "cur";
+      cell4.innerHTML = "min";
+      cell5.innerHTML = "avg";
+      cell6.innerHTML = "max";
+      cell7.innerHTML = "sum";
   });
-
-  createDataTable = function (lines) {
-    var index  = 0,
-         length = lines.length,
-         datapoint,
-         point,
-         data,
-         type,
-         host;
-
-    data = {
-      used:    [],
-      free: []
-    };
-
-    for (; index < length; index++) {
-      datapoint = lines[index].split(' ');
-      var set = parseDataPoint(datapoint,new Array('used','free'));                        
-      if (undefined != set) {
-        data[set[0]].push(set[1]);
-      }
-    }
-
-    return {
-      data: data
-    };
-  };
-
-  function parseDataPoint(datapoint,fields) {
-    var length = fields.length, dlength = datapoint.length;
-    for (dindex = 3; dindex < dlength; dindex++) {
-      var item = datapoint[dindex].split('=');
-      for (var index = 0; index < length; index++) {
-        if (item[1] == fields[index]) {
-          var point = [ datapoint[1]*1000, datapoint[2]/1024/1024/1024];
-          return new Array(item[1],point);
-        }
-      }
-    }
-  }
 };

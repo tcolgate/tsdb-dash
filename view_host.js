@@ -85,8 +85,8 @@
                     {
                        "start": moment($("#start_date").val()).format("X"),
                          "end": moment($("#end_date").val()).format("X"),
-                       'width': "500px",
-                      'height': "280px",
+                       'width': "400px",
+                      'height': "220px",
                        'title': spec_data['title'],
                        'stack': spec_data['stack'],
                       'ylabel': spec_data['units'],
