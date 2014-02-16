@@ -1,113 +1,102 @@
 (function () {
+  var $document = $(document), onDocumentReady;
+  var params = $.getQuery();
+  var branchId = params['branch'];
 
-// $.when($.ajax( "/page1.php" ), 
-//        $.ajax( "/page2.php" ) ).done(
-//           function( a1, a2 ) {
-//             // a1 and a2 are arguments resolved for the page1 and page2 ajax requests, respectively.
-//             // Each argument is an array with the following structure: [ data, statusText, jqXHR ]
-//             var data = a1[ 0 ] + a2[ 0 ]; // a1[ 0 ] = "Whip", a2[ 0 ] = " It"
-//             if ( /Whip It/.test( data ) ) {
-//               alert( "We got what we came for!" );
-//             }});
+  onDocumentReady = function () {
+    $('*[name=start_date]').appendDtpicker({
+      "current": moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss")
+    });
 
-    var $document = $(document), onDocumentReady;
-    var params = $.getQuery(); 
-    var branchId = params['branch'];
+    $('*[name=end_date]').appendDtpicker();
 
-    onDocumentReady = function () {
-      $('*[name=start_date]').appendDtpicker({
-        "current": moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss")
-      });
+    $.ajax({
+      url: "/api/tree/branch?branch=" + branchId,
+      dataType: "json",
+      cache: true,
+      async: true,
+      method: 'GET',
+    }).done(onBranchListSuccess);
+  };
 
-      $('*[name=end_date]').appendDtpicker();
-
-      $.ajax({
-          url: "/api/tree/branch?branch=" + branchId,
-          dataType: "json",
-          cache: true,
-          async: true,
-          method: 'GET',
-      }).done(onBranchListSuccess);
-    };
-
-
-    onBranchListSuccess = function (branch_data, textStatus, jqXHR) {
-      $.getJSON(
-       'groupings.json',
-        function(groupings){
-          var host = branch_data['displayName'];
-          var groups = {};
-          for(var key in groupings) {
-            groupings[key]["regex"] = new RegExp(groupings[key]["regex"]);
+  onBranchListSuccess = function (branch_data, textStatus, jqXHR) {
+    $.getJSON(
+      'groupings.json',
+      function(groupings){
+        var host = branch_data['displayName'];
+        var groups = {};
+        for(var key in groupings) {
+          groupings[key]["regex"] = new RegExp(groupings[key]["regex"]);
+        };
+        for (var l in branch_data['leaves']) {
+          var leaf = branch_data['leaves'][l];
+          var displayName = leaf['displayName'];
+          var match = false;
+          for (var g in groupings) {
+            if (displayName.match(groupings[g]['regex'])){
+              match = g;
+              break;
+            }
           };
-          for (var l in branch_data['leaves']) {
-            var leaf = branch_data['leaves'][l];
-            var displayName = leaf['displayName'];
-            var match = false;
-            for (var g in groupings) {
-              if (displayName.match(groupings[g]['regex'])){
-                match = g;
-                break;
-              }
-            };
-            if (match == false){
-              console.log("Unmatched metric: " + displayName);
-              next;
-            };
-
-            if (! groups.hasOwnProperty(match)){
-              groups[match] = true;
-            };
+          if (match == false){
+            console.log("Unmatched metric: " + displayName);
+            next;
           };
 
-          for (g in groups){
-            var group = groupings[g];
-            if (group.hasOwnProperty("charts") && group['charts'].length > 0){
-              var grtitle = group['name'];
-              if (group.hasOwnProperty("title")){
-                grtitle = group['title'];
-              }
+          if (! groups.hasOwnProperty(match)){
+            groups[match] = true;
+          };
+        };
 
-              var gritem = $("<h3 id=\"" + group['name'] + "\">" + grtitle + "</h3>");
-              $("#container").append(gritem);
+        for (g in groups){
+          var group = groupings[g];
+          if (group.hasOwnProperty("charts") && group['charts'].length > 0){
+            var grtitle = group['name'];
+            if (group.hasOwnProperty("title")){
+              grtitle = group['title'];
+            }
 
-              for (c in group["charts"]){
-                (function(grdiv,groupindex,chartindex){
-                  var spec ="charts/"+ groupings[groupindex]["charts"][chartindex] + ".json" ;
-                  console.log("Will draw chart: " + spec);
-                  $.getJSON(spec).done(function(spec_data){
-  
-                    var name   = groupings[groupindex]["name"];
-                    var target = $("<div id=\"" + name + "\"></div>");
-                    grdiv.append(target);
+            var gritem = $("<h3 id=\"" + group['name'] + "\">" + grtitle + "</h3>");
+            $("#container").append(gritem);
 
-                    plotchart(target, 
+            for (c in group["charts"]){
+              (function(grdiv,groupindex,chartindex){
+                var spec ="charts/"+ groupings[groupindex]["charts"][chartindex] + ".json" ;
+                console.log("Will draw chart: " + spec);
+                $.getJSON(spec).done(function(spec_data){
+
+                  var name   = groupings[groupindex]["name"];
+                  var target = $("<div id=\"" + name + "\"></div>");
+                  grdiv.append(target);
+
+                  plotchart(target, 
                     {
-                       "start": moment($("#start_date").val()).format("X"),
-                         "end": moment($("#end_date").val()).format("X"),
-                       'width': "400px",
+                      "start": moment($("#start_date").val()).format("X"),
+                      "end": moment($("#end_date").val()).format("X"),
+                      'width': "400px",
                       'height': "220px",
-                       'title': spec_data['title'],
-                       'stack': spec_data['stack'],
+                      'title': spec_data['title'],
+                      'stack': spec_data['stack'],
                       'ylabel': spec_data['units'],
-                        'ytag': spec_data['ytag'],
-                         "dss": spec_data['dss'],
-                        "fill": spec_data['fill'],
-                   "linewidth": spec_data['linewidth'],
-                       "units": spec_data['units'],
-                         "log": spec_data['log'],
-                     "logbase": spec_data['logbase'],
+                      'ytag': spec_data['ytag'],
+                      "dss": spec_data['dss'],
+                      "fill": spec_data['fill'],
+                      "linewidth": spec_data['linewidth'],
+                      "units": spec_data['units'],
+                      "log": spec_data['log'],
+                      "logbase": spec_data['logbase'],
                       "format": spec_data['format'],
-                        "tags": {"host": host},
+                      "tags": {"host": host},
                       "legend": {"show": true}
-                    })
-                  })
-                })(gritem,g,c)
-              } 
+                    }
+                  )
+                })
+              })(gritem,g,c)
             }
           }
         }
-      )
-    }
+      }
+    )
+  }
   $document.ready(onDocumentReady);
 })();
