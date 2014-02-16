@@ -17,7 +17,7 @@ function plotchart(div,opts) {
   var legcont = $("<div class='legend'></div>");
 
   var enclose = 
-    $("<div style=\"width: "+ width +"\" class='graph'>" 
+    $("<div style=\"overflow: auto; width: "+ width +"\" class='graph'>" 
       + "<h6 class='graph'>" 
       + title 
       + "</h6>").append(target).append(legcont).append($("</div>"));
@@ -53,6 +53,7 @@ function plotchart(div,opts) {
     legend = opts['legend'];
   };
   legend['container'] = legcont;
+  legend['noColumns'] = 6;
 
   var logbase = 10.0; 
   if(opts.hasOwnProperty("logbase") && opts['logbase']){
@@ -242,11 +243,11 @@ function plotchart(div,opts) {
           series['avg'] = avg;
 
           series['label'] = series['label'] 
-            + " cur: " + gprintf(format,logbase,'.',cur)
-            + " min: " + gprintf(format,logbase,'.',min)
-            + " avg: " + gprintf(format,logbase,'.',avg)
-            + " max: " + gprintf(format,logbase,'.',max)
-            + " sum: " + gprintf(format,logbase,'.',sum); 
+            + "<td>cur: " + gprintf(format,logbase,'.',cur) + "</td>"
+            + "<td>min: " + gprintf(format,logbase,'.',min) + "</td>"
+            + "<td>avg: " + gprintf(format,logbase,'.',avg) + "</td>"
+            + "<td>max: " + gprintf(format,logbase,'.',max) + "</td>"
+            + "<td>sum: " + gprintf(format,logbase,'.',sum) + "</td></tr><tr>"; 
 
           allseries.push(series)
         }
