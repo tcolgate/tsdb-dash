@@ -24,6 +24,11 @@ function plotchart(div,opts) {
 
   div.append(enclose);
 
+  var onselect = undefined;
+  if(opts.hasOwnProperty("onselect") && opts['onselect']){
+    onselect = opts['onselect'];
+  }
+
   var ylabel = null;
   if(opts.hasOwnProperty("units")){
     ylabel = opts['units'];
@@ -292,5 +297,9 @@ function plotchart(div,opts) {
       cell5.innerHTML = "avg";
       cell6.innerHTML = "max";
       cell7.innerHTML = "sum";
+
+      if(onselect){
+        target.bind("plotselected", onselect);
+      }
   });
 };

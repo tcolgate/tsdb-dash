@@ -3,13 +3,7 @@
   var params = $.getQuery();
   var branchId = params['branch'];
 
-  onDocumentReady = function () {
-    $('*[name=start_date]').appendDtpicker({
-      "current": moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss")
-    });
-
-    $('*[name=end_date]').appendDtpicker();
-
+  onDateChange = function (ev) {
     $.ajax({
       url: "/api/tree/branch?branch=" + branchId,
       dataType: "json",
@@ -17,12 +11,43 @@
       async: true,
       method: 'GET',
     }).done(onBranchListSuccess);
+  }
+
+  onDocumentReady = function () {
+
+    var now = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+    $('#start_date').val(moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss"));
+    $('#end_date').val(now);
+
+    $('#start_date').on("change",onDateChange);
+    $('#end_date').on("change",onDateChange);
+
+    $('#end_date').change();
+
+/*
+    $('#start_date').appendDtpicker({
+      closeOnSelected: true,
+      dateFormat: "YYYY-MM-DD hh:mm",
+      current: moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm"),
+      maxDate: now
+    });
+
+    $('#end_date').appendDtpicker({
+      dateFormat: "YYYY-MM-DD hh:mm",
+      closeOnSelected: true,
+      current: now,
+      maxDate: now
+    });
+ */
+
   };
 
   onBranchListSuccess = function (branch_data, textStatus, jqXHR) {
     $.getJSON(
       'groupings.json',
       function(groupings){
+        $("#container").html("");
+
         var host = branch_data['displayName'];
         var groups = {};
         for(var key in groupings) {
@@ -69,10 +94,18 @@
                   var target = $("<div id=\"" + name + "\"></div>");
                   grdiv.append(target);
 
+                  onPlotSelected = function(event, ranges){
+                    var from = ranges.xaxis.from;
+                    var   to = ranges.xaxis.to;
+
+                    $('#start_date').val(moment(new Date(from)).format("YYYY-MM-DD HH:mm:ss"));
+                    $('#end_date').val(moment(new Date(to)).format("YYYY-MM-DD HH:mm:ss")).change();
+                  }
                   plotchart(target, 
                     {
                       "start": moment($("#start_date").val()).format("X"),
                       "end": moment($("#end_date").val()).format("X"),
+                      "onselect": onPlotSelected, 
                       'width': "400px",
                       'height': "220px",
                       'title': spec_data['title'],
