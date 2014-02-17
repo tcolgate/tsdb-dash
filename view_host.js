@@ -3,6 +3,22 @@
   var params = $.getQuery();
   var branchId = params['branch'];
 
+ 	if ( document.location.protocol === 'file:' ) {
+ 		alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
+ 	}
+
+ 	// Establish Variables
+ 	var History = window.History; 
+ 	var	State = History.getState();
+
+  console.log('initial:', State.data, State.title, State.url);
+
+ 	// Bind to State Change
+ 	History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+ 		var State = History.getState(); // Note: We are using History.getState() instead of event.state
+ 		console.log('statechange:', State.data, State.title, State.url);
+ 	});
+
   onDateChange = function (ev) {
     $.ajax({
       url: "/api/tree/branch?branch=" + branchId,
