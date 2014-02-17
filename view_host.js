@@ -1,7 +1,6 @@
 (function () {
   var $document = $(document), onDocumentReady;
   var params = $.getQuery();
-  var branchId = params['branch'];
 
  	if ( document.location.protocol === 'file:' ) {
  		alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
@@ -13,10 +12,19 @@
 
   console.log('initial:', State.data, State.title, State.url);
 
+  var branchId = "";
+  if(State['data'].hasOwnProperty("branch") && State['data']['branch']){
+    branchId = State['data']['branch'];
+  } else {
+    branchId = params['branch'];
+  }
+
+  console.log("branchid: ", params, branchId);
+
  	// Bind to State Change
  	History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
- 		var State = History.getState(); // Note: We are using History.getState() instead of event.state
- 		console.log('statechange:', State.data, State.title, State.url);
+    var State = History.getState(); // Note: We are using History.getState() instead of event.state
+    console.log('statechange:', State.data, State.title, State.url);
  	});
 
   onDateChange = function (ev) {
@@ -32,8 +40,26 @@
   onDocumentReady = function () {
 
     var now = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-    $('#start_date').val(moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss"));
-    $('#end_date').val(now);
+
+    if(State['data'].hasOwnProperty("start_date") && State['data']['start_date']){
+      $('#start_date').val(State['data']['start_date']);
+    } else {
+      if (params.hasOwnProperty("start_date") && params['start_date']){
+        $('#start_date').val(params['start_date']);
+      } else {
+        $('#start_date').val(moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss"));
+      }
+    }
+
+    if(State['data'].hasOwnProperty("end_date") && State['data']['end_date']){
+      $('#end_date').val(State['data']['end_date']);
+    } else {
+      if (params.hasOwnProperty("end_date") && params['end_date']){
+        $('#end_date').val(params['end_date']);
+      } else {
+        $('#end_date').val(now);
+      }
+    }
 
     $('#start_date').on("change",onDateChange);
     $('#end_date').on("change",onDateChange);
@@ -107,15 +133,32 @@
                 $.getJSON(spec).done(function(spec_data){
 
                   var name   = groupings[groupindex]["name"];
-                  var target = $("<div id=\"" + name + "\"></div>");
+                  var target = $("<div id=\"" + name + "\"><a name=\"" + name + "\"></a></div>");
                   grdiv.append(target);
 
                   onPlotSelected = function(event, ranges){
                     var from = ranges.xaxis.from;
                     var   to = ranges.xaxis.to;
 
-                    $('#start_date').val(moment(new Date(from)).format("YYYY-MM-DD HH:mm:ss"));
-                    $('#end_date').val(moment(new Date(to)).format("YYYY-MM-DD HH:mm:ss")).change();
+                    var newstate = $.extend({},History.getState()['data']);
+
+                    console.log(newstate);
+
+                    $.extend(newstate,{branch: branchId});
+                    $.extend(newstate,{start_date: moment(new Date(from)).format("YYYY-MM-DD HH:mm:ss")});
+                    $.extend(newstate,{end_date: moment(new Date(to)).format("YYYY-MM-DD HH:mm:ss")});
+
+                    var str = [];
+                    for(var p in newstate)
+                      if (newstate.hasOwnProperty(p)) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(newstate[p]));
+                      }
+                    var  newurl = "?" + str.join("&");
+
+                    History.pushState(newstate,null,newurl);
+
+                    $('#start_date').val(newstate['start_date']);
+                    $('#end_date').val(newstate['end_date']).change();
                   }
                   plotchart(target, 
                     {
