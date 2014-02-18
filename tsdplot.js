@@ -1,4 +1,4 @@
-function plotchart(div,opts) {
+function plotchart(renderer,opts) {
   var title  = opts['title'];
   var width  = opts['width'];
   var height = opts['height'];
@@ -171,13 +171,11 @@ function plotchart(div,opts) {
 
       var legcont = $("<div class='legend'></div>");
 
-      var enclose = 
+      var div = 
         $("<div style=\"overflow: visible; width: "+ width +"\" class='graph'>" 
           + "<h6 class='graph'>" 
           + title 
           + "</h6>").append(target).append(legcont).append($("</div>"));
-
-      div.append(enclose);
 
       var onselect = undefined;
       if(opts.hasOwnProperty("onselect") && opts['onselect']){
@@ -249,48 +247,59 @@ function plotchart(div,opts) {
             }})(logbase,tickformatter)
       }
 
-      var plot = $.plot(
-        target,
-        allseries,
-        {
-          xaxis: { mode: "time", show: true },
-        
-          yaxes: [{
-              position: 'left',
-              axisLabel: ylabel,
-              color: "#00000000",
-              transform: transform,
-              ticks: ticks
-          }],
-          grid: { hoverable: true, autoHighlight: false },
-          legend: legend,
-          selection: { mode: "x" },
-          series: {
-            stack: stack,
-            lines: { fill: fill, show: true , lineWidth: linewidth},
-            shadowSize: 0
+      renderer(
+        (function(dv,srs,lgd,ylbl,trfm,tks,stk,fl,lw,oslct){
+          return function(tgt){
+            var graph = dv.children()[1];
+            var legend = dv.children()[2];
+            
+            tgt.append(dv);
+            $.plot(
+              graph,
+              srs,
+              {
+                xaxis: { mode: "time", show: true },
+              
+                yaxes: [{
+                    position: 'left',
+                    axisLabel: ylbl,
+                    color: "#00000000",
+                    transform: trfm,
+                    ticks: tks
+                }],
+                grid: { hoverable: true, autoHighlight: false },
+                legend: lgd,
+                selection: { mode: "x" },
+                series: {
+                  stack: stk,
+                  lines: { fill: fl, show: true , lineWidth: lw},
+                  shadowSize: 0
+                }
+              }
+            );
+
+            console.log(legend);
+
+            // Populate the table columns
+            var table = legend.children[0];
+            var row = table.insertRow(0);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            cell3.innerHTML = "cur";
+            cell4.innerHTML = "min";
+            cell5.innerHTML = "avg";
+            cell6.innerHTML = "max";
+            cell7.innerHTML = "sum";
+
+            if(onselect){
+              target.bind("plotselected", oslct);
+            };
           }
-        }
-      );
-
-      // Populate the table columns
-      var table = legend['container'].children()[0];
-      var row = table.insertRow(0);
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);
-      var cell4 = row.insertCell(3);
-      var cell5 = row.insertCell(4);
-      var cell6 = row.insertCell(5);
-      var cell7 = row.insertCell(6);
-      cell3.innerHTML = "cur";
-      cell4.innerHTML = "min";
-      cell5.innerHTML = "avg";
-      cell6.innerHTML = "max";
-      cell7.innerHTML = "sum";
-
-      if(onselect){
-        target.bind("plotselected", onselect);
-      }
-  });
+        })(div,allseries,legend,ylabel.transform,ticks,stack,fill,linewidth,onselect))
+      });
 };

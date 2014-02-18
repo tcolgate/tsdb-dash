@@ -161,7 +161,15 @@
                     $('#start_date').val(newstate['start_date']);
                     $('#end_date').val(newstate['end_date']).change();
                   }
-                  plotchart(target, 
+
+                  plotchart(
+                    (function(t){
+                      return function(fn){
+                        console.log(fn);
+                        fn(t);
+                      }
+                    })(target)
+                    , 
                     {
                       "start": moment($("#start_date").val()).format("X"),
                       "end": moment($("#end_date").val()).format("X"),
