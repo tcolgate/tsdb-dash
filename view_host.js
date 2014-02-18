@@ -142,7 +142,6 @@
 
                     var newstate = $.extend({},History.getState()['data']);
 
-                    console.log(newstate);
 
                     $.extend(newstate,{branch: branchId});
                     $.extend(newstate,{start_date: moment(new Date(from)).format("YYYY-MM-DD HH:mm:ss")});
@@ -156,6 +155,8 @@
                     var  newurl = "?" + str.join("&");
 
                     History.pushState(newstate,null,newurl);
+
+                    console.log(newstate);
 
                     $('#start_date').val(newstate['start_date']);
                     $('#end_date').val(newstate['end_date']).change();

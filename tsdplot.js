@@ -1,110 +1,7 @@
 function plotchart(div,opts) {
-  var plot,
-      onHostfileChange,
-      onHostfileLoadSuccess,
-      createDataTable,
-      onHostChange;
-
   var title  = opts['title'];
   var width  = opts['width'];
   var height = opts['height'];
-
-  var target = $(
-    "<div class='plot' style=\"width: " + width +";"
-    + " height: " + height +";\">" 
-    + "</div>");
-
-  var legcont = $("<div class='legend'></div>");
-
-  var enclose = 
-    $("<div style=\"overflow: visible; width: "+ width +"\" class='graph'>" 
-      + "<h6 class='graph'>" 
-      + title 
-      + "</h6>").append(target).append(legcont).append($("</div>"));
-
-  div.append(enclose);
-
-  var onselect = undefined;
-  if(opts.hasOwnProperty("onselect") && opts['onselect']){
-    onselect = opts['onselect'];
-  }
-
-  var ylabel = null;
-  if(opts.hasOwnProperty("units")){
-    ylabel = opts['units'];
-  }
-  var ytag = null;
-  if(opts.hasOwnProperty("ytag")){
-    ytag = opts['ytag'];
-  }
-
-  var stack = undefined;
-  if(opts.hasOwnProperty("stack")){
-    stack = opts['stack'];
-  }
-
-  var fill = 0;
-  if(opts.hasOwnProperty("fill")){
-    fill = opts['fill'];
-  }
-
-  var linewidth = 0;
-  if(opts.hasOwnProperty("linewidth")){
-    linewidth = opts['linewidth'];
-  }
-
-  var legend = { show: true, position: "sw" };
-  if(opts.hasOwnProperty("legend")){
-    legend = opts['legend'];
-  };
-  legend['container'] = legcont;
-  legend['noColumns'] = 6;
-
-  var logbase = 10.0; 
-  if(opts.hasOwnProperty("logbase") && opts['logbase']){
-    logbase = opts['logbase'];
-  }
-
-  var format = "%f";
-  if(opts.hasOwnProperty("format") && opts["format"]){
-    format = opts["format"];
-  }
-
-  var ticks;
-  var transform = function(x){return x};
-  if(opts.hasOwnProperty("log") && opts["log"]){
-    var tickformatter = 
-      (function(fmt,lgb){
-        return function (val,axis) {
-          var ret = gprintf(fmt,lgb,'.',val);
-          return ret;
-        }
-      })(format,logbase);
-
-    transform = 
-      (function(lgb){
-        return function(v){return Math.log(v+0.0001) / Math.log(lgb);}
-      })(logbase);
-
-    ticks = 
-      (function(lgb,tkf){
-        return function(axis) {
-          var res = [];
-          var max = Math.ceil(Math.log(axis.max) / Math.log(lgb));
-          var i = 0;
-
-          do {
-            var v   = Math.pow(lgb,i);
-            var txt = tkf(v, axis);
-            res.push([v,txt]);
-            ++i;
-          } while (i < max);
-
-          return res;
-        }})(logbase,tickformatter)
-  }
-
-
 
   var dss = opts["dss"];
 
@@ -114,7 +11,7 @@ function plotchart(div,opts) {
   var globaltags = new Array();
   $.each(opts["tags"],function(k,v){globaltags.push(k + "=" + v)});
 
-  var wpix = div.width();
+  var wpix = width;
   var start = opts["start"]
   var end = opts["end"]
   var twidth = end - start;
@@ -162,7 +59,6 @@ function plotchart(div,opts) {
       tagstr = "{" + tags.join(",") + "}";
     };
 
-
     args.push("m=" + terms.join(":") + tagstr);
 
     proms.push(
@@ -174,6 +70,16 @@ function plotchart(div,opts) {
         method: 'GET'
       }));
   };
+
+  var logbase = 10.0; 
+  if(opts.hasOwnProperty("logbase") && opts['logbase']){
+    logbase = opts['logbase'];
+  }
+
+  var format = "%f";
+  if(opts.hasOwnProperty("format") && opts["format"]){
+    format = opts["format"];
+  }
 
   $.when.apply($,proms).done( 
     function () {
@@ -258,7 +164,92 @@ function plotchart(div,opts) {
         }
       }
 
-      plot = $.plot(
+      var target = $(
+        "<div class='plot' style=\"width: " + width +";"
+        + " height: " + height +";\">" 
+        + "</div>");
+
+      var legcont = $("<div class='legend'></div>");
+
+      var enclose = 
+        $("<div style=\"overflow: visible; width: "+ width +"\" class='graph'>" 
+          + "<h6 class='graph'>" 
+          + title 
+          + "</h6>").append(target).append(legcont).append($("</div>"));
+
+      div.append(enclose);
+
+      var onselect = undefined;
+      if(opts.hasOwnProperty("onselect") && opts['onselect']){
+        onselect = opts['onselect'];
+      }
+
+      var ylabel = null;
+      if(opts.hasOwnProperty("units")){
+        ylabel = opts['units'];
+      }
+      var ytag = null;
+      if(opts.hasOwnProperty("ytag")){
+        ytag = opts['ytag'];
+      }
+
+      var stack = undefined;
+      if(opts.hasOwnProperty("stack")){
+        stack = opts['stack'];
+      }
+
+      var fill = 0;
+      if(opts.hasOwnProperty("fill")){
+        fill = opts['fill'];
+      }
+
+      var linewidth = 0;
+      if(opts.hasOwnProperty("linewidth")){
+        linewidth = opts['linewidth'];
+      }
+
+      var legend = { show: true, position: "sw" };
+      if(opts.hasOwnProperty("legend")){
+        legend = opts['legend'];
+      };
+      legend['container'] = legcont;
+      legend['noColumns'] = 6;
+
+      var ticks;
+      var transform = function(x){return x};
+      if(opts.hasOwnProperty("log") && opts["log"]){
+        var tickformatter = 
+          (function(fmt,lgb){
+            return function (val,axis) {
+              var ret = gprintf(fmt,lgb,'.',val);
+              return ret;
+            }
+          })(format,logbase);
+
+        transform = 
+          (function(lgb){
+            return function(v){return Math.log(v+0.0001) / Math.log(lgb);}
+          })(logbase);
+
+        ticks = 
+          (function(lgb,tkf){
+            return function(axis) {
+              var res = [];
+              var max = Math.ceil(Math.log(axis.max) / Math.log(lgb));
+              var i = 0;
+
+              do {
+                var v   = Math.pow(lgb,i);
+                var txt = tkf(v, axis);
+                res.push([v,txt]);
+                ++i;
+              } while (i < max);
+
+              return res;
+            }})(logbase,tickformatter)
+      }
+
+      var plot = $.plot(
         target,
         allseries,
         {
