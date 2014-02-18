@@ -278,8 +278,6 @@ function plotchart(renderer,opts) {
               }
             );
 
-            console.log(legend);
-
             // Populate the table columns
             var table = legend.children[0];
             var row = table.insertRow(0);
@@ -297,7 +295,7 @@ function plotchart(renderer,opts) {
             cell7.innerHTML = "sum";
 
             if(onselect){
-              target.bind("plotselected", oslct);
+              graph.bind("plotselected", oslct);
             };
           }
         })(div,allseries,legend,ylabel.transform,ticks,stack,fill,linewidth,onselect))

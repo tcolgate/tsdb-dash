@@ -165,7 +165,6 @@
                   plotchart(
                     (function(t){
                       return function(fn){
-                        console.log(fn);
                         fn(t);
                       }
                     })(target)
