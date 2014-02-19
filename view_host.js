@@ -22,23 +22,8 @@
   console.log("branchid: ", params, branchId);
 
  	// Bind to State Change
- 	History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+ 	onStateChange = function(){ // Note: We are using statechange instead of popstate
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
-    console.log('statechange:', State.data, State.title, State.url);
- 	});
-
-  onDateChange = function (ev) {
-    $.ajax({
-      url: "/api/tree/branch?branch=" + branchId,
-      dataType: "json",
-      cache: true,
-      async: true,
-      method: 'GET',
-    }).done(onBranchListSuccess);
-  }
-
-  onDocumentReady = function () {
-
     var now = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
 
     if(State['data'].hasOwnProperty("start_date") && State['data']['start_date']){
@@ -65,6 +50,25 @@
     $('#end_date').on("change",onDateChange);
 
     $('#end_date').change();
+
+    console.log('statechange:', State.data, State.title, State.url);
+ 	};
+
+ 	History.Adapter.bind(window,'statechange', onStateChange);
+
+  onDateChange = function (ev) {
+    $.ajax({
+      url: "/api/tree/branch?branch=" + branchId,
+      dataType: "json",
+      cache: true,
+      async: true,
+      method: 'GET',
+    }).done(onBranchListSuccess);
+  }
+
+  onDocumentReady = function () {
+
+    onStateChange();
 
 /*
     $('#start_date').appendDtpicker({
@@ -142,7 +146,6 @@
 
                     var newstate = $.extend({},History.getState()['data']);
 
-
                     $.extend(newstate,{branch: branchId});
                     $.extend(newstate,{start_date: moment(new Date(from)).format("YYYY-MM-DD HH:mm:ss")});
                     $.extend(newstate,{end_date: moment(new Date(to)).format("YYYY-MM-DD HH:mm:ss")});
@@ -155,11 +158,6 @@
                     var  newurl = "?" + str.join("&");
 
                     History.pushState(newstate,null,newurl);
-
-                    console.log(newstate);
-
-                    $('#start_date').val(newstate['start_date']);
-                    $('#end_date').val(newstate['end_date']).change();
                   }
                   var chart = new plotchart( 
                     {
