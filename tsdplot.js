@@ -295,7 +295,7 @@ function plotchart(renderer,opts) {
             cell7.innerHTML = "sum";
 
             if(onselect){
-              graph.bind("plotselected", oslct);
+              $(graph).bind("plotselected", oslct);
             };
           }
         })(div,allseries,legend,ylabel.transform,ticks,stack,fill,linewidth,onselect))
