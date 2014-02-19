@@ -57,8 +57,11 @@ function plotchart(opts) {
   this.globaltags = new Array();
   $.each(opts["tags"],function(k,v){that.globaltags.push(k + "=" + v)});
 
-  var wpix = this.width;
+  var wpix = parseInt(this.width.replace(/px$/,""));
   var twidth = this.end - this.start;
+  console.log("wpix: ",wpix);
+  console.log("twidth: ",twidth);
+
   var tperpix = Math.floor(twidth / wpix);
 
   for(dsi in this.dss){
@@ -86,8 +89,9 @@ function plotchart(opts) {
     if(rate){ terms.push("rate") };
 
     //downsample
-    if(tperpix > 0){
-      terms.push("" + tperpix + "s-" + downsample);
+    console.log("tperpix: ",tperpix);
+    if(tperpix > 1){
+      terms.push("" + (tperpix * 2) + "s-" + this.downsample);
     }
 
     // metric

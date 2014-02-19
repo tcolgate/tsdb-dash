@@ -107,7 +107,7 @@
           };
           if (match == false){
             console.log("Unmatched metric: " + displayName);
-            next;
+            continue;
           };
 
           if (! groups.hasOwnProperty(match)){
