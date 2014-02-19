@@ -1,5 +1,4 @@
 function plotchart(opts) {
-
   var that = this;
   this.title  = opts['title'];
   this.width  = opts['width'];
@@ -308,5 +307,4 @@ function plotchart(opts) {
   this.appendAllTo = function(div){
     return that.renderTo(div)
   };
-
 };
