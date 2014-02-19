@@ -161,7 +161,7 @@
                     $('#start_date').val(newstate['start_date']);
                     $('#end_date').val(newstate['end_date']).change();
                   }
-                  plotchart(target, 
+                  var chart = new plotchart( 
                     {
                       "start": moment($("#start_date").val()).format("X"),
                       "end": moment($("#end_date").val()).format("X"),
@@ -182,7 +182,8 @@
                       "tags": {"host": host},
                       "legend": {"show": true}
                     }
-                  )
+                  );
+                  chart.renderTo(target);
                 })
               })(gritem,g,c)
             }

@@ -1,38 +1,83 @@
-function plotchart(div,opts) {
-  var title  = opts['title'];
-  var width  = opts['width'];
-  var height = opts['height'];
+function plotchart(opts) {
 
-  var dss = opts["dss"];
+  var that = this;
+  this.title  = opts['title'];
+  this.width  = opts['width'];
+  this.height = opts['height'];
+  this.start = opts["start"]
+  this.end = opts["end"]
 
-  var i = 0;
-  var proms = [];
+  this.dss = opts["dss"];
+  this.proms = [];
+  this.downsample = "max";
 
-  var globaltags = new Array();
-  $.each(opts["tags"],function(k,v){globaltags.push(k + "=" + v)});
+  this.logbase = 10.0; 
+  if(opts.hasOwnProperty("logbase") && opts['logbase']){
+    this.logbase = opts['logbase'];
+  }
 
-  var wpix = width;
-  var start = opts["start"]
-  var end = opts["end"]
-  var twidth = end - start;
+  this.format = "%f";
+  if(opts.hasOwnProperty("format") && opts["format"]){
+    this.format = opts["format"];
+  }
+
+  this.onselect = undefined;
+  if(opts.hasOwnProperty("onselect") && opts['onselect']){
+    this.onselect = opts['onselect'];
+  }
+
+  this.ylabel = null;
+  if(opts.hasOwnProperty("units")){
+    this.ylabel = opts['units'];
+  }
+  this.ytag = null;
+  if(opts.hasOwnProperty("ytag")){
+    this.ytag = opts['ytag'];
+  }
+
+  this.stack = undefined;
+  if(opts.hasOwnProperty("stack")){
+    this.stack = opts['stack'];
+  }
+
+  this.fill = 0;
+  if(opts.hasOwnProperty("fill")){
+    this.fill = opts['fill'];
+  }
+
+  this.linewidth = 0;
+  if(opts.hasOwnProperty("linewidth")){
+    this.linewidth = opts['linewidth'];
+  }
+
+  this.legend = { show: true, position: "sw" };
+  if(opts.hasOwnProperty("legend")){
+    this.legend = opts['legend'];
+  };
+
+  this.globaltags = new Array();
+  $.each(opts["tags"],function(k,v){that.globaltags.push(k + "=" + v)});
+
+  var wpix = this.width;
+  var twidth = this.end - this.start;
   var tperpix = Math.floor(twidth / wpix);
-  var downsample = "max";
 
-  for(dsi in dss){
-    var ds = dss[dsi]; 
+  for(dsi in this.dss){
+    var ds = this.dss[dsi]; 
     var args = new Array();
     var terms = new Array();
-    var tags = globaltags;
+    var tags = this.globaltags.slice(0);
+    var aggr = "sum";
 
     var lag = 0;
     if(ds.hasOwnProperty("lag")){
       lag = ds["lag"];
     };
-    args.push("start=" + (parseInt(start) - lag));
-    args.push("end=" + (parseInt(end) - lag));
+    args.push("start=" + (parseInt(this.start) - lag));
+    args.push("end=" + (parseInt(this.end) - lag));
 
     // Agg
-    terms[0] = "sum" ;
+    terms[0] = aggr ;
 
     //rate
     var rate = false;
@@ -61,7 +106,7 @@ function plotchart(div,opts) {
 
     args.push("m=" + terms.join(":") + tagstr);
 
-    proms.push(
+    this.proms.push(
       $.ajax({
         url: "/api/query?" + args.join("&"),
         dataType: "json",
@@ -71,226 +116,197 @@ function plotchart(div,opts) {
       }));
   };
 
-  var logbase = 10.0; 
-  if(opts.hasOwnProperty("logbase") && opts['logbase']){
-    logbase = opts['logbase'];
-  }
 
-  var format = "%f";
-  if(opts.hasOwnProperty("format") && opts["format"]){
-    format = opts["format"];
-  }
+  this.allseries = new Array();
 
-  $.when.apply($,proms).done( 
-    function () {
-      var allseries = new Array(), placeholder;
-      var responses;
-      if(proms.length > 1){
-        responses = arguments;
-      } else {
-        responses = new Array();
-        responses[0] = arguments;
-      };
+  this.prepare = function(){
+    return $.when.apply($,that.proms).done( 
+      function () {
+        var responses;
+        if(that.proms.length > 1){
+          responses = arguments;
+        } else {
+          responses = new Array();
+          responses[0] = arguments;
+        };
 
-      for (var resp in responses){
-        // $.when promises to pass responses in the order
-        // they were requested in
-        var query_data = responses[resp][0]; 
-        var ds = dss[resp]; 
-        for (var s in query_data) {
-          var dphash = query_data[s].dps;
-          var series = {};
-          var dps =  new Array();
+        for (var resp in responses){
+          // $.when promises to pass responses in the order
+          // they were requested in
+          var query_data = responses[resp][0]; 
+          var ds = that.dss[resp]; 
+          for (var s in query_data) {
+            var dphash = query_data[s].dps;
+            var series = {};
+            var dps =  new Array();
 
-          if (!ytag){
-            if (ds.hasOwnProperty("label")){
-              series['label'] = ds['label'];
-            } else {
-              series['label'] = query_data[s]['metric'];
-            }
-          } else {
-            if (ds.hasOwnProperty("labelmap")){
-              if (ds["labelmap"].hasOwnProperty(query_data[s]['tags'][ytag])){
-                series['label'] = ds["labelmap"][query_data[s]['tags'][ytag]];
+            if (!that.ytag){
+              if (ds.hasOwnProperty("label")){
+                series['label'] = ds['label'];
               } else {
-                series['label'] = query_data[s]['tags'][ytag];
+                series['label'] = query_data[s]['metric'];
               }
             } else {
-              series['label'] = query_data[s]['tags'][ytag];
+              if (ds.hasOwnProperty("labelmap")){
+                if (ds["labelmap"].hasOwnProperty(query_data[s]['tags'][that.ytag])){
+                  series['label'] = ds["labelmap"][query_data[s]['tags'][that.ytag]];
+                } else {
+                  series['label'] = query_data[s]['tags'][that.ytag];
+                }
+              } else {
+                series['label'] = query_data[s]['tags'][that.ytag];
+              }
             }
+
+            series['data'] = dps;
+
+            var lag = 0;
+            if (ds.hasOwnProperty("lag")){
+              lag = ds['lag'];
+            };
+            
+            var cur = 0;
+            var min = 1/0;
+            var max = 0;
+            var sum = 0;
+
+            for (var key in dphash) {
+              var item = new Array();
+              var val  = dphash[key]
+              item[0] = (lag + parseInt(key)) * 1000 ;
+              item[1] = val;
+              cur = val;
+              if(val < min){min = val};
+              if(val > max){max = val};
+              sum += val;
+
+              dps.push(item);
+            };
+
+            var avg = sum / dps.length;
+
+            series['cur'] = cur;
+            series['min'] = min;
+            series['max'] = max;
+            series['sum'] = sum;
+            series['avg'] = avg;
+
+            series['label'] = series['label'] 
+              + "<td>" + gprintf(that.format,that.logbase,'.',cur) + "</td>"
+              + "<td>" + gprintf(that.format,that.logbase,'.',min) + "</td>"
+              + "<td>" + gprintf(that.format,that.logbase,'.',avg) + "</td>"
+              + "<td>" + gprintf(that.format,that.logbase,'.',max) + "</td>"
+              + "<td>" + gprintf(that.format,that.logbase,'.',sum) + "</td></tr><tr>"; 
+
+            that.allseries.push(series)
           }
+        }
+      }
+    );
+  };
 
-          series['data'] = dps;
+  this.renderTo = function(div){
+    return that.prepare().done(function(){
+        var target = $(
+          "<div class='plot' style=\"width: " + that.width +";"
+          + " height: " + that.height +";\">" 
+          + "</div>");
 
-          var lag = 0;
-          if (ds.hasOwnProperty("lag")){
-            lag = ds['lag'];
-          };
+        var legcont = $("<div class='legend'></div>");
+
+        var enclose = 
+          $("<div style=\"overflow: visible; width: "+ that.width +"\" class='graph'>" 
+            + "<h6 class='graph'>" 
+            + that.title 
+            + "</h6>").append(target).append(legcont).append($("</div>"));
+
+        div.append(enclose);
+
+        that.legend['container'] = legcont;
+        that.legend['noColumns'] = 6;
+
+        var ticks;
+        var transform = function(x){return x};
+        if(opts.hasOwnProperty("log") && opts["log"]){
+          var tickformatter = 
+            (function(fmt,lgb){
+              return function (val,axis) {
+                var ret = gprintf(fmt,lgb,'.',val);
+                return ret;
+              }
+            })(that.format,that.logbase);
+
+          transform = 
+            (function(lgb){
+              return function(v){return Math.log(v+0.0001) / Math.log(lgb);}
+            })(that.logbase);
+
+          ticks = 
+            (function(lgb,tkf){
+              return function(axis) {
+                var res = [];
+                var max = Math.ceil(Math.log(axis.max) / Math.log(lgb));
+                var i = 0;
+
+                do {
+                  var v   = Math.pow(lgb,i);
+                  var txt = tkf(v, axis);
+                  res.push([v,txt]);
+                  ++i;
+                } while (i < max);
+
+                return res;
+              }})(that.logbase,tickformatter)
+        }
+
+        var plot = $.plot(
+          target,
+          that.allseries,
+          {
+            xaxis: { mode: "time", show: true },
           
-          var cur = 0;
-          var min = 1/0;
-          var max = 0;
-          var sum = 0;
-
-          for (var key in dphash) {
-            var item = new Array();
-            var val  = dphash[key]
-            item[0] = (lag + parseInt(key)) * 1000 ;
-            item[1] = val;
-            cur = val;
-            if(val < min){min = val};
-            if(val > max){max = val};
-            sum += val;
-
-            dps.push(item);
-          };
-
-          var avg = sum / dps.length;
-
-          series['cur'] = cur;
-          series['min'] = min;
-          series['max'] = max;
-          series['sum'] = sum;
-          series['avg'] = avg;
-
-          series['label'] = series['label'] 
-            + "<td>" + gprintf(format,logbase,'.',cur) + "</td>"
-            + "<td>" + gprintf(format,logbase,'.',min) + "</td>"
-            + "<td>" + gprintf(format,logbase,'.',avg) + "</td>"
-            + "<td>" + gprintf(format,logbase,'.',max) + "</td>"
-            + "<td>" + gprintf(format,logbase,'.',sum) + "</td></tr><tr>"; 
-
-          allseries.push(series)
-        }
-      }
-
-      var target = $(
-        "<div class='plot' style=\"width: " + width +";"
-        + " height: " + height +";\">" 
-        + "</div>");
-
-      var legcont = $("<div class='legend'></div>");
-
-      var enclose = 
-        $("<div style=\"overflow: visible; width: "+ width +"\" class='graph'>" 
-          + "<h6 class='graph'>" 
-          + title 
-          + "</h6>").append(target).append(legcont).append($("</div>"));
-
-      div.append(enclose);
-
-      var onselect = undefined;
-      if(opts.hasOwnProperty("onselect") && opts['onselect']){
-        onselect = opts['onselect'];
-      }
-
-      var ylabel = null;
-      if(opts.hasOwnProperty("units")){
-        ylabel = opts['units'];
-      }
-      var ytag = null;
-      if(opts.hasOwnProperty("ytag")){
-        ytag = opts['ytag'];
-      }
-
-      var stack = undefined;
-      if(opts.hasOwnProperty("stack")){
-        stack = opts['stack'];
-      }
-
-      var fill = 0;
-      if(opts.hasOwnProperty("fill")){
-        fill = opts['fill'];
-      }
-
-      var linewidth = 0;
-      if(opts.hasOwnProperty("linewidth")){
-        linewidth = opts['linewidth'];
-      }
-
-      var legend = { show: true, position: "sw" };
-      if(opts.hasOwnProperty("legend")){
-        legend = opts['legend'];
-      };
-      legend['container'] = legcont;
-      legend['noColumns'] = 6;
-
-      var ticks;
-      var transform = function(x){return x};
-      if(opts.hasOwnProperty("log") && opts["log"]){
-        var tickformatter = 
-          (function(fmt,lgb){
-            return function (val,axis) {
-              var ret = gprintf(fmt,lgb,'.',val);
-              return ret;
+            yaxes: [{
+                position: 'left',
+                axisLabel: that.ylabel,
+                color: "#00000000",
+                transform: transform,
+                ticks: ticks
+            }],
+            grid: { hoverable: true, autoHighlight: false },
+            legend: that.legend,
+            selection: { mode: "x" },
+            series: {
+              stack: that.stack,
+              lines: { fill: that.fill, show: true , lineWidth: that.linewidth},
+              shadowSize: 0
             }
-          })(format,logbase);
-
-        transform = 
-          (function(lgb){
-            return function(v){return Math.log(v+0.0001) / Math.log(lgb);}
-          })(logbase);
-
-        ticks = 
-          (function(lgb,tkf){
-            return function(axis) {
-              var res = [];
-              var max = Math.ceil(Math.log(axis.max) / Math.log(lgb));
-              var i = 0;
-
-              do {
-                var v   = Math.pow(lgb,i);
-                var txt = tkf(v, axis);
-                res.push([v,txt]);
-                ++i;
-              } while (i < max);
-
-              return res;
-            }})(logbase,tickformatter)
-      }
-
-      var plot = $.plot(
-        target,
-        allseries,
-        {
-          xaxis: { mode: "time", show: true },
-        
-          yaxes: [{
-              position: 'left',
-              axisLabel: ylabel,
-              color: "#00000000",
-              transform: transform,
-              ticks: ticks
-          }],
-          grid: { hoverable: true, autoHighlight: false },
-          legend: legend,
-          selection: { mode: "x" },
-          series: {
-            stack: stack,
-            lines: { fill: fill, show: true , lineWidth: linewidth},
-            shadowSize: 0
           }
+        );
+
+        // Populate the table columns
+        var table = that.legend['container'].children()[0];
+        var row = table.insertRow(0);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        cell3.innerHTML = "cur";
+        cell4.innerHTML = "min";
+        cell5.innerHTML = "avg";
+        cell6.innerHTML = "max";
+        cell7.innerHTML = "sum";
+
+        if(that.onselect){
+          target.bind("plotselected", that.onselect);
         }
-      );
+    })
+  };
 
-      // Populate the table columns
-      var table = legend['container'].children()[0];
-      var row = table.insertRow(0);
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);
-      var cell4 = row.insertCell(3);
-      var cell5 = row.insertCell(4);
-      var cell6 = row.insertCell(5);
-      var cell7 = row.insertCell(6);
-      cell3.innerHTML = "cur";
-      cell4.innerHTML = "min";
-      cell5.innerHTML = "avg";
-      cell6.innerHTML = "max";
-      cell7.innerHTML = "sum";
+  this.appendAllTo = function(div){
+    return that.renderTo(div)
+  };
 
-      if(onselect){
-        target.bind("plotselected", onselect);
-      }
-  });
 };
