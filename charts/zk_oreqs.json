@@ -1,0 +1,10 @@
+{
+  "title": "Outstanding Requests",
+  "units": "reqs",
+ "format": "%.2s%c",
+   "fill": 0,
+"linewidth": 1,
+    "dss": [{"metric": "zookeeper.zk_outstanding_requests", 
+              "label": "reqs",
+               "rate": false }]
+}

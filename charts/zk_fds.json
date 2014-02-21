@@ -1,0 +1,10 @@
+{
+  "title": "Open FDs",
+  "units": "fds",
+ "format": "%.2s%c",
+   "fill": 0,
+"linewidth": 1,
+    "dss": [{"metric": "zookeeper.zk_open_file_descriptor_count", 
+              "label": "fds",
+               "rate": false }]
+}

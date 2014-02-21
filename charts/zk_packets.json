@@ -1,0 +1,13 @@
+{
+  "title": "Packets",
+  "units": "pkts",
+ "format": "%.2s%c",
+   "fill": 0,
+"linewidth": 1,
+    "dss": [{"metric": "zookeeper.zk_packets_sent", 
+              "label": "tx",
+               "rate": true }.
+            {"metric": "zookeeper.zk_packets_received", 
+              "label": "rx",
+               "rate": true }]
+}

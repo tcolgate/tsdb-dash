@@ -1,0 +1,16 @@
+{
+  "title": "Latency",
+  "units": "ms",
+ "format": "%.2fms",
+   "fill": 0,
+"linewidth": 1,
+    "dss": [{"metric": "zookeeper.zk_min_latency", 
+              "label": "min",
+               "rate": false }.
+            {"metric": "zookeeper.zk_avg_latency", 
+              "label": "avg",
+               "rate": false }.
+            {"metric": "zookeeper.zk_max_latency", 
+              "label": "max",
+               "rate": false }]
+}

@@ -92,7 +92,7 @@
   },
   "22": {
     "name": "CpuFreq",
-    "regex": "proc\\.scaling\\..*"
+    "regex": "proc\\.scaling\\..*",
     "charts": [ "cpu_scaling" ]
   },
   "23": {
@@ -125,7 +125,8 @@
   },
   "30": {
     "name": "Zookeeper",
-    "regex": "zookeeper\\..*"
+   "regex": "zookeeper\\..*",
+  "charts": ["zk_conns", "zk_data", "zk_fds", "zk_latency", "zk_oreqs", "zk_packets"]
   },
   "31": {
     "name": "EventsApi",
