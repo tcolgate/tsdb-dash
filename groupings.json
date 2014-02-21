@@ -93,6 +93,7 @@
   "22": {
     "name": "CpuFreq",
     "regex": "proc\\.scaling\\..*"
+    "charts": [ "cpu_scaling" ]
   },
   "23": {
     "name": "Tomcat",
