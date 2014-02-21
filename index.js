@@ -1,4 +1,4 @@
-(function () {
+index_main = function () {
 
 // $.when($.ajax( "/page1.php" ), 
 //        $.ajax( "/page2.php" ) ).done(
@@ -109,4 +109,4 @@
 
     $document.ready(onDocumentReady);
 
-})();
+};

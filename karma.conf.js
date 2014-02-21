@@ -20,7 +20,7 @@ module.exports = function(config) {
       'bower_components/history.js/scripts/bundled/html5/jquery.history.js',
       'lib/**/*.js',
       '*.js',
-      'tests/**/*.test.js'
+      'spec/**/*.test.js'
     ],
 
 

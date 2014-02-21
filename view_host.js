@@ -1,4 +1,4 @@
-(function () {
+view_host_main = function () {
   var $document = $(document), onDocumentReady;
   var params = $.getQuery();
 
@@ -191,4 +191,4 @@
     )
   }
   $document.ready(onDocumentReady);
-})();
+};
