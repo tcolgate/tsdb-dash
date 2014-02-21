@@ -1,0 +1,10 @@
+{
+      "title": "Scaling",
+      "units": "freq",
+       "fill": 0,
+  "linewidth": 1,
+        "log": true,
+     "format": "%.2s%chz",
+        "dss": [{"metric": "proc.scaling.cur",
+                   "tags": ["cpu=*"]}]
+}
