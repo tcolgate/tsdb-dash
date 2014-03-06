@@ -20,6 +20,7 @@ module.exports = function(config) {
       'bower_components/history.js/scripts/bundled/html5/jquery.history.js',
       'lib/**/*.js',
       '*.js',
+      'bower_components/jasmine-ajax/lib/mock-ajax.js',
       'spec/**/*.test.js'
     ],
 

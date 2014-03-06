@@ -24,6 +24,8 @@
     "jquery": "~2.1.0",
     "flot": "~0.8.2",
     "moment": "~2.5.1",
-    "history.js": "~1.8"
+    "history.js": "~1.8",
+    "bower": "*",
+    "jasmine-ajax": "v2.0.0.rc1"
   }
 }
