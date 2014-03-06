@@ -1,5 +1,5 @@
-This is a pure JavaScript implelemtation of a dashboard for 
-opentsdb.
+This is a pure JavaScript implementation of a dashboard for 
+OpenTSDB.
 
 To install, simple move this directory into the "static" directory of your
 OpenTSDB install.
@@ -23,7 +23,7 @@ curl -X PUT 'http://localhost:4242/api/tree?treeid=1&strict_match=true'
 curl -X PUT 'http://localhost:4242/api/tree?treeid=1&enabled=true'
 ```
 
-It shoudl look as follows
+It should look as follows
 
 ```json
 {
