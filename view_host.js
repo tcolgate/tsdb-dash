@@ -10,16 +10,12 @@ view_host_main = function () {
  	var History = window.History; 
  	var	State = History.getState();
 
-  console.log('initial:', State.data, State.title, State.url);
-
   var branchId = "";
   if(State['data'].hasOwnProperty("branch") && State['data']['branch']){
     branchId = State['data']['branch'];
   } else {
     branchId = params['branch'];
   }
-
-  console.log("branchid: ", params, branchId);
 
  	// Bind to State Change
  	onStateChange = function(){ // Note: We are using statechange instead of popstate
@@ -51,7 +47,6 @@ view_host_main = function () {
 
     $('#end_date').change();
 
-    console.log('statechange:', State.data, State.title, State.url);
  	};
 
  	History.Adapter.bind(window,'statechange', onStateChange);
@@ -133,7 +128,6 @@ view_host_main = function () {
             for (c in group["charts"]){
               (function(grdiv,groupindex,chartindex){
                 var spec ="charts/"+ groupings[groupindex]["charts"][chartindex] + ".json" ;
-                console.log("Will draw chart: " + spec);
                 $.getJSON(spec).done(function(spec_data){
 
                   var name   = groupings[groupindex]["name"];

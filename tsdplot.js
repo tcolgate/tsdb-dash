@@ -59,8 +59,6 @@ function plotchart(opts) {
 
   var wpix = parseInt(this.width.replace(/px$/,""));
   var twidth = this.end - this.start;
-  console.log("wpix: ",wpix);
-  console.log("twidth: ",twidth);
 
   var tperpix = Math.floor(twidth / wpix);
 
@@ -89,7 +87,6 @@ function plotchart(opts) {
     if(rate){ terms.push("rate") };
 
     //downsample
-    console.log("tperpix: ",tperpix);
     if(tperpix > 1){
       terms.push("" + (tperpix * 2) + "s-" + this.downsample);
     }
