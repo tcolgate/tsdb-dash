@@ -1,0 +1,10 @@
+{
+      "title": "Keys",
+      "units": "keys",
+       "fill": 0,
+  "linewidth": 1,
+     "format": "%.2s%chz",
+        "dss": [{"metric": "redis.keys",
+                   "tags": ["db=*"]}],
+       "ytag": "db"
+}

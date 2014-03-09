@@ -1,0 +1,10 @@
+{
+  "title": "Commands",
+  "units": "cmds",
+ "format": "%.2s%c",
+   "fill": 0,
+"linewidth": 1,
+    "dss": [{"metric": "redis.total_commands_processed", 
+              "label": "cmds",
+               "rate": true }]
+}
