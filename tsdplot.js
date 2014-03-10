@@ -5,6 +5,7 @@ function plotchart(opts) {
   this.height = opts['height'];
   this.start = opts["start"]
   this.end = opts["end"]
+  this.grouptag = opts['grouptag']
 
   this.dss = opts["dss"];
   this.proms = [];
@@ -56,6 +57,9 @@ function plotchart(opts) {
 
   this.globaltags = new Array();
   $.each(opts["tags"],function(k,v){that.globaltags.push(k + "=" + v)});
+  if (undefined != this.grouptag){
+    this.globaltags.push(this.grouptag + "=*");
+  }
 
   var wpix = parseInt(this.width.replace(/px$/,""));
   var twidth = this.end - this.start;
@@ -130,11 +134,31 @@ function plotchart(opts) {
           responses[0] = arguments;
         };
 
+        // We need to split the responses into graphs
+        var respset = new Array();
+        for (var resp in responses){
+          var query_data = responses[resp][0]; 
+          var ds = that.dss[resp]; 
+
+          for (var qd in query_data){
+            if(undefined != that.grouptag){
+              var gtagval = query_data[qd]["tags"][that.grouptag]
+              if(respset[gtagval] == undefined){
+                respset[gtagval] = new Array();
+              };
+              respset[gtagval].push(query_data[qd]);
+            } 
+          }
+        }
+
+        console.log(respset);
+
         for (var resp in responses){
           // $.when promises to pass responses in the order
           // they were requested in
           var query_data = responses[resp][0]; 
           var ds = that.dss[resp]; 
+
           for (var s in query_data) {
             var dphash = query_data[s].dps;
             var series = {};

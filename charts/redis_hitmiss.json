@@ -1,9 +1,9 @@
 {
       "title": "Key hits and misses",
-      "units": "ooss",
+      "units": "ops",
        "fill": 0,
   "linewidth": 1,
-     "format": "%.2s%chz",
-        "dss": [{"metric": "redis.keyspace_hits"},
-                {"metric": "redis.keyspace_nisses"}],
+     "format": "%.2d",
+        "dss": [{"metric": "redis.keyspace_hits", "label": "hit"},
+                {"metric": "redis.keyspace_misses", "label": "miss"}]
 }

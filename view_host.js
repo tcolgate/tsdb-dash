@@ -172,6 +172,7 @@ view_host_main = function () {
                       "logbase": spec_data['logbase'],
                       "format": spec_data['format'],
                       "tags": {"host": host},
+                      "grouptag": spec_data['grouptag'],
                       "legend": {"show": true}
                     }
                   );

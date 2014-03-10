@@ -1,0 +1,16 @@
+{
+      "title": "Network Bytes - ",
+      "units": "B/s",
+       "fill": 0,
+  "linewidth": 1,
+        "log": true,
+     "format": "%.2s%c",
+   "grouptag": "iface",
+        "dss": [{"metric": "proc.net.bytes",
+                   "tags": ["direction=in"],
+                   "rate": true},
+                {"metric": "proc.net.bytes",
+                   "tags": ["direction=out"],
+                   "rate": true}],
+       "ytag": "direction"
+}

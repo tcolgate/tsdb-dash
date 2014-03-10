@@ -64,7 +64,8 @@
   },
   "15": {
     "name": "NetStat",
-    "regex": "proc\\.net\\..*"
+    "regex": "proc\\.net\\..*",
+    "charts": ["net_bytes"]
   },
   "16": {
     "name": "Uptime",
@@ -117,7 +118,8 @@
   },
   "28": {
     "name": "Redis",
-    "regex": "redis\\..*"
+   "regex": "redis\\..*",
+  "charts": ["redis_keys", "redis_command", "redis_hitmiss"]
   },
   "29": {
     "name": "ElasticSearch",
