@@ -235,7 +235,6 @@ function plotchart(opts) { var that = this; this.title  = opts['title']; this.wi
   this.renderGraphTo = function(gid,divid){
     return that.prepare().done(function(){
       (function(g,div){
-        console.log(g);
         var target = $(
           "<div class='plot' style=\"width: " + that.width +";"
           + " height: " + that.height +";\">" 
@@ -319,7 +318,6 @@ function plotchart(opts) { var that = this; this.title  = opts['title']; this.wi
         );
 
         // Populate the table columns
-        console.log(that.allgraphs[gid]);
         var table = that.allgraphs[gid].legend['container'].children()[0];
         var row = table.insertRow(0);
         var cell1 = row.insertCell(0);
