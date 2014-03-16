@@ -1,0 +1,12 @@
+{
+      "title": "NUMA Remote Allocations",
+      "units": "allocs/s",
+       "fill": 0,
+  "linewidth": 1,
+        "log": false,
+     "format": "%.2s%c",
+        "dss": [{"metric": "sys.numa.allocation",
+                   "tags": ["type=remote","node=*"],
+                   "rate": true }],
+       "ytag": "node"
+}
