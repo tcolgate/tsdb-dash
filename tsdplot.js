@@ -1,9 +1,4 @@
-function plotchart(opts) {
-  var that = this;
-  this.title  = opts['title'];
-  this.width  = opts['width'];
-  this.height = opts['height'];
-  this.start = opts["start"]
+function plotchart(opts) { var that = this; this.title  = opts['title']; this.width  = opts['width']; this.height = opts['height']; this.start = opts["start"]
   this.end = opts["end"]
   this.grouptag = opts['grouptag']
 
@@ -121,7 +116,7 @@ function plotchart(opts) {
   };
 
 
-  this.allseries = new Array();
+  this.allgraphs = new Array();
 
   this.prepare = function(){
     return $.when.apply($,that.proms).done( 
@@ -138,11 +133,15 @@ function plotchart(opts) {
         var respset = new Array();
         for (var resp in responses){
           var query_data = responses[resp][0]; 
-          var ds = that.dss[resp]; 
-
           for (var qd in query_data){
             if(undefined != that.grouptag){
               var gtagval = query_data[qd]["tags"][that.grouptag]
+              if(respset[gtagval] == undefined){
+                respset[gtagval] = new Array();
+              };
+              respset[gtagval].push(query_data[qd]);
+            } else {
+              var gtagval = 0;
               if(respset[gtagval] == undefined){
                 respset[gtagval] = new Array();
               };
@@ -151,18 +150,22 @@ function plotchart(opts) {
           }
         }
 
-        console.log(respset);
+        for (var r in respset){
+          // E.g. for eth0...
+          var respgroup = respset[r];
+          that.allgraphs[r] =  new Array();
+          var graph = that.allgraphs[r];
+          graph.allseries = new Array();
 
-        for (var resp in responses){
-          // $.when promises to pass responses in the order
-          // they were requested in
-          var query_data = responses[resp][0]; 
-          var ds = that.dss[resp]; 
+          var query_data = respgroup; 
 
           for (var s in query_data) {
             var dphash = query_data[s].dps;
-            var series = {};
+            var series = new Array();
+            var ds = that.dss[s]; 
             var dps =  new Array();
+
+            series['tags'] = query_data[s]['tags'];
 
             if (!that.ytag){
               if (ds.hasOwnProperty("label")){
@@ -222,15 +225,17 @@ function plotchart(opts) {
               + "<td>" + gprintf(that.format,that.logbase,'.',max) + "</td>"
               + "<td>" + gprintf(that.format,that.logbase,'.',sum) + "</td></tr><tr>"; 
 
-            that.allseries.push(series)
+            graph.allseries.push(series)
           }
         }
       }
     );
   };
 
-  this.renderTo = function(div){
+  this.renderGraphTo = function(gid,divid){
     return that.prepare().done(function(){
+      (function(g,div){
+        console.log(g);
         var target = $(
           "<div class='plot' style=\"width: " + that.width +";"
           + " height: " + that.height +";\">" 
@@ -238,16 +243,22 @@ function plotchart(opts) {
 
         var legcont = $("<div class='legend'></div>");
 
+        var title = that.title;
+        if( undefined != that.grouptag ){
+          title += g;
+        };
+
         var enclose = 
           $("<div style=\"overflow: visible; width: "+ that.width +"\" class='graph'>" 
             + "<h6 class='graph'>" 
-            + that.title 
+            + title 
             + "</h6>").append(target).append(legcont).append($("</div>"));
 
         div.append(enclose);
 
-        that.legend['container'] = legcont;
-        that.legend['noColumns'] = 6;
+        that.allgraphs[gid].legend = $.extend(true,{},that.legend);
+        that.allgraphs[gid].legend['container'] = legcont;
+        that.allgraphs[gid].legend['noColumns'] = 6;
 
         var ticks;
         var transform = function(x){return x};
@@ -285,7 +296,7 @@ function plotchart(opts) {
 
         var plot = $.plot(
           target,
-          that.allseries,
+          that.allgraphs[gid].allseries,
           {
             xaxis: { mode: "time", show: true },
           
@@ -297,7 +308,7 @@ function plotchart(opts) {
                 ticks: ticks
             }],
             grid: { hoverable: true, autoHighlight: false },
-            legend: that.legend,
+            legend: that.allgraphs[gid].legend,
             selection: { mode: "x" },
             series: {
               stack: that.stack,
@@ -308,7 +319,8 @@ function plotchart(opts) {
         );
 
         // Populate the table columns
-        var table = that.legend['container'].children()[0];
+        console.log(that.allgraphs[gid]);
+        var table = that.allgraphs[gid].legend['container'].children()[0];
         var row = table.insertRow(0);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
@@ -326,10 +338,17 @@ function plotchart(opts) {
         if(that.onselect){
           target.bind("plotselected", that.onselect);
         }
+      })(gid,divid)
     })
   };
 
-  this.appendAllTo = function(div){
-    return that.renderTo(div)
+  this.renderAllTo = function(divid){
+    that.prepare().done(function(){
+      for(gid in that.allgraphs){
+        (function(g,d){
+          that.renderGraphTo(g,d)
+        })(gid,divid)
+      }
+    });
   };
 };

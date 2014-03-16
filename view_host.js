@@ -176,7 +176,7 @@ view_host_main = function () {
                       "legend": {"show": true}
                     }
                   );
-                  chart.renderTo(target);
+                  chart.renderAllTo(target);
                 })
               })(gritem,g,c)
             }

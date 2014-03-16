@@ -5,7 +5,8 @@
   },
   "1": {
     "name": "NUMA",
-    "regex": "sys\\.numa\\..*"
+   "regex": "sys\\.numa\\..*",
+  "charts": ["numa_allocation_local", "numa_allocation_remote"]
   },
   "2": {
     "name": "HBase",
