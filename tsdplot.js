@@ -261,20 +261,19 @@ function plotchart(opts) { var that = this; this.title  = opts['title']; this.wi
 
         var ticks;
         var transform = function(x){return x};
-        if(opts.hasOwnProperty("log") && opts["log"]){
-          var tickformatter = 
-            (function(fmt,lgb){
-              return function (val,axis) {
-                var ret = gprintf(fmt,lgb,'.',val);
-                return ret;
-              }
-            })(that.format,that.logbase);
+        var tickformatter = 
+          (function(fmt,lgb){
+            return function (val,axis) {
+              var ret = gprintf(fmt,lgb,'.',val);
+              return ret;
+            }
+          })(that.format,that.logbase);
 
+        if(opts.hasOwnProperty("log") && opts["log"]){
           transform = 
             (function(lgb){
               return function(v){return Math.log(v+0.0001) / Math.log(lgb);}
             })(that.logbase);
-
           ticks = 
             (function(lgb,tkf){
               return function(axis) {
@@ -304,7 +303,8 @@ function plotchart(opts) { var that = this; this.title  = opts['title']; this.wi
                 axisLabel: that.ylabel,
                 color: "#00000000",
                 transform: transform,
-                ticks: ticks
+                ticks: ticks,
+                tickFormatter: tickformatter
             }],
             grid: { hoverable: true, autoHighlight: false },
             legend: that.allgraphs[gid].legend,

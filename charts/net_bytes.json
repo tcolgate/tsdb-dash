@@ -3,7 +3,7 @@
       "units": "B/s",
        "fill": 0,
   "linewidth": 1,
-        "log": true,
+        "log": false,
      "format": "%.2s%c",
    "grouptag": "iface",
         "dss": [{"metric": "proc.net.bytes",
