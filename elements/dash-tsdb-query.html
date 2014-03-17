@@ -1,0 +1,54 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+
+<polymer-element name="dash-tsdb-query" attributes="start end base metric tags rate aggrOp dsmpOp result">
+  <template>
+    <template if="{{ url == undefined }}">
+      <H2>No URL prepared</h2>
+    </template>
+    <template if="{{ url != undefined }}">
+      <H2>Would try and get {{ url }}</h2>
+      <polymer-ajax auto url="{{ url }}" 
+        handleAs="json"
+        on-polymer-response="{{ gotData }}">
+      </polymer-ajax>
+    </template>
+  </template>
+  <script>
+    Polymer('dash-tsdb-query', {
+       url: undefined,
+     start: moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss"),
+       end: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+      base: undefined,
+    metric: undefined,
+      tags: undefined,
+      rate: false,
+    aggrOp: "sym",
+    dsmpOp: "sym",
+    result: undefined,
+  observer: {
+               start: "validate",
+                 end: "validate",
+                base: "validate",
+              metric: "validate",
+                tags: "validate",
+                rate: "validate",
+              aggrOp: "validate",
+              dsmpOp: "validate"
+            },
+   valiate: function(oldv,newv){
+              console.log(oldv);
+              console.log(newv);
+              this.url = "http://localhost";
+            },
+   gotData: function(ev,resp){
+              this.result = resp.response;
+            },
+   created: function(){
+              this.tags = [];
+              this.result = [];
+            }
+    });
+  </script>
+</polymer-element>
+
