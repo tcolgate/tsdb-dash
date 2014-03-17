@@ -1,15 +1,4 @@
 index_main = function () {
-
-// $.when($.ajax( "/page1.php" ), 
-//        $.ajax( "/page2.php" ) ).done(
-//           function( a1, a2 ) {
-//             // a1 and a2 are arguments resolved for the page1 and page2 ajax requests, respectively.
-//             // Each argument is an array with the following structure: [ data, statusText, jqXHR ]
-//             var data = a1[ 0 ] + a2[ 0 ]; // a1[ 0 ] = "Whip", a2[ 0 ] = " It"
-//             if ( /Whip It/.test( data ) ) {
-//               alert( "We got what we came for!" );
-//             }});
-
     var $document = $(document), onDocumentReady, onTreeListSuccess, populateBranches;
 
     onDocumentReady = function () {

@@ -1,0 +1,37 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+
+<polymer-element name="dash-tsdb-plot" attributes="width height start end spec">
+  <template>
+    <span> Trying graph {{width}} {{height}} {{start}} {{end}} {{spec}} </span>
+    <div id="plot" width={{width}} height={{height}}>
+      <polymer-ajax auto url="groupings.json" 
+        handleAs="json"
+        on-polymer-response="{{gotSpec}}">
+      </polymer-ajax>
+      <template if="{{ spec == undefined }}">
+        <H1>No spec set!</h1>
+      </template>
+      <template if="{{ spec != undefined }}">
+        <div id="chart"></div>
+        <div id="key"></div>
+        <h1> spec: {{spec}} </h1>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer('dash-tsdb-plot', {
+     width: 600,
+    height: 400,
+       end: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+     start: moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss"),
+   gotSpec: function(ev,resp){
+               this.spec = resp.response;
+             },
+     ready: function(){
+              this.spec = undefined
+            }
+    });
+  </script>
+</polymer-element>
+
