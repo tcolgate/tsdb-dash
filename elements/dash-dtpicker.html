@@ -2,11 +2,30 @@
 
 <polymer-element name="dash-dtpicker" attributes="time">
   <template>
-    <input id="dtInput" type="text" value="{{time}}">
+    <style>
+      input {
+        background: white;
+      }
+    </style> 
+    <input type="text" value="{{time_in}}" id="dtInput">
   </template>
   <script>
     Polymer('dash-dtpicker', {
-      time: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+   time_in: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+      time: undefined,
+   observe: {
+              time_in: 'validate'
+            },
+  validate: function(oldv,newv){
+              console.log(newv);
+              var newdate = moment(newv, "YYYY-MM-DD HH:mm:ss",true);
+              if (newdate.isValid()){
+                this.$.dtInput.style.background = "white";
+                this.time = newdate;
+              } else {
+                this.$.dtInput.style.background = "red";
+              }
+            }
     });
   </script>
 </polymer-element>
