@@ -3,6 +3,7 @@
 <link rel="import" href="dash-dtrange.html">
 <link rel="import" href="dash-tsdb-plot.html">
 
+<script src="dash-view-host.js"></script>
 <polymer-element name="dash-view-host" attributes="host">
   <template>
     <template if="{{ host == undefined }}">
@@ -14,11 +15,4 @@
       <dash-tsdb-plot spec="net_bytes" start={{start_time}} end={{end_time}}></dash-tsdb-plot>
     </template>
   </template>
-  <script>
-    Polymer('dash-view-host', {
-      host: undefined,
-      ready:  function(){
-      }
-    });
-  </script>
-</>
+</polymer-element>

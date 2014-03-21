@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
 <link rel="import" href="../elements/dash-tsdb-tree.html">
 
+<script src="dash-app.js"></script>
 <polymer-element name="dash-app">
   <template>
     <H1>TSDB Dasboard</h1>
@@ -23,18 +24,4 @@
     </template>
 
   </template>
-  <script>
-    Polymer('dash-app', {
-     gotTrees: function(ev,resp){
-                 this.trees = resp.response;
-               },
-    gotGroups: function(ev,resp){
-                 this.groups = resp.response;
-               },
-        ready: function(){
-                 this.trees = [];
-                 this.groups = [];
-               }
-    });
-  </script>
 </polymer-element>
