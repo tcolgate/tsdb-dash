@@ -26,8 +26,8 @@ Polymer('dash-tsdb-query', {
                 var args = new Array();
                 var terms = new Array(); 
   
-                args.push("start=" + parseInt(this.start));
-                args.push("end=" + parseInt(this.end));
+                args.push("start=" + parseInt(this.start.valueOf()));
+                args.push("end=" + parseInt(this.end.valueOf()));
   
                 terms[0] = this.aggrOp ;
                 if(this.rate){

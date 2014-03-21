@@ -2,12 +2,12 @@
 <link rel="import" href="dash-dtpicker.html">
 
 <script src="dash-dtrange.js"></script>
-<polymer-element name="dash-dtrange" attributes="start end">
+<polymer-element name="dash-dtrange" attributes="start end valid">
   <template>
     <span>Start: </span>
-    <dash-dtpicker time="{{start}}"></dash-dtpicker>
+    <dash-dtpicker id="start_input" time="{{start}}"></dash-dtpicker>
     <span>End: </span>
-    <dash-dtpicker time="{{end}}"></dash-dtpicker>
+    <dash-dtpicker id="end_input" time="{{end}}"></dash-dtpicker>
   </template>
 </polymer-element>
 
