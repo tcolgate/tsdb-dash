@@ -17,13 +17,12 @@
               time_in: 'validate'
             },
   validate: function(oldv,newv){
-              console.log(newv);
               var newdate = moment(newv, "YYYY-MM-DD HH:mm:ss",true);
               if (newdate.isValid()){
                 this.$.dtInput.style.background = "white";
                 this.time = newdate;
               } else {
-                this.$.dtInput.style.background = "red";
+                this.$.dtInput.style.background = "#FFE4E1";
               }
             }
     });
