@@ -1,13 +1,13 @@
 Polymer('dash-tsdb-query', {
-         url: undefined,
-       start: moment(new Date()).subtract('days',1).format("YYYY-MM-DD HH:mm:ss"),
-         end: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         base: '/api/query',
+        rate: false,
+      aggrOp: "sum",
+       start: undefined,
+         end: undefined,
       metric: undefined,
         tags: undefined,
-        rate: false,
-      aggrOp: "sym",
         dsmp: undefined,
+         url: undefined,
       result: undefined,
      observe: {
                  start: 'validate',
@@ -19,13 +19,17 @@ Polymer('dash-tsdb-query', {
                 aggrOp: 'validate',
                   dsmp: 'validate'
               },
-  endChanged: function(oldv,newv){
-                console.log(oldv);
-              },
     validate: function(oldv,newv){
                 var args = new Array();
                 var terms = new Array(); 
   
+                if(this.start == undefined ||
+                   this.end == undefined ||
+                   this.metric == undefined
+                ){
+                  return;
+                };
+
                 args.push("start=" + parseInt(this.start.valueOf()));
                 args.push("end=" + parseInt(this.end.valueOf()));
   
@@ -53,14 +57,11 @@ Polymer('dash-tsdb-query', {
               },
      gotData: function(ev,resp){
                 this.result = resp.response;
-              },
-     created: function(){
-                this.tags = [];
-                this.result = [];
+                this.fire('result', this.result);
               },
        ready: function(){
-                this.rate = true;
-                this.tags = ["jello"];
+                this.tags = [];
+                this.result = [];
               }
 });
 

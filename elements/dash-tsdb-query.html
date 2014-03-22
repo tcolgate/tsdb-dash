@@ -4,11 +4,7 @@
 <script src="dash-tsdb-query.js"></script>
 <polymer-element name="dash-tsdb-query" attributes="start end base metric tags rate aggrOp dsmp result">
   <template>
-    <template if="{{ url == undefined }}">
-      <H2>No URL prepared</h2>
-    </template>
     <template if="{{ url != undefined }}">
-      <H2>Would try and get {{ url }}</h2>
       <polymer-ajax auto url="{{ url }}" 
         handleAs="json"
         on-polymer-response="{{ gotData }}">

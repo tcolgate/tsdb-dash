@@ -1,0 +1,23 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="dash-tsdb-dataset.html">
+
+<script src="dash-tsdb-plotset.js"></script>
+<polymer-element name="dash-tsdb-plotset" attributes="width height start end spec specData tags">
+  <template>
+    <template if="{{ spec != undefined }}">
+      <polymer-ajax auto url="charts/{{spec}}.json" 
+        handleAs="json"
+        on-polymer-response="{{gotSpec}}">
+      </polymer-ajax>
+    </template>
+    <template if="{{ specData != undefined }}">
+      <dash-tsdb-dataset 
+        start="{{ start }}"
+          end="{{ end }}"
+         spec="{{ specData }}">
+      </dash-tsdb-dataset>
+    </template>
+  </template>
+</polymer-element>
+

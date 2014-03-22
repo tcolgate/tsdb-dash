@@ -1,0 +1,21 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="dash-tsdb-query.html">
+
+<script src="dash-tsdb-dataset.js"></script>
+<polymer-element name="dash-tsdb-dataset" attributes="start end spec tags resultset">
+  <template>
+    <template if="{{ spec != undefined }}">
+      <template repeat="{{ ds,i ub specData.dss }}">
+        <dash-tsdb-query 
+             metric="{{ ds.metric }}" 
+               tags="{{ ds.tags }}" 
+               rate="{{ ds.rate }}"
+              start="{{ start }}" 
+                end="{{ end }}"
+          on-result="{{ gotResult }}">
+        </dash-tsdb-query>
+      <template>
+  </template>
+</polymer-element>
+
