@@ -2,9 +2,11 @@
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
 <link rel="import" href="dash-dtrange.html">
 <link rel="import" href="dash-tsdb-plotset.html">
+<link rel="import" href="dash-tsdb-plot.html">
+<link rel="import" href="dash-spec.html">
 
 <script src="dash-view-host.js"></script>
-<polymer-element name="dash-view-host" attributes="host">
+<polymer-element name="dash-view-host" attributes="host data">
   <template>
     <template if="{{ host == undefined }}">
       <H1>No host set!</h1>
@@ -12,7 +14,27 @@
     <template if="{{ host != undefined }}">
       <H1>Host view: {{host}}</h1>
       <dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange>
-      <dash-tsdb-plotset spec="net_bytes" tags={{tags}} start={{start_time}} end={{end_time}}></dash-tsdb-plotset>
+
+      <dash-spec
+          specName="net_bytes"
+         globaltags="{{ tags }}"
+               spec="{{ spec }}">
+      </dash-spec>
+
+      <template if="{{ spec != undefined }}">
+        <dash-tsdb-plotset 
+             spec={{spec}}
+            start={{start_time}}
+              end={{end_time}}
+          results={{data}}>
+        </dash-tsdb-plotset>
+
+        <template if="{{ data != undefined }}">
+          <template repeat="{{ d in data }}">
+          <dash-tsdb-plot spec={{spec}} data={{d}}></dash-tsdb-plot>
+          </template>
+        </template>
+      </template>
     </template>
   </template>
 </polymer-element>

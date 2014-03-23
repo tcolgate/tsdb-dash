@@ -30,10 +30,11 @@ Polymer('dash-tsdb-dataset', {
 
                  this.specData = this.spec;
                },
-    gotResult: function(ev){
+  gotDsResult: function(ev){
                  var data = ev.detail;
                  var gtag = undefined;
                  var resmap = new Array();
+                 var dssi = ev.srcElement.attributes.dsi.value;
 
                  if(this.spec.hasOwnProperty("grouptag")){
                    gtag = this.spec.grouptag;
@@ -47,24 +48,29 @@ Polymer('dash-tsdb-dataset', {
                    if(!resmap.hasOwnProperty(t)){
                      resmap[t] = new Array();
                    };
-                   resmap[t].push(data[di]);
+                   resmap[t][dssi] = data[di];
                  };
 
                  for(ri in resmap){
-                   var entry = new Array();
-                   entry.name = ri;
-                   entry.data = resmap[ri];
+                   var ent = new Object();
+                   ent.name = ri;
+                   ent.data = resmap[ri][dssi];
                    var found = false;
 
-                   for(rs in this.resultset){
-                     if(this.resultset[rs].name === entry.name){
+                   for( rs in this.resultset ){
+                     if(this.resultset[rs].name === ent.name){
                        found = true;
-                       this.resultset[rs].data.concat(entry.data);
+                       this.resultset[rs].data[dssi] = ent.data;
                        break;
-                     }
+                     };
                    };
+
                    if(!found){
-                     this.resultset.push(entry);
+                     var n = new Object();
+                     n.name = ent.name;
+                     n.data = new Array();
+                     n.data[dssi] = ent.data;
+                     this.resultset.push(n);
                    };
                  };
                },

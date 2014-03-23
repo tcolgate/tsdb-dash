@@ -9,6 +9,7 @@ Polymer('dash-tsdb-query', {
         dsmp: undefined,
          url: undefined,
       result: undefined,
+        dsid: undefined,
      observe: {
                  start: 'validate',
                    end: 'validate',
@@ -57,7 +58,7 @@ Polymer('dash-tsdb-query', {
               },
      gotData: function(ev,resp){
                 this.result = resp.response;
-                this.fire('result', this.result);
+                this.fire('query-result', this.result);
               },
        ready: function(){
                 this.tags = [];

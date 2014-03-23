@@ -1,0 +1,10 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<script src="dash-tsdb-plot.js"></script>
+<polymer-element name="dash-tsdb-plot" attributes="width height spec data">
+  <template if="{{ spec != undefined && data != undefined}}">
+    <h3>{{ spec.title }}{{ data.name  }}</h3>
+    <span> Graph here {{ width }} {{ height }}</span>
+  </template>
+</polymer-element>
+

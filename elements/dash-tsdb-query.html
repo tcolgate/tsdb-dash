@@ -2,7 +2,7 @@
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
 
 <script src="dash-tsdb-query.js"></script>
-<polymer-element name="dash-tsdb-query" attributes="start end base metric tags rate aggrOp dsmp result">
+<polymer-element name="dash-tsdb-query" attributes="start end base metric tags rate aggrOp dsmp result dsid">
   <template>
     <template if="{{ url != undefined }}">
       <polymer-ajax auto url="{{ url }}" 

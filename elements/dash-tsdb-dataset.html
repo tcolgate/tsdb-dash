@@ -6,14 +6,15 @@
 <polymer-element name="dash-tsdb-dataset" attributes="start end spec tags resultset">
   <template>
     <template if="{{ spec != undefined }}">
-      <template repeat="{{ ds,i ub specData.dss }}">
+      <template repeat="{{ ds,i in specData.dss }}">
         <dash-tsdb-query 
              metric="{{ ds.metric }}" 
                tags="{{ ds.tags }}" 
                rate="{{ ds.rate }}"
               start="{{ start }}" 
                 end="{{ end }}"
-          on-result="{{ gotResult }}">
+                dsi="{{ i }}"
+    on-query-result="{{ gotDsResult }}">
         </dash-tsdb-query>
       <template>
   </template>

@@ -3,21 +3,14 @@
 <link rel="import" href="dash-tsdb-dataset.html">
 
 <script src="dash-tsdb-plotset.js"></script>
-<polymer-element name="dash-tsdb-plotset" attributes="width height start end spec specData tags plotdatasets">
+<polymer-element name="dash-tsdb-plotset" attributes="width height start end spec results">
   <template>
     <template if="{{ spec != undefined }}">
-      <polymer-ajax auto url="charts/{{spec}}.json" 
-        handleAs="json"
-        on-polymer-response="{{gotSpec}}">
-      </polymer-ajax>
-    </template>
-    <template if="{{ specData != undefined }}">
       <dash-tsdb-dataset 
-                    start="{{ start }}"
-                      end="{{ end }}"
-                     spec="{{ specData }}"
-                resultset="{{ dataresults }}"
-        on-dataset-result="{{ gotPlotResult }}">
+            start="{{ start }}"
+              end="{{ end }}"
+              spec="{{ spec }}"
+         resultset="{{ results }}">
       </dash-tsdb-dataset>
     </template>
   </template>
