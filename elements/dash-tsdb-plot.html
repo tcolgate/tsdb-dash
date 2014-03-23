@@ -3,8 +3,13 @@
 <script src="dash-tsdb-plot.js"></script>
 <polymer-element name="dash-tsdb-plot" attributes="width height spec data">
   <template if="{{ spec != undefined && data != undefined}}">
-    <h3>{{ spec.title }}{{ data.name  }}</h3>
-    <span> Graph here {{ width }} {{ height }}</span>
+    <div style="overflow: visible; width: {{ width }}px; height: {{ height }}px;" class="graph">
+      <h6 class="graph"> {{ spec.title }}{{ data.name  }}</h6>
+      <div id="plot" style="width: {{ width }}px; height: {{ height }}px;">
+      </div>
+      <div id='legend'>
+      </div>
+    </div>
   </template>
 </polymer-element>
 

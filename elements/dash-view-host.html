@@ -23,6 +23,8 @@
 
       <template if="{{ spec != undefined }}">
         <dash-tsdb-plotset 
+            width=200,
+           height=100,
              spec={{spec}}
             start={{start_time}}
               end={{end_time}}
@@ -31,7 +33,12 @@
 
         <template if="{{ data != undefined }}">
           <template repeat="{{ d in data }}">
-          <dash-tsdb-plot spec={{spec}} data={{d}}></dash-tsdb-plot>
+            <dash-tsdb-plot 
+                spec={{spec}} 
+                data={{d}}
+               width=200,
+              height=100>
+            </dash-tsdb-plot>
           </template>
         </template>
       </template>

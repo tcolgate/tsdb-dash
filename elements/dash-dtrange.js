@@ -1,20 +1,20 @@
 Polymer('dash-dtrange', {
-       end: moment(new Date()),
-     start: moment(new Date()).subtract('days',1),
+    end_in: moment(new Date()),
+  start_in: moment(new Date()).subtract('days',1),
      valid: true,
    observe: {
-              start: "validate",
-                end: "validate"
+              start_in: "validate",
+                end_in: "validate"
             },
   validate: function(oldv,newv){
-              console.log(this.start.valueOf());
-              console.log(this.end.valueOf());
               if( 
-                  this.start <= this.end 
+                  this.start_in <= this.end_in 
               ){
                 this.valid = true
                 this.$.start_input.valid = true;
                 this.$.end_input.valid = true;
+                this.start = this.start_in;
+                this.end = this.end_in;
               } else {
                 this.valid = false;
                 this.$.start_input.valid = false;
