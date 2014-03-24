@@ -13,7 +13,7 @@ describe("gprintf", function() {
     });
     it("sci should render 100s", function() {
         expect(gprintf).toBeDefined();
-        expect(gprintf("%.2s%cB",100.0,".",10000)).toEqual("100.00");
+        expect(gprintf("%.2s%cB",10.0,".",100)).toEqual("100.00 B");
     });
     it("sci should render kilo", function() {
         expect(gprintf).toBeDefined();

@@ -11,18 +11,9 @@ describe("View Hosts", function() {
               "responseText": 'immediate response2'
     });
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(arguments) {
-      if (this.readyState == this.DONE) {
-        doneFn(this.responseText);
-      }
-    };
-
-    xhr.open("GET", "/api/tree");
-    xhr.send();
+    view_host_main();
 
     expect(doneFn).toHaveBeenCalledWith('immediate response')
 
-//    view_host_main();
   });
 });
