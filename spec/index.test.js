@@ -1,4 +1,4 @@
-describe("View Hosts", function() {
+describe("Index", function() {
   beforeEach(function() {
     jasmine.Ajax.install();
   });
