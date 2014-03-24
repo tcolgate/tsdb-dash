@@ -3,9 +3,7 @@ Polymer('dash-view-host', {
          spec: undefined,
          data: undefined,
   hostChanged: function(oldv,newv){
-                 this.tags=new Array();
+                 this.tags = [];
                  this.tags.push("host=" + newv);
-               },
-        ready: function(){
                }
 });

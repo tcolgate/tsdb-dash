@@ -11,12 +11,12 @@ Polymer('dash-dtpicker', {
                      this.valid = false;
                    } 
                  },
-    timeChanged: function(oldv,newv){
+    timeChanged: function(){
                    if(this.valid){
                      this.timeIn = this.time.format("YYYY-MM-DD HH:mm:ss");
                    }
                  },
-   validChanged: function(oldv,newv){
+   validChanged: function(){
                    if (this.valid){
                      this.$.dtInput.style.background = "white";
                    } else {
@@ -24,6 +24,6 @@ Polymer('dash-dtpicker', {
                    }
                  },
           ready: function(){
-                   this.time = moment(new Date())
+                   this.time = moment(new Date());
                  }
 });

@@ -4,8 +4,7 @@ Polymer('dash-tsdb-plotset', {
      spec: undefined,
       end: undefined,
     start: undefined,
-resultsChanged: function(oldv,newv){ console.log("plotset",newv)},
   created: function(){
-             this.results = new Array();
+             this.results = [];
            }
 });

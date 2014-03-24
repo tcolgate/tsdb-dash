@@ -6,11 +6,11 @@ Polymer('dash-dtrange', {
               start_in: "validate",
                 end_in: "validate"
             },
-  validate: function(oldv,newv){
+  validate: function(){
               if( 
                   this.start_in <= this.end_in 
               ){
-                this.valid = true
+                this.valid = true;
                 this.$.start_input.valid = true;
                 this.$.end_input.valid = true;
                 this.start = this.start_in;
