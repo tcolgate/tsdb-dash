@@ -39,7 +39,7 @@ Polymer('dash-tsdb-query', {
                   terms.push("rate");
                 }
 
-                if(this.dsmp !== undefined){
+                if(this.dsmp){
                   terms.push(this.dsmp);
                 }
 
