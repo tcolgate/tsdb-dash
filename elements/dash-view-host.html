@@ -35,7 +35,8 @@
           <template repeat="{{ d in data }}">
             <dash-tsdb-plot 
                 spec={{spec}} 
-                data={{d}}
+                name={{d.name}}
+                data={{d.data}}
                width=200,
               height=100>
             </dash-tsdb-plot>

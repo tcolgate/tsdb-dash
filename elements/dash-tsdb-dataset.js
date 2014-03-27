@@ -38,12 +38,13 @@ Polymer('dash-tsdb-dataset', {
                  var gtag;
                  var resmap = [];
                  var dssi = ev.srcElement.attributes.dsi.value;
+                 var di, t;
+                 var ri, ent,found,rs,n;
 
                  if(this.spec.hasOwnProperty("grouptag")){
                    gtag = this.spec.grouptag;
                  }
 
-                 var di, t;
                  for( di in data){
                    if(data.hasOwnProperty(di)){
                      t = "";
@@ -57,7 +58,6 @@ Polymer('dash-tsdb-dataset', {
                    }
                  }
 
-                 var ri, ent,found,rs,n;
                  for(ri in resmap){
                    if(resmap.hasOwnProperty(ri)){
                      ent = {};
@@ -85,7 +85,7 @@ Polymer('dash-tsdb-dataset', {
                    }
                  }
                },
-        ready: function(){
+      created: function(){
                  this.tags = [];
                  this.resultset = [];
                }

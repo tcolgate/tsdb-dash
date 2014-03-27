@@ -2,51 +2,78 @@ Polymer('dash-tsdb-plot', {
     width: 600,
    height: 400,
      spec: undefined,
+     name: undefined,
      data: undefined,
   observe: {
              spec: "render",
+             name: "render",
              data: "render"
            },
    render: function(){
 
-     /*
-            var dphash = query_data[s].dps;
-            var series = new Array();
-            var ds = that.dss[s]; 
-            var dps =  new Array();
-                  
-            var cur = 0;
-            var min = 1/0;
-            var max = 0;
-            var sum = 0;
+            var series = [];
+            var d, ds, dps, dp, s, v, vs, t; 
+            var cur, min, max, sum, avg;
+            var di;
 
-            for (var key in dphash) {
-              var item = new Array();
-              var val  = dphash[key]
-              item[0] = (lag + parseInt(key)) * 1000 ;
-              item[1] = val;
-              cur = val;
-              if(val < min){min = val};
-              if(val > max){max = val};
-              sum += val;
+            for(di in this.data){
+              if(this.data.hasOwnProperty(di)){
+                s = {};
+                vs = [];
+                d = this.data[di];
+                ds = this.spec.dss[di];
+                dps = d.dps;
+                cur = 0;
+                min = 1/0;
+                max = 0;
+                sum = 0;
 
-              dps.push(item);
+                s.label = this.name;
+                for (t in dps) {
+                  if(dps.hasOwnProperty(t)){
+                    v = [];
+                    dp = dps[t]
+                    v[0] = parseInt(t,10) * 1000 ;
+                    v[1] = dp;
+                    cur = dp;
+                    if(dp < min){min = dp};
+                    if(dp > max){max = dp};
+                    sum += dp;
+  
+                    vs.push(v);
+                  }
+                };
+                avg = sum / vs.length;
+  
+                s['data'] = vs;
+                s['cur'] = cur;
+                s['min'] = min;
+                s['max'] = max;
+                s['sum'] = sum;
+                s['avg'] = avg;
+  
+                /*
+                s['label'] = s['label'] 
+                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',cur) + "</td>"
+                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',min) + "</td>"
+                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',avg) + "</td>"
+                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',max) + "</td>"
+                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',sum) + "</td></tr><tr>"; 
+                  */
+
+                series.push(s);
+              }
             };
 
-            var avg = sum / dps.length;
+            $.plot(
+               this.$.plot,
+               series,
+               {
+                 xaxis: { mode: "time", show: true }
+               }
+            );
 
-            series['cur'] = cur;
-            series['min'] = min;
-            series['max'] = max;
-            series['sum'] = sum;
-            series['avg'] = avg;
-
-            series['label'] = series['label'] 
-              + "<td>" + gprintf(that.format,that.logbase,'.',cur) + "</td>"
-              + "<td>" + gprintf(that.format,that.logbase,'.',min) + "</td>"
-              + "<td>" + gprintf(that.format,that.logbase,'.',avg) + "</td>"
-              + "<td>" + gprintf(that.format,that.logbase,'.',max) + "</td>"
-              + "<td>" + gprintf(that.format,that.logbase,'.',sum) + "</td></tr><tr>"; 
+            /*
 
              //this.$.legend 
              //t.allgraphs[gid].legend['container'] = legcont;
