@@ -11,107 +11,157 @@ Polymer('dash-tsdb-plot', {
            },
    render: function(){
 
-            var series = [];
-            var d, ds, dps, dp, s, v, vs, t; 
-            var cur, min, max, sum, avg;
-            var di;
+             var series = [];
+             var d, ds, dps, dp, s, v, vs, t; 
+             var cur, min, max, sum, avg;
+             var di;
 
-            for(di in this.data){
-              if(this.data.hasOwnProperty(di)){
-                s = {};
-                vs = [];
-                d = this.data[di];
-                ds = this.spec.dss[di];
-                dps = d.dps;
-                cur = 0;
-                min = 1/0;
-                max = 0;
-                sum = 0;
+             var ticks;
 
-                s.label = this.name;
-                for (t in dps) {
-                  if(dps.hasOwnProperty(t)){
-                    v = [];
-                    dp = dps[t]
-                    v[0] = parseInt(t,10) * 1000 ;
-                    v[1] = dp;
-                    cur = dp;
-                    if(dp < min){min = dp};
-                    if(dp > max){max = dp};
-                    sum += dp;
+             var transform = function(x){return x;};
+
+             var tickformatter = 
+               (function(fmt,lgb){
+                 return function (val) {
+                   var ret = gprintf(fmt,lgb,'.',val);
+                   return ret;
+                 };
+               })(ds.format,ds.logbase);
+
+
+             for(di in this.data){
+               if(this.data.hasOwnProperty(di)){
+                 s = {};
+                 vs = [];
+                 d = this.data[di];
+                 ds = this.spec.dss[di];
+                 dps = d.dps;
+                 cur = 0;
+                 min = 1/0;
+                 max = 0;
+                 sum = 0;
+ 
+                 if (!ds.ytag){
+                   if (ds.hasOwnProperty("label")){
+                     s.label = ds.label;
+                   } else {
+                     s.label = d.metric;
+                   }
+                 } else {
+                   if (ds.hasOwnProperty("labelmap")){
+                     if (ds.labelmap.hasOwnProperty(d.tags[ds.ytag])){
+                       s.label = ds.labelmap[d.tags[ds.ytag]];
+                     } else {
+                       s.label = d.tags[ds.ytag];
+                     }
+                   } else {
+                     s.label = d.tags[ds.ytag];
+                   }
+                 }
+
+                 for (t in dps) {
+                   if(dps.hasOwnProperty(t)){
+                     v = [];
+                     dp = dps[t];
+                     v[0] = parseInt(t,10) * 1000 ;
+                     v[1] = dp;
+                     cur = dp;
+                     if(dp < min){min = dp;};
+                     if(dp > max){max = dp;};
+                     sum += dp;
+   
+                     vs.push(v);
+                   }
+                 }
+                 avg = sum / vs.length;
+   
+                 s.data = vs;
+                 s.cur = cur;
+                 s.min = min;
+                 s.max = max;
+                 s.sum = sum;
+                 s.avg = avg;
   
-                    vs.push(v);
-                  }
-                };
-                avg = sum / vs.length;
-  
-                s['data'] = vs;
-                s['cur'] = cur;
-                s['min'] = min;
-                s['max'] = max;
-                s['sum'] = sum;
-                s['avg'] = avg;
-  
-                /*
-                s['label'] = s['label'] 
-                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',cur) + "</td>"
-                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',min) + "</td>"
-                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',avg) + "</td>"
-                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',max) + "</td>"
-                  + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',sum) + "</td></tr><tr>"; 
-                  */
+                 s.label = s.label
+                   + "<td>" + gprintf(ds.format,ds.logbase,'.',cur) + "</td>"
+                   + "<td>" + gprintf(ds.format,ds.logbase,'.',min) + "</td>"
+                   + "<td>" + gprintf(ds.format,ds.logbase,'.',avg) + "</td>"
+                   + "<td>" + gprintf(ds.format,ds.logbase,'.',max) + "</td>"
+                   + "<td>" + gprintf(ds.format,ds.logbase,'.',sum) + "</td></tr><tr>"; 
 
-                series.push(s);
-              }
-            };
+                 series.push(s);
+               }
+             }
 
-            $.plot(
+ 
+             if(ds.hasOwnProperty("log") && ds.log){
+               transform = 
+                 (function(lgb){
+                   return function(v){return Math.log(v) / Math.log(lgb);};
+                 })(ds.logbase);
+               ticks = 
+                 (function(lgb,tkf){
+                   return function(axis) {
+                     var res = [];
+                     var mx = Math.ceil(Math.log(axis.max) / Math.log(lgb));
+                     var i = 0;
+                     var vl, txt;
+
+                     do {
+                       vl  = Math.pow(lgb,i);
+                       txt = tkf(vl, axis);
+                       res.push([vl,txt]);
+                       ++i;
+                     } while (i < mx);
+ 
+                     return res;
+                   };})(ds.logbase,tickformatter);
+             }
+
+             var leg = { show: true, position: "sw" };
+             leg.container = this.$.legend;
+             leg.noColumns = 6;
+
+             var flotspec = {
+               xaxis: { mode: "time", show: true },
+             
+               yaxes: [{
+                 position: 'left',
+                   axisLabel: ds.ylabel,
+                   color: "#00000000",
+                   transform: transform,
+                   ticks: ticks,
+                   tickFormatter: tickformatter
+               }],
+
+               grid: { hoverable: true, autoHighlight: false },
+               legend: leg,
+               selection: { mode: "x" },
+               series: {
+                 stack: ds.stack,
+                 lines: { fill: ds.fill, show: true , lineWidth: ds.linewidth},
+                 shadowSize: 0
+               }
+             };
+
+             $.plot(
                this.$.plot,
                series,
-               {
-                 xaxis: { mode: "time", show: true }
-               }
-            );
+               flotspec
+             );
 
-            /*
+             /*
+             if(that.onselect){
+               this.$.plot.bind("plotselected", that.onselect);
+             }
+              */
+             
+             /*
 
              //this.$.legend 
              //t.allgraphs[gid].legend['container'] = legcont;
              //that.allgraphs[gid].legend['noColumns'] = 6;
  
-             var ticks;
-             var transform = function(x){return x;};
-             var tickformatter = 
-               (function(fmt,lgb){
-                 return function (val,axis) {
-                   var ret = gprintf(fmt,lgb,'.',val);
-                   return ret;
-                 };
-               })(this.spec.format,this.spec.logbase);
- 
-             if(this.spec.hasOwnProperty("log") && this.spec.log){
-               transform = 
-                 (function(lgb){
-                   return function(v){return Math.log(v+0.0001) / Math.log(lgb);};
-                 })(this.spec.logbase);
-               ticks = 
-                 (function(lgb,tkf){
-                   return function(axis) {
-                     var res = [];
-                     var max = Math.ceil(Math.log(axis.max) / Math.log(lgb));
-                     var i = 0;
- 
-                     var v, txt;
-                     do {
-                       v   = Math.pow(lgb,i);
-                       txt = tkf(v, axis);
-                       res.push([v,txt]);
-                       ++i;
-                     } while (i < max);
- 
-                     return res;
-                   };})(this.spec.logbase,tickformatter);
-             }
  
             $.plot(
                this.$.plot,
@@ -154,9 +204,7 @@ Polymer('dash-tsdb-plot', {
              cell6.innerHTML = "max";
              cell7.innerHTML = "sum";
 
-             if(that.onselect){
-               target.bind("plotselected", that.onselect);
-             }
+             
              */
 
            },
