@@ -20,13 +20,15 @@ Polymer('dash-tsdb-plot', {
 
              var transform = function(x){return x;};
 
+             console.log("spec: ", this.spec);
+
              var tickformatter = 
                (function(fmt,lgb){
                  return function (val) {
                    var ret = gprintf(fmt,lgb,'.',val);
                    return ret;
                  };
-               })(ds.format,ds.logbase);
+               })(this.spec.format,this.spec.logbase);
 
 
              for(di in this.data){
@@ -41,7 +43,9 @@ Polymer('dash-tsdb-plot', {
                  max = 0;
                  sum = 0;
  
-                 if (!ds.ytag){
+                 console.log("d:", d);
+                 console.log("ds:", ds);
+                 if (!this.spec.ytag){
                    if (ds.hasOwnProperty("label")){
                      s.label = ds.label;
                    } else {
@@ -49,13 +53,13 @@ Polymer('dash-tsdb-plot', {
                    }
                  } else {
                    if (ds.hasOwnProperty("labelmap")){
-                     if (ds.labelmap.hasOwnProperty(d.tags[ds.ytag])){
-                       s.label = ds.labelmap[d.tags[ds.ytag]];
+                     if (ds.labelmap.hasOwnProperty(d.tags[this.spec.ytag])){
+                       s.label = ds.labelmap[d.tags[this.spec.ytag]];
                      } else {
-                       s.label = d.tags[ds.ytag];
+                       s.label = d.tags[this.spec.ytag];
                      }
                    } else {
-                     s.label = d.tags[ds.ytag];
+                     s.label = d.tags[this.spec.ytag];
                    }
                  }
 
@@ -83,11 +87,11 @@ Polymer('dash-tsdb-plot', {
                  s.avg = avg;
   
                  s.label = s.label
-                   + "<td>" + gprintf(ds.format,ds.logbase,'.',cur) + "</td>"
-                   + "<td>" + gprintf(ds.format,ds.logbase,'.',min) + "</td>"
-                   + "<td>" + gprintf(ds.format,ds.logbase,'.',avg) + "</td>"
-                   + "<td>" + gprintf(ds.format,ds.logbase,'.',max) + "</td>"
-                   + "<td>" + gprintf(ds.format,ds.logbase,'.',sum) + "</td></tr><tr>"; 
+                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',cur) + "</td>"
+                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',min) + "</td>"
+                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',avg) + "</td>"
+                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',max) + "</td>"
+                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',sum) + "</td></tr><tr>"; 
 
                  series.push(s);
                }

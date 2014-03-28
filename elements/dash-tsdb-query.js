@@ -31,10 +31,13 @@ Polymer('dash-tsdb-query', {
                   return;
                 }
 
+                console.log("q: ",this);
+
                 args.push("start=" + parseInt(this.start.valueOf(),10));
                 args.push("end=" + parseInt(this.end.valueOf(),10));
   
                 terms[0] = this.aggrOp ;
+
                 if(this.rate){
                   terms.push("rate");
                 }

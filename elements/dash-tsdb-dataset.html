@@ -3,7 +3,7 @@
 <link rel="import" href="dash-tsdb-query.html">
 
 <script src="dash-tsdb-dataset.js"></script>
-<polymer-element name="dash-tsdb-dataset" attributes="start end spec tags resultset">
+<polymer-element name="dash-tsdb-dataset" attributes="start end samples spec tags resultset">
   <template>
     <template if="{{ spec != undefined }}">
       <template repeat="{{ ds,i in specData.dss }}">
@@ -11,6 +11,8 @@
              metric="{{ ds.metric }}" 
                tags="{{ ds.tags }}" 
                rate="{{ ds.rate }}"
+               aggr="{{ ds.aggrOp }}"
+               dsmp="{{ ds.dsmp }}"
               start="{{ start }}" 
                 end="{{ end }}"
                 dsi="{{ i }}"

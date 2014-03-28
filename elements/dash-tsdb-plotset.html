@@ -7,8 +7,9 @@
   <template>
     <template if="{{ spec != undefined }}">
       <dash-tsdb-dataset 
-            start="{{ start }}"
-              end="{{ end }}"
+             start="{{ start }}"
+               end="{{ end }}"
+           samples="{{ width }}"
               spec="{{ spec }}"
          resultset="{{ results }}">
       </dash-tsdb-dataset>

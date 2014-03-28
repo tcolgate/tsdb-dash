@@ -2,32 +2,54 @@ Polymer('dash-tsdb-dataset', {
          spec: undefined,
           end: undefined,
         start: undefined,
+      samples: undefined,
      grouptag: undefined,
       observe: {
                      spec: "validate",
                       end: "validate",
                     start: "validate",
+                  samples: "validate",
                  grouptag: "validate"
                },
      validate: function(){
 
-                 var dsi,ds,alltags;
+                 var dsi,ds;
+                 var tperpix;
+
+                 var alltags = [];
+                 if(this.spec.hasOwnProperty("tags")){
+                   alltags = this.spec.tags;
+                 }
+                 if(this.spec.hasOwnProperty("grouptag")){
+                   alltags.push(this.spec.grouptag + "=*");
+                 }
+
                  for(dsi in this.spec.dss){
                    if(this.spec.dss.hasOwnProperty(dsi)){
                      ds = this.spec.dss[dsi];
-                     if(ds.hasOwnProperty("rate")){
-                       ds.raterate = false;
+                     if(!ds.hasOwnProperty("rate")){
+                       ds.rate = false;
                      }
       
-                     alltags = this.tags;
-                     if(this.spec.hasOwnProperty("grouptag")){
-                       alltags.push(this.spec.grouptag + "=*");
-                     }
                      if(ds.hasOwnProperty("tags")){
                        ds.tags = alltags.concat(ds.tags);
                      } else {
                        ds.tags = alltags;
-                     }
+                     };
+
+                     if(!ds.hasOwnProperty("aggrOp")){
+                       ds.aggrOp = "sum";
+                     };
+
+                     if(!ds.hasOwnProperty("dsmpOp")){
+                       ds.dsmpOp = "sum";
+                     };
+                     
+                     tperpix = Math.ceil(((this.end.valueOf() - this.start.valueOf()) / this.samples) / 1000);
+                     if (tperpix < 15) {
+                       tperpix = 15;
+                     };
+                     ds.dsmp = "" + tperpix + "s-" + ds.dsmpOp
                    }
                  }
 
