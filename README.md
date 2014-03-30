@@ -16,7 +16,7 @@ It can be created as follows....
 
 ```sh
 curl -X POST 'http://localhost:4242/api/tree?name=DashByHosts'
-curl -X POST 'http://localhost:4242/api/tree/rule?treeid=1&level=1&order=0&type=TAGK&field=dc&description=Location'
+#curl -X POST 'http://localhost:4242/api/tree/rule?treeid=1&level=1&order=0&type=TAGK&field=dc&description=Location'
 curl -X POST 'http://localhost:4242/api/tree/rule?treeid=1&level=2&order=0&type=TAGK&field=host&description=Host'
 curl -X POST 'http://localhost:4242/api/tree/rule?treeid=1&level=3&order=0&type=METRIC&description=Metric'
 curl -X PUT 'http://localhost:4242/api/tree?treeid=1&strict_match=true'
