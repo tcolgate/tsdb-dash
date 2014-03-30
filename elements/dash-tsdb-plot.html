@@ -3,7 +3,7 @@
 <script src="dash-tsdb-plot.js"></script>
 <polymer-element name="dash-tsdb-plot" attributes="width height spec name data">
   <template if="{{ spec != undefined && data != undefined}}">
-    <div style="overflow: visible; width: {{ width }}px; height: {{ height }}px;" class="graph">
+  <div style="overflow: visible; width: {{ width }}px;" class="graph">
       <h6 class="graph"> {{ spec.title }}{{ name  }}</h6>
       <div id="plot" style="width: {{ width }}px; height: {{ height }}px;">
       </div>

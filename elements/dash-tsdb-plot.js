@@ -154,6 +154,8 @@ Polymer('dash-tsdb-plot', {
                flotspec
              );
 
+             $(this.$.plot).bind("plotselected", this.intPlotSelect.bind(this));
+
              /*
              if(that.onselect){
                this.$.plot.bind("plotselected", that.onselect);
@@ -211,6 +213,10 @@ Polymer('dash-tsdb-plot', {
              
              */
 
+           },
+   intPlotSelect: function(ev, rngs){
+             console.log(this);
+             this.fire("plot-select",{event: ev, ranges: rngs});
            },
     ready: function(){
              this.tags = [];
