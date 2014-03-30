@@ -2,7 +2,10 @@ Polymer('dash-view-host', {
          host: undefined,
          spec: undefined,
          data: undefined,
- plotSelected: function(ev,evdata){
+    gotGroups: function(ev,resp){
+                 this.groups = resp.response;
+               },
+  plotSelected: function(ev,evdata){
                  var currdt = this.$.dtinput 
                  var new_start = moment(evdata.ranges.xaxis.from)
                  var new_end = moment(evdata.ranges.xaxis.to)
@@ -12,5 +15,8 @@ Polymer('dash-view-host', {
   hostChanged: function(oldv,newv){
                  this.tags = [];
                  this.tags.push("host=" + newv);
+               },
+      created: function(){
+                 this.groups = [];
                }
 });

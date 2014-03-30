@@ -2,17 +2,11 @@
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
 
 <script src="dash-tsdb-tree.js"></script>
-<polymer-element name="dash-tsdb-tree" attributes="tree_id groups">
+<polymer-element name="dash-tsdb-tree" attributes="tree_id result">
   <template>
-    <H2>TSDB Tree {{tree_id}}</h2>
-
     <polymer-ajax id="req" auto url="/api/tree/branch?treeid={{tree_id}}"
       handleAs="json"
       on-polymer-response="{{gotBranch}}">
     </polymer-ajax>
-
-    <template repeat="{{ branch in branches }}">
-      <h2> Branch {{branch}} </h2>
-    </template>
   </template>
 </polymer-element>

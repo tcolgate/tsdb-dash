@@ -20,8 +20,6 @@ Polymer('dash-tsdb-plot', {
 
              var transform = function(x){return x;};
 
-             console.log("spec: ", this.spec);
-
              var tickformatter = 
                (function(fmt,lgb){
                  return function (val) {
@@ -43,8 +41,6 @@ Polymer('dash-tsdb-plot', {
                  max = 0;
                  sum = 0;
  
-                 console.log("d:", d);
-                 console.log("ds:", ds);
                  if (!this.spec.ytag){
                    if (ds.hasOwnProperty("label")){
                      s.label = ds.label;
@@ -215,7 +211,6 @@ Polymer('dash-tsdb-plot', {
 
            },
    intPlotSelect: function(ev, rngs){
-             console.log(this);
              this.fire("plot-select",{event: ev, ranges: rngs});
            },
     ready: function(){

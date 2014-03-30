@@ -29,7 +29,6 @@ Polymer('dash-spec', {
                    } else {
                      ds.tags = alltags;
                    }
-                   console.log("ds: ", ds);
                  }
                };
 

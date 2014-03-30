@@ -1,12 +1,12 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
 <link rel="import" href="dash-dtrange.html">
-<link rel="import" href="dash-tsdb-plotset.html">
+<link rel="import" href="dash-tsdb-plotset.html" result="{{htree}}">
 <link rel="import" href="dash-tsdb-plot.html">
 <link rel="import" href="dash-spec.html">
 
 <script src="dash-view-host.js"></script>
-<polymer-element name="dash-view-host" attributes="host data">
+<polymer-element name="dash-view-host" attributes="host data groups">
   <template>
     <template if="{{ host == undefined }}">
       <H1>No host set!</h1>
@@ -14,6 +14,21 @@
     <template if="{{ host != undefined }}">
       <H1>Host view: {{host}}</h1>
       <dash-dtrange id="dtinput" start={{start_time}} end={{end_time}}></dash-dtrange>
+      <p>
+
+      <polymer-ajax auto url="groupings.json" 
+        handleAs="json"
+        on-polymer-response="{{gotGroups}}">
+      </polymer-ajax>
+
+      <dash-tsdb-tree id="hosttree" tree_id=1 result="{{htree}}"></dash-tsdb-tree>
+      <template repeat="{{ t in htree.leaves }}">
+        <h3> {{ t }} </h3>
+      </template>
+
+      <template repeat="{{ g in groups }}">
+        <h3> {{ g.name }} </h3>
+      </template>
 
       <dash-spec
           specName="net_bytes"
@@ -22,6 +37,7 @@
       </dash-spec>
 
       <template if="{{ spec != undefined }}">
+        <h3> </h3>
         <dash-tsdb-plotset 
             width=600,
            height=300,
@@ -34,11 +50,12 @@
         <template if="{{ data != undefined }}">
           <template repeat="{{ d in data }}">
             <dash-tsdb-plot 
-                spec={{spec}} 
+                style="float: left;"
+                spec={{spec}}
                 name={{d.name}}
                 data={{d.data}}
-               width=600,
-               height=300,
+               width=500
+               height=300
                on-plot-select="{{ plotSelected }}">
             </dash-tsdb-plot>
           </template>
