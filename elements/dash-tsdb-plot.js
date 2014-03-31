@@ -28,8 +28,6 @@ Polymer('dash-tsdb-plot', {
                  };
                })(this.spec.format,this.spec.logbase);
 
-
-             console.log("plotdata: ", this.data);
              for(di in this.data){
                if(this.data.hasOwnProperty(di)){
                  for(ddi in this.data[di]){

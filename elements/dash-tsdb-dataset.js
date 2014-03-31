@@ -82,8 +82,6 @@ Polymer('dash-tsdb-dataset', {
                      resmap[t][dssi].push(data[di]);
                    }
                  }
-                 console.log("data: ",data);
-                 console.log("resmap: ",resmap);
 
                  for(ri in resmap){
                    if(resmap.hasOwnProperty(ri)){
@@ -111,7 +109,6 @@ Polymer('dash-tsdb-dataset', {
                      }
                    }
                  }
-                 console.log("resultset: ",this.resultset);
                },
       created: function(){
                  this.tags = [];
