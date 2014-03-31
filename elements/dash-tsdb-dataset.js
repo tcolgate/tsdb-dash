@@ -20,7 +20,7 @@ Polymer('dash-tsdb-dataset', {
                  if(this.spec.hasOwnProperty("tags")){
                    alltags = this.spec.tags;
                  }
-                 if(this.spec.hasOwnProperty("grouptag")){
+                 if(this.spec.hasOwnProperty("grouptag") && this.spec.grouptag){
                    alltags.push(this.spec.grouptag + "=*");
                  }
 

@@ -31,39 +31,41 @@
 
       <template repeat="{{ act in activeGroups}}">
         <h4> {{ act.name }} </h4>
-      </template>
+        <template repeat="{{ chart in act.charts}}">
+          <dash-spec
+               specName="{{ chart }}"
+             globaltags="{{ tags }}"
+                   spec="{{ spec }}">
+          </dash-spec>
 
-      <dash-spec
-          specName="net_bytes"
-         globaltags="{{ tags }}"
-               spec="{{ spec }}">
-      </dash-spec>
+          <template if="{{ spec != undefined }}">
+            <dash-tsdb-plotset 
+                width=600,
+               height=300,
+                 spec={{spec}}
+                start={{start_time}}
+                  end={{end_time}}
+              results={{data}}>
+            </dash-tsdb-plotset>
 
-      <template if="{{ spec != undefined }}">
-        <h3> </h3>
-        <dash-tsdb-plotset 
-            width=600,
-           height=300,
-             spec={{spec}}
-            start={{start_time}}
-              end={{end_time}}
-          results={{data}}>
-        </dash-tsdb-plotset>
-
-        <template if="{{ data != undefined }}">
-          <template repeat="{{ d in data }}">
-            <dash-tsdb-plot 
-                style="float: left;"
-                spec={{spec}}
-                name={{d.name}}
-                data={{d.data}}
-               width=500
-               height=300
-               on-plot-select="{{ plotSelected }}">
-            </dash-tsdb-plot>
+            <template if="{{ data != undefined }}">
+              <template repeat="{{ d in data }}">
+                <dash-tsdb-plot 
+                    style="float: left;"
+                    spec={{spec}}
+                    name={{d.name}}
+                    data={{d.data}}
+                   width=500
+                   height=300
+                   on-plot-select="{{ plotSelected }}">
+                </dash-tsdb-plot>
+              </template>
+            </template>
           </template>
+        <div style="clear:both;"></div>
         </template>
       </template>
+
     </template>
   </template>
 </polymer-element>
