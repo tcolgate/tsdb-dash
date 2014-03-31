@@ -76,9 +76,14 @@ Polymer('dash-tsdb-dataset', {
                      if(!resmap.hasOwnProperty(t)){
                        resmap[t] = [];
                      }
-                     resmap[t][dssi] = data[di];
+                     if(!resmap[t].hasOwnProperty(dssi)){
+                       resmap[t][dssi] = [];
+                     }
+                     resmap[t][dssi].push(data[di]);
                    }
                  }
+                 console.log("data: ",data);
+                 console.log("resmap: ",resmap);
 
                  for(ri in resmap){
                    if(resmap.hasOwnProperty(ri)){
@@ -106,6 +111,7 @@ Polymer('dash-tsdb-dataset', {
                      }
                    }
                  }
+                 console.log("resultset: ",this.resultset);
                },
       created: function(){
                  this.tags = [];

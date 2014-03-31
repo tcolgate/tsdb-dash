@@ -14,7 +14,7 @@ Polymer('dash-tsdb-plot', {
              var series = [];
              var d, ds, dps, dp, s, v, vs, t; 
              var cur, min, max, sum, avg;
-             var di;
+             var di, ddi;
 
              var ticks;
 
@@ -29,67 +29,72 @@ Polymer('dash-tsdb-plot', {
                })(this.spec.format,this.spec.logbase);
 
 
+             console.log("plotdata: ", this.data);
              for(di in this.data){
                if(this.data.hasOwnProperty(di)){
-                 s = {};
-                 vs = [];
-                 d = this.data[di];
-                 ds = this.spec.dss[di];
-                 dps = d.dps;
-                 cur = 0;
-                 min = 1/0;
-                 max = 0;
-                 sum = 0;
- 
-                 if (!this.spec.ytag){
-                   if (ds.hasOwnProperty("label")){
-                     s.label = ds.label;
-                   } else {
-                     s.label = d.metric;
-                   }
-                 } else {
-                   if (ds.hasOwnProperty("labelmap")){
-                     if (ds.labelmap.hasOwnProperty(d.tags[this.spec.ytag])){
-                       s.label = ds.labelmap[d.tags[this.spec.ytag]];
+                 for(ddi in this.data[di]){
+                   if(this.data[di].hasOwnProperty(ddi)){
+                     s = {};
+                     vs = [];
+                     d = this.data[di][ddi];
+                     ds = this.spec.dss[di];
+                     dps = d.dps;
+                     cur = 0;
+                     min = 1/0;
+                     max = 0;
+                     sum = 0;
+     
+                     if (!this.spec.ytag){
+                       if (ds.hasOwnProperty("label")){
+                         s.label = ds.label;
+                       } else {
+                         s.label = d.metric;
+                       }
                      } else {
-                       s.label = d.tags[this.spec.ytag];
+                       if (ds.hasOwnProperty("labelmap")){
+                         if (ds.labelmap.hasOwnProperty(d.tags[this.spec.ytag])){
+                           s.label = ds.labelmap[d.tags[this.spec.ytag]];
+                         } else {
+                           s.label = d.tags[this.spec.ytag];
+                         }
+                       } else {
+                         s.label = d.tags[this.spec.ytag];
+                       }
                      }
-                   } else {
-                     s.label = d.tags[this.spec.ytag];
-                   }
-                 }
 
-                 for (t in dps) {
-                   if(dps.hasOwnProperty(t)){
-                     v = [];
-                     dp = dps[t];
-                     v[0] = parseInt(t,10) * 1000 ;
-                     v[1] = dp;
-                     cur = dp;
-                     if(dp < min){min = dp;};
-                     if(dp > max){max = dp;};
-                     sum += dp;
-   
-                     vs.push(v);
-                   }
-                 }
-                 avg = sum / vs.length;
-   
-                 s.data = vs;
-                 s.cur = cur;
-                 s.min = min;
-                 s.max = max;
-                 s.sum = sum;
-                 s.avg = avg;
-  
-                 s.label = s.label
-                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',cur) + "</td>"
-                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',min) + "</td>"
-                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',avg) + "</td>"
-                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',max) + "</td>"
-                   + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',sum) + "</td></tr><tr>"; 
+                     for (t in dps) {
+                       if(dps.hasOwnProperty(t)){
+                         v = [];
+                         dp = dps[t];
+                         v[0] = parseInt(t,10) * 1000 ;
+                         v[1] = dp;
+                         cur = dp;
+                         if(dp < min){min = dp;};
+                         if(dp > max){max = dp;};
+                         sum += dp;
+       
+                         vs.push(v);
+                       }
+                     }
+                     avg = sum / vs.length;
+       
+                     s.data = vs;
+                     s.cur = cur;
+                     s.min = min;
+                     s.max = max;
+                     s.sum = sum;
+                     s.avg = avg;
+      
+                     s.label = s.label
+                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',cur) + "</td>"
+                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',min) + "</td>"
+                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',avg) + "</td>"
+                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',max) + "</td>"
+                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',sum) + "</td></tr><tr>"; 
 
-                 series.push(s);
+                     series.push(s);
+                   }
+                 };
                }
              }
 

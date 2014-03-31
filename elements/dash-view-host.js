@@ -31,14 +31,11 @@ Polymer('dash-view-host', {
                  this.tags.push("host=" + newv);
                },
  updateGroups: function(oldv,newv){
-                 console.log("oldv:",oldv,"newv",newv);
                  var l, g, ag, leaf, displayName, match, isActive;
-                 console.log("htree: ", this.htree);
                  if(! this.htree.leaves){
                    return
                  };
                  var leaves = this.htree.leaves;
-                 console.log("leaves: ", leaves);
                  for (l in this.htree.leaves) {
                    if(leaves.hasOwnProperty(l)){ 
                      leaf = leaves[l];
@@ -53,7 +50,6 @@ Polymer('dash-view-host', {
                        }
                      };
                      if (match == false){
-                       console.log("Unmatched metric: " + displayName);
                        continue
                      };
 
