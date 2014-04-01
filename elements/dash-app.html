@@ -1,27 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
-<link rel="import" href="../elements/dash-tsdb-tree.html">
+<link rel="import" href="../bower_components/polymer-simple-router/release/polymer-simple-router-elements.html">
 
 <script src="dash-app.js"></script>
 <polymer-element name="dash-app">
   <template>
-    <H1>TSDB Dasboard</h1>
-
-    <polymer-ajax auto url="/api/tree" 
-      handleAs="json"
-      on-polymer-response="{{gotTrees}}">
-    </polymer-ajax>
-
-    <polymer-ajax auto url="groupings.json" 
-      handleAs="json"
-      on-polymer-response="{{gotGroups}}">
-    </polymer-ajax>
-
-    <template if="{{ groups != [] }}">
-      <template repeat="{{ tree in trees }}">
-        <dash-tsdb-tree tree_id="{{tree.treeId}}" groups="{{groups}}"></dash-tsdb-tree>
-      </template>
-    </template>
-
+    <sr-router>
+      <sr-state name="home" url="/s/dash/index.html" elementName="dash-tree"></sr-state>
+      <sr-state name="viewhost" url="/s/dash/view_host.html" elementName="dash-view-host"></sr-state>
+    </sr-router>
   </template>
 </polymer-element>
