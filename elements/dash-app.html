@@ -1,13 +1,12 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
-<link rel="import" href="../bower_components/polymer-simple-router/release/polymer-simple-router-elements.html">
+<link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
 
 <script src="dash-app.js"></script>
 <polymer-element name="dash-app">
   <template>
-    <sr-router>
-      <sr-state name="home" url="/s/dash/index.html" elementName="dash-tree"></sr-state>
-      <sr-state name="viewhost" url="/s/dash/view_host.html" elementName="dash-view-host"></sr-state>
-    </sr-router>
+    <flatiron-director route="{{route}}" autoHash></flatiron-director>
+    hash: <input value="{{route}}">
+    <a href=dash-view-host.html#barnacle">Relocate</a>
   </template>
 </polymer-element>
