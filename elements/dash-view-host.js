@@ -1,7 +1,6 @@
-(function(){
-  var dt = "hello there";
-  console.log("got here",dt);
 Polymer('dash-view-host', {
+   start_time: undefined,
+     end_time: undefined,
          host: undefined,
          spec: undefined,
          data: undefined,
@@ -23,18 +22,12 @@ Polymer('dash-view-host', {
                  this.htree = resp;
                },
  plotSelected: function(ev,evdata){
-                 console.log(dt)
-                 var new_start = moment(evdata.ranges.xaxis.from)
-                 var new_end = moment(evdata.ranges.xaxis.to)
-                 dt.start = new_start;
-                 dt.end = new_end;
+                 this.start_time = moment(evdata.ranges.xaxis.from)
+                 this.end_time = moment(evdata.ranges.xaxis.to)
                },
   hostChanged: function(oldv,newv){
                  this.tags = [];
                  this.tags.push("host=" + newv);
-                 console.log("got here2",dt);
-                 dt = this.$.dtinput
-                 console.log("got here3",dt);
                },
  updateGroups: function(oldv,newv){
                  var l, g, ag, leaf, displayName, match, isActive;
@@ -83,4 +76,3 @@ Polymer('dash-view-host', {
         ready: function(){
                }
 });
-})();

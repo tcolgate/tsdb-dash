@@ -16,8 +16,14 @@
       <h1> no valid view given </h2>
     </template>
     <template if="{{ cmd == 'view_host' }}">
+      <dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange>
+      <br/>
       <template repeat="{{ a,i in args }}">
-        <dash-view-host host="{{ a }}"></dash-view-host>
+        <dash-view-host 
+          host="{{ a }}" 
+          start_time={{start_time}} 
+          end_time={{end_time}}>
+        </dash-view-host>
       </template>
     </template>
   </template>
