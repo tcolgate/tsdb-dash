@@ -1,13 +1,28 @@
 Polymer('dash-app', {
-         routeStr: undefined,
-            route: undefined,
-  routeStrChanged: function (oldv,newv) {
-                     this.route = newv.split("/");
+         routeStr: "",
+              cmd: "",
+             args: undefined,
+          observe: {
+                      cmd: "update",
+                     args: "update",
                    },
-     routeChanged: function (oldv,newv) {
-                     this.routeStr = newv.join("/");
+  routeStrChanged: function (oldv,newv) {
+                     var l1 = newv.split("?");
+                     this.cmd = l1[0];
+                     if(l1[1]){
+                       this.args = l1[1].split("&");
+                     }else{
+                       this.args = undefined
+                     };
+                   },
+           update: function () {
+                     var argStr = "";
+                     if(this.args && this.args.length > 0){
+                       argStr = "?" + this.args.join("&")
+                     };
+
+                     this.route = this.cmd + argStr;
                    },
           created: function () {
-                      this.route = new Array();
                    }
 });

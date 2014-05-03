@@ -3,12 +3,13 @@
 <link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
 
 <script src="dash-app.js"></script>
-<polymer-element name="dash-app" attributes="routeStr route">
+<polymer-element name="dash-app" attributes="routeStr cmd args">
   <template>
     <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
     <h1>{{routeStr}}</h1>
-    <template repeat="{{ r in route }}">
-      <h2>{{r}}</h2>
+    <h2>{{cmd}}</h2>
+    <template repeat="{{ a in args }}">
+      <h2>{{a}}</h2>
     </template>
   </template>
 </polymer-element>
