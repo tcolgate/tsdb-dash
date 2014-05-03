@@ -1,5 +1,5 @@
 Polymer('dash-app', {
-         routeStr: "test",
+         routeStr: undefined,
             route: undefined,
   routeStrChanged: function (oldv,newv) {
                      this.route = newv.split("/");
@@ -8,6 +8,5 @@ Polymer('dash-app', {
                      this.routeStr = newv.join("/");
                    },
             ready: function () {
-                      this.route = new Array();
                    }
 });
