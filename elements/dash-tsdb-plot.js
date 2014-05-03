@@ -147,13 +147,13 @@ Polymer('dash-tsdb-plot', {
                }
              };
 
-             $.plot(
+             jQuery.plot(
                this.$.plot,
                series,
                flotspec
              );
 
-             $(this.$.plot).bind("plotselected", this.intPlotSelect.bind(this));
+             jQuery(this.$.plot).bind("plotselected", this.intPlotSelect.bind(this));
 
              /*
              if(that.onselect){

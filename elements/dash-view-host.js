@@ -1,4 +1,6 @@
 Polymer('dash-view-host', {
+   start_time: undefined,
+     end_time: undefined,
          host: undefined,
          spec: undefined,
          data: undefined,
@@ -20,11 +22,8 @@ Polymer('dash-view-host', {
                  this.htree = resp;
                },
  plotSelected: function(ev,evdata){
-                 var currdt = this.$.dtinput 
-                 var new_start = moment(evdata.ranges.xaxis.from)
-                 var new_end = moment(evdata.ranges.xaxis.to)
-                 currdt.start = new_start;
-                 currdt.end = new_end;
+                 this.start_time = moment(evdata.ranges.xaxis.from)
+                 this.end_time = moment(evdata.ranges.xaxis.to)
                },
   hostChanged: function(oldv,newv){
                  this.tags = [];
@@ -73,5 +72,7 @@ Polymer('dash-view-host', {
                  this.atree = {};
                  this.htree = {};
                  this.activeGroups = [];
+               },
+        ready: function(){
                }
 });

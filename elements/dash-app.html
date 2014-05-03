@@ -1,12 +1,32 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
 <link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
+<link rel="import" href="dash-view-host.html">
 
 <script src="dash-app.js"></script>
-<polymer-element name="dash-app">
+<polymer-element name="dash-app" attributes="routeStr cmd args">
   <template>
-    <flatiron-director route="{{route}}" autoHash></flatiron-director>
-    hash: <input value="{{route}}">
-    <a href=dash-view-host.html#barnacle">Relocate</a>
+    <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
+    <h1>str: {{routeStr}}</h1>
+    <h2>cmd: {{cmd}}</h2>
+    <template repeat="{{ a,i in args }}">
+      <h2>arg[{{i}}]: {{a}}</h2>
+    </template>
+    <template if="{{ cmd != 'view_host' }}">
+      <h1> no valid view given </h2>
+    </template>
+    <template if="{{ cmd == 'view_host' }}">
+      <dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange>
+      <br/>
+      <template repeat="{{ a,i in args }}">
+        <template if="{{ start_time != null && end_time != null}}">
+          <dash-view-host 
+            host="{{ a }}" 
+            start_time={{start_time}} 
+            end_time={{end_time}}>
+          </dash-view-host>
+        </template>
+      </template>
+    </template>
   </template>
 </polymer-element>
