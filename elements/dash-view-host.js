@@ -1,5 +1,5 @@
 (function(){
-  var dt = undefined;
+  var dt = "hello there";
 Polymer('dash-view-host', {
          host: undefined,
          spec: undefined,
