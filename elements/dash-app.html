@@ -10,13 +10,13 @@
     <h1>str: {{routeStr}}</h1>
     <h2>cmd: {{cmd}}</h2>
     <template repeat="{{ a,i in args }}">
-    <h2>arg[{{i}}]: {{a}}</h2>
+      <h2>arg[{{i}}]: {{a}}</h2>
     </template>
   </template>
 
   <template if="{{ cmd == "view_host" }}">
-    <template if="{{ args[0] }}">
-      <dash-view-host host="{{ args[0] }}"></dash-view-host>
+    <template repeat="{{ a,i in args }}">
+      <dash-view-host host="{{ a }}"></dash-view-host>
     </template>
   </template>
 
