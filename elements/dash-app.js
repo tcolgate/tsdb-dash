@@ -21,7 +21,7 @@ Polymer('dash-app', {
                        argStr = "?" + this.args.join("&")
                      };
 
-                     this.route = this.cmd + argStr;
+                     this.routeStr = this.cmd + argStr;
                    },
           created: function () {
                    }
