@@ -19,13 +19,14 @@ Polymer('dash-view-host', {
     gotHTreeResult: function(ev,resp){
                  this.htree = resp;
                },
- plotSelected: function(ev,evdata){
-                 var currdt = this.$.dtinput 
-                 var new_start = moment(evdata.ranges.xaxis.from)
-                 var new_end = moment(evdata.ranges.xaxis.to)
-                 currdt.start = new_start;
-                 currdt.end = new_end;
-               },
+ plotSelected: (function(dt){
+                 return function(ev,evdata){
+                          var new_start = moment(evdata.ranges.xaxis.from)
+                          var new_end = moment(evdata.ranges.xaxis.to)
+                          dt.start = new_start;
+                          dt.end = new_end;
+                 }
+               })(this.$.dtinput),
   hostChanged: function(oldv,newv){
                  this.tags = [];
                  this.tags.push("host=" + newv);
