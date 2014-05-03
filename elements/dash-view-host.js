@@ -22,13 +22,13 @@ Polymer('dash-view-host', {
  plotSelected: (function(dtscope){
                  return function(ev,evdata){
                           console.log(dtscope)
-                          var dt = dtscope.dtinput
+                          var dt = dtscope.$.dtinput
                           var new_start = moment(evdata.ranges.xaxis.from)
                           var new_end = moment(evdata.ranges.xaxis.to)
                           dt.start = new_start;
                           dt.end = new_end;
                  }
-               })(this.$),
+               })(this),
   hostChanged: function(oldv,newv){
                  this.tags = [];
                  this.tags.push("host=" + newv);
