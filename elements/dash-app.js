@@ -1,6 +1,6 @@
 Polymer('dash-app', {
-         routeStr: "",
-              cmd: "",
+         routeStr: undefined,
+              cmd: undefined,
              args: undefined,
           observe: {
                       cmd: "update",
