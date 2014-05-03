@@ -5,8 +5,8 @@
 <script src="dash-app.js"></script>
 <polymer-element name="dash-app">
   <template>
-    <flatiron-director route="{{route}}" autoHash></flatiron-director>
-    hash: <input value="{{route}}">
-    <a href=dash-view-host.html#barnacle">Relocate</a>
+    <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
+    <h1>{{routeStr}}</h1>
+    <h1>{{route}}</h1>
   </template>
 </polymer-element>
