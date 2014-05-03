@@ -81,7 +81,6 @@ Polymer('dash-view-host', {
                  this.activeGroups = [];
                },
         ready: function(){
-                 dt = this.$.dtinput
                }
 });
 })();
