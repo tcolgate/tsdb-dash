@@ -7,6 +7,8 @@
   <template>
     <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
     <h1>{{routeStr}}</h1>
-    <h1>{{route}}</h1>
+    <template repeat="{{ r in route }}">
+      <h2>{{r}}</h2>
+    </template>
   </template>
 </polymer-element>
