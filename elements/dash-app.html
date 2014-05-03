@@ -12,7 +12,7 @@
     <template repeat="{{ a,i in args }}">
       <h2>arg[{{i}}]: {{a}}</h2>
     </template>
-    <template if="{{ cmd == "view_host" }}">
+    <template if="{{ cmd != "view_host" }}">
       <h1> no valid view given </h2>
     </template>
     <template if="{{ cmd == "view_host" }}">
