@@ -7,6 +7,7 @@ Polymer('dash-app', {
      routeChanged: function (oldv,newv) {
                      this.routeStr = newv.join("/");
                    },
-            ready: function () {
+          created: function () {
+                      this.route = new Array();
                    }
 });
