@@ -19,11 +19,13 @@
       <dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange>
       <br/>
       <template repeat="{{ a,i in args }}">
-        <dash-view-host 
-          host="{{ a }}" 
-          start_time={{start_time}} 
-          end_time={{end_time}}>
-        </dash-view-host>
+        <template if="{{ start_time != null && end_time != null}}">
+          <dash-view-host 
+            host="{{ a }}" 
+            start_time={{start_time}} 
+            end_time={{end_time}}>
+          </dash-view-host>
+        </template>
       </template>
     </template>
   </template>
