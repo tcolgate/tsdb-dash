@@ -6,5 +6,6 @@
   "units": "procs",
     "dss": [{"metric": "proc.loadavg.runnable",
               "label": "Runnable proc",
+             "dsmpOp": "max",
                "rate": false }]
 }
