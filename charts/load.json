@@ -6,11 +6,14 @@
   "units": "load",
     "dss": [{"metric": "proc.loadavg.1min",
                "rate": false ,
+             "dsmpOp": "max",
               "label": "1 min"},
             {"metric": "proc.loadavg.5min",
                "rate": false ,
+             "dsmpOp": "max",
               "label": "5 min"},
             {"metric": "proc.loadavg.15min",
                "rate": false ,
+             "dsmpOp": "max",
               "label": "15 min"}]
 }
