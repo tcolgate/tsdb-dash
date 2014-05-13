@@ -13,7 +13,7 @@ Polymer('dash-tsdb-plot', {
 
              var series = [];
              var d, ds, dps, dp, s, v, vs, t; 
-             var cur, min, max, sum, avg;
+             var cur, min, max, sum, avg, lag;
              var di, ddi;
 
              var ticks;
@@ -60,11 +60,18 @@ Polymer('dash-tsdb-plot', {
                        }
                      }
 
+                     if (ds.hasOwnProperty("lag")){
+                       lag = ds.lag;
+                     } else {
+                       lag = 0;
+                     }
+                     console.log("lag: ", lag);
+
                      for (t in dps) {
                        if(dps.hasOwnProperty(t)){
                          v = [];
                          dp = dps[t];
-                         v[0] = parseInt(t,10) * 1000 ;
+                         v[0] = (lag + parseInt(t,10)) * 1000 ;
                          v[1] = dp;
                          cur = dp;
                          if(dp < min){min = dp;};

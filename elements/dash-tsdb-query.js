@@ -7,6 +7,7 @@ Polymer('dash-tsdb-query', {
       metric: undefined,
         tags: undefined,
         dsmp: undefined,
+         lag: 0,
          url: undefined,
       result: undefined,
         dsid: undefined,
@@ -18,7 +19,8 @@ Polymer('dash-tsdb-query', {
                   tags: 'validate',
                   rate: 'validate',
                 aggrOp: 'validate',
-                  dsmp: 'validate'
+                  dsmp: 'validate',
+                   lag: 'validate'
               },
     validate: function(){
                 var args = [];
@@ -31,8 +33,13 @@ Polymer('dash-tsdb-query', {
                   return;
                 }
 
-                args.push("start=" + parseInt(this.start.valueOf(),10));
-                args.push("end=" + parseInt(this.end.valueOf(),10));
+                // TODO
+                // This isn't perfect. Ideally the start/end would be adjust for 
+                // the lag before the query was setup so we wouldn't need to know
+                // about it here, but doing it in the dataset makes the propagation
+                // of the date chnages a little harder. Being lazy
+                args.push("start=" + (parseInt(this.start.valueOf(),10) - (this.lag * 1000)));
+                args.push("end=" + (parseInt(this.end.valueOf(),10) - (this.lag * 1000)));
   
                 terms[0] = this.aggrOp ;
 
