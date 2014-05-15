@@ -4,6 +4,7 @@ Polymer('dash-tsdb-dataset', {
         start: undefined,
       samples: undefined,
      grouptag: undefined,
+     specData: undefined,
       observe: {
                      spec: "validate",
                       end: "validate",

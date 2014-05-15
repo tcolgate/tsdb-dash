@@ -52,6 +52,11 @@
     "regex": "net\\.sockstat\\..*"
   },
   {
+    "name": "IPTables",
+   "regex": "iptrack\\..*",
+  "charts": ["iptrack_bytes","iptrack_packets"]
+  },
+  {
     "name": "IPv4",
     "regex": "net\\.stat\\.(tc|ud)p.*"
   },
