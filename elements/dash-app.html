@@ -7,11 +7,6 @@
 <polymer-element name="dash-app" attributes="routeStr cmd args">
   <template>
     <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
-    <h1>str: {{routeStr}}</h1>
-    <h2>cmd: {{cmd}}</h2>
-    <template repeat="{{ a,i in args }}">
-      <h2>arg[{{i}}]: {{a}}</h2>
-    </template>
     <template if="{{ cmd != 'view_host' }}">
       <h1> no valid view given </h2>
     </template>
