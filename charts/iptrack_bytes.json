@@ -1,0 +1,15 @@
+{
+      "title": "IP Tables Bytes - ",
+      "units": "B/s",
+       "fill": 0,
+  "linewidth": 1,
+        "log": false,
+     "format": "%.2s%c",
+   "grouptag": "name",
+        "dss": [{"metric": "iptrack.bytes.in",
+                  "label": "in",
+                   "rate": true},
+                {"metric": "iptrack.bytes.out",
+                  "label": "out",
+                   "rate": true}]
+}
