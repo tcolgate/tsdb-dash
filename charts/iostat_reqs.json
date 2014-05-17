@@ -1,0 +1,14 @@
+{
+  "title": "Requests - ",
+  "units": "reqs",
+ "format": "%.2s%c",
+"grouptag": "dev",
+    "dss": [{"metric": "iostat.disk.read_requests", 
+              "label": "reads",
+               "rate": true,
+               "tags": ["dev=*"]},
+            {"metric": "iostat.disk.write_requests", 
+              "label": "writes",
+               "rate": true,
+               "tags": ["dev=*"]}] 
+}

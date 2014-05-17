@@ -1,0 +1,8 @@
+{
+  "title": "Partitions Ops In Progress ",
+  "units": "ops",
+ "format": "%.2s%c",
+   "ytag": "dev",
+    "dss": [{"metric": "iostat.part.ios_in_progress", 
+               "tags": ["dev=*"]}]
+}

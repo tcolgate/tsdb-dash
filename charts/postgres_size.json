@@ -1,0 +1,8 @@
+{
+  "title": "Size - ",
+  "units": "B",
+ "format": "%.2s%c",
+   "ytag": "database",
+    "dss": [{"metric": "postgresql.size", 
+             "tags": ["database=*"]}] 
+}

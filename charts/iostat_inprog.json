@@ -1,0 +1,8 @@
+{
+  "title": "Device Ops In Progress ",
+  "units": "ops",
+ "format": "%.2s%c",
+   "ytag": "dev",
+    "dss": [{"metric": "iostat.disk.ios_in_progress", 
+               "tags": ["dev=*"]}]
+}

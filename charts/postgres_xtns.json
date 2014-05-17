@@ -1,0 +1,12 @@
+{
+  "title": "Transactions - ",
+  "units": "txns",
+ "format": "%.2s%c",
+"grouptag": "database",
+    "dss": [{"metric": "postgresql.xact_commit", 
+              "label": "commits",
+               "rate": true },
+            {"metric": "postgresql.xact_rollback", 
+              "label": "rollback",
+               "rate": true }] 
+}
