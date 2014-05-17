@@ -1,7 +1,8 @@
 [
   {
     "name": "PostgreSQL",
-    "regex": "postgresql\\..*"
+    "regex": "postgresql\\..*",
+    "charts": ["postgres_size","postgres_xtns"]
   },
   {
     "name": "NUMA",
@@ -41,11 +42,13 @@
   },
   {
     "name": "IOStat",
-    "regex": "iostat\\..*"
+   "regex": "iostat\\..*",
+  "charts": [ "iostat_inprog", "iostat_sects", "iostat_reqs" ]
   },
   {
     "name": "DIskSpace",
-    "regex": "df\\..*"
+    "regex": "df\\..*",
+    "charts": [ "df_bytes", "df_inodes" ]
   },
   {
     "name": "SocketStats",

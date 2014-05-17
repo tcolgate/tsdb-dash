@@ -1,6 +1,7 @@
 Polymer('dash-tsdb-query', {
         base: '/api/query',
         rate: false,
+    rateCtrl: undefined,
       aggrOp: "sum",
        start: undefined,
          end: undefined,
@@ -18,6 +19,7 @@ Polymer('dash-tsdb-query', {
                 metric: 'validate',
                   tags: 'validate',
                   rate: 'validate',
+              rateCtrl: 'validate',
                 aggrOp: 'validate',
                   dsmp: 'validate',
                    lag: 'validate'
@@ -43,8 +45,13 @@ Polymer('dash-tsdb-query', {
   
                 terms[0] = this.aggrOp ;
 
+                console.log(this);
                 if(this.rate){
-                  terms.push("rate");
+                  if(this.rateCtrl){
+                    terms.push("rate{" + this.rateCtrl + "}");
+                  } else {
+                    terms.push("rate");
+                  }
                 }
 
                 if(this.dsmp){
@@ -53,6 +60,8 @@ Polymer('dash-tsdb-query', {
 
                 // metric
                 terms.push(this.metric);
+
+                console.log(terms)
     
                 //tags
                 var tagstr = "";

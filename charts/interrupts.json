@@ -8,6 +8,7 @@
         "dss": [{"metric": "proc.interrupts",
                    "tags": ["type=*"],
                    "rate": true,
+               "rateCtrl": "counter,,4000000000",
                    "labelmap": {
                                  "RES": "Reschedulw",
                                  "LOC": "Local Timer",

@@ -8,8 +8,10 @@
    "grouptag": "name",
         "dss": [{"metric": "iptrack.packets.in",
                   "label": "in",
-                   "rate": true},
+                   "rate": true,
+               "rateCtrl": "counter,,4000000000"},
                 {"metric": "iptrack.packets.out",
                   "label": "out",
-                   "rate": true}]
+                   "rate": true,
+               "rateCtrl": "counter,,4000000000"}]
 }

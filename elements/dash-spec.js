@@ -23,6 +23,9 @@ Polymer('dash-spec', {
                    if(!ds.hasOwnProperty("rate")){
                      ds.rate = false;
                    };
+                   if(!ds.hasOwnProperty("rateCtrl")){
+                     ds.rateCtrl = false;
+                   };
                    alltags = this.globaltags;
                    if(ds.hasOwnProperty("tags")){
                      ds.tags = alltags.concat(ds.tags);

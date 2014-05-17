@@ -7,6 +7,7 @@
      "format": "%.2s%c",
         "dss": [{"metric": "sys.numa.allocation",
                    "tags": ["type=remote","node=*"],
+               "rateCtrl": "counter,,4000000000",
                    "rate": true }],
        "ytag": "node"
 }

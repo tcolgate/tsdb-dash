@@ -8,9 +8,11 @@
    "grouptag": "iface",
         "dss": [{"metric": "proc.net.bytes",
                    "tags": ["direction=in"],
+               "rateCtrl": "counter,125000000,125000000",
                    "rate": true},
                 {"metric": "proc.net.bytes",
                    "tags": ["direction=out"],
+               "rateCtrl": "counter,125000000,125000000",
                    "rate": true}],
        "ytag": "direction"
 }
