@@ -48,7 +48,7 @@ Polymer('dash-view-host', {
                          }
                        }
                      };
-                     if (match == false){
+                     if (match === false){
                        continue
                      };
 
