@@ -25,8 +25,9 @@
     "history.js": "~1.8",
     "bower": "*",
     "jasmine-ajax": "v2.0.0.rc1",
-    "polymer": "Polymer/polymer#~0.1.4",
-    "polymer-ajax": "Polymer/polymer-ajax#~0.1.4",
-    "flatiron-director": "Polymer/flatiron-director#~0.1.4"
+    "polymer": "Polymer/polymer#~0.3.3",
+    "flatiron-director": "Polymer/flatiron-director#~0.3.0",
+    "core-elements": "Polymer/core-elements#~0.3.3",
+    "paper-elements": "Polymer/paper-elements#~0.3.3"
   }
 }
