@@ -72,7 +72,7 @@ Polymer('dash-spec', {
 
                this.spec = s;
              },
-      ready: function(){
+    changed: function(){
                this.globaltags = [];
              }
 });

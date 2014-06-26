@@ -74,7 +74,7 @@ Polymer('dash-tsdb-query', {
                 this.result = resp.response;
                 this.fire('query-result', this.result);
               },
-       ready: function(){
+     created: function(){
                 this.tags = [];
                 this.result = [];
               }

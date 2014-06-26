@@ -215,7 +215,7 @@ Polymer('dash-tsdb-plot', {
    intPlotSelect: function(ev, rngs){
              this.fire("plot-select",{event: ev, ranges: rngs});
            },
-    ready: function(){
+   created: function(){
              this.tags = [];
            }
 });

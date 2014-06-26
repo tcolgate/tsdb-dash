@@ -1,14 +1,14 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 
 <script src="dash-tsdb-query.js"></script>
 <polymer-element name="dash-tsdb-query" attributes="start end base metric tags rate rateCtrl aggrOp dsmp lag result dsid">
   <template>
     <template if="{{ url != undefined }}">
-      <polymer-ajax auto url="{{ url }}" 
+      <core-ajax auto url="{{ url }}" 
         handleAs="json"
-        on-polymer-response="{{ gotData }}">
-      </polymer-ajax>
+        on-core-response="{{ gotData }}">
+      </core-ajax>
     </template>
   </template>
 </polymer-element>

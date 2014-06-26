@@ -1,20 +1,20 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 
 <script src="dash-tsdb-tree.js"></script>
 <polymer-element name="dash-tsdb-tree" attributes="tree_id branch_id result">
   <template>
     <template if="{{ tree_id }}">
-      <polymer-ajax id="req" auto url="/api/tree/branch?treeid={{tree_id}}"
+      <core-ajax id="req" auto url="/api/tree/branch?treeid={{tree_id}}"
         handleAs="json"
-        on-polymer-response="{{gotBranch}}">
-      </polymer-ajax>
+        on-core-response="{{gotBranch}}">
+      </core-ajax>
     </template>
     <template if="{{ branch_id }}">
-      <polymer-ajax id="req" auto url="/api/tree/branch?branch={{branch_id}}"
+      <core-ajax id="req" auto url="/api/tree/branch?branch={{branch_id}}"
         handleAs="json"
-        on-polymer-response="{{gotBranch}}">
-      </polymer-ajax>
+        on-core-response="{{gotBranch}}">
+      </core-ajax>
     </template>
   </template>
 </polymer-element>

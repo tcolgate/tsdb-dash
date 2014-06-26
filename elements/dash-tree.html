@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../elements/dash-tsdb-tree.html">
 
 <script src="dash-tree.js"></script>
@@ -7,15 +7,15 @@
   <template>
     <H1>TSDB Dasboard</h1>
 
-    <polymer-ajax auto url="/api/tree" 
+    <core-ajax auto url="/api/tree" 
       handleAs="json"
-      on-polymer-response="{{gotTrees}}">
-    </polymer-ajax>
+      on-core-response="{{gotTrees}}">
+    </core-ajax>
 
-    <polymer-ajax auto url="groupings.json" 
+    <core-ajax auto url="../groupings.json" 
       handleAs="json"
-      on-polymer-response="{{gotGroups}}">
-    </polymer-ajax>
+      on-core-response="{{gotGroups}}">
+    </core-ajax>
 
     <template if="{{ groups != [] }}">
       <template repeat="{{ tree in trees }}">

@@ -1,14 +1,14 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 
 <script src="dash-spec.js"></script>
 <polymer-element name="dash-spec" attributes="specName spec globaltags">
   <template if="{{ specName != undefined }}">
-    <polymer-ajax 
+    <core-ajax 
                      auto 
                       url="charts/{{specName}}.json" 
                  handleAs="json"
-      on-polymer-response="{{ gotSpec }}">
-    </polymer-ajax>
+      on-core-response="{{ gotSpec }}">
+    </core-ajax>
   </template>
 </polymer-element>

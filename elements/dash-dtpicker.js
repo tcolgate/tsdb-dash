@@ -23,7 +23,7 @@ Polymer('dash-dtpicker', {
                      this.$.dtInput.style.background = "#FFE4E1";
                    }
                  },
-          ready: function(){
+        created: function(){
                    this.time = moment(new Date());
                  }
 });

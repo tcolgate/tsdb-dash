@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
 <link rel="import" href="dash-dtrange.html">
 <link rel="import" href="dash-tsdb-tree.html">
@@ -16,10 +16,10 @@
     <template if="{{ host != undefined }}">
       <H1>Host view: {{host}}</h1>
 
-      <polymer-ajax auto url="groupings.json" 
+      <core-ajax auto url="../groupings.json" 
         handleAs="json"
-        on-polymer-response="{{gotGroups}}">
-      </polymer-ajax>
+        on-core-response="{{gotGroups}}">
+      </core-ajax>
 
       <dash-tsdb-tree tree_id="1" result="{{atree}}"></dash-tsdb-tree>
       <template repeat="{{ at in atree.branches}}">

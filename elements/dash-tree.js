@@ -6,7 +6,7 @@ Polymer('dash-tree', {
                  this.groups = resp.response;
                },
 
-        ready: function () {
+      created: function () {
                  this.trees = [];
                  this.groups = [];
                }
