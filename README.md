@@ -5,9 +5,6 @@ To install, simple move this directory into the "static" directory of your
 OpenTSDB install.
 
 We make use of
-  jQuery
-  simple-dtpicker
-  flot 
   moment
 
 A TSDB tree is needed on the server side.
