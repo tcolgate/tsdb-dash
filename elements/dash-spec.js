@@ -1,5 +1,5 @@
 Polymer('dash-spec', {
-  specNname: undefined,
+   specName: undefined,
        spec: undefined, 
     gotSpec: function(ev,resp){
                var data = resp.response;
