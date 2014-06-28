@@ -45,7 +45,6 @@ Polymer('dash-tsdb-query', {
   
                 terms[0] = this.aggrOp ;
 
-                console.log(this);
                 if(this.rate){
                   if(this.rateCtrl){
                     terms.push("rate{" + this.rateCtrl + "}");
@@ -61,8 +60,6 @@ Polymer('dash-tsdb-query', {
                 // metric
                 terms.push(this.metric);
 
-                console.log(terms)
-    
                 //tags
                 var tagstr = "";
                 if(this.tags.length > 0){

@@ -1,8 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-
 <script src="dash-tsdb-plot.js"></script>
+
 <polymer-element name="dash-tsdb-plot" attributes="width height spec name data">
   <template if="{{ spec != undefined && data != undefined}}">
+    <link type="text/css" rel="stylesheet" href="../bower_components/nvd3/nv.d3.min.css">
     <div style="overflow: visible; width: {{ width }}px;" class="graph">
       <h6 class="graph"> {{ spec.title }}{{ name  }}</h6>
       <svg id="plot" width="{{width}}" height="{{height}}"></svg>

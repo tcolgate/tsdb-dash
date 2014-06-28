@@ -11,67 +11,32 @@ function nvd3(el, data) {
   nv.addGraph(function() {
     var chart = nv.models.lineChart()
             .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+            .interpolate("basis")           // <=== THERE IT IS!
             .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
             .transitionDuration(350)  //how fast do you want the lines to transition?
             .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
             .showYAxis(true)        //Show the y-axis
             .showXAxis(true)        //Show the x-axis
-    ;
+            .color(d3.scale.category10().range())
 
     chart.xAxis     //Chart x-axis settings
         .axisLabel('Time (ms)')
-        .tickFormat(d3.format(',r'));
+        .tickFormat(function(d) { return d3.time.format('%x')(new Date(d))})
+
+    chart.xScale(d3.time.scale());
 
     chart.yAxis     //Chart y-axis settings
-        .axisLabel('Voltage (v)')
-        .tickFormat(d3.format('.02f'));
-
-    /* Done setting the chart up? Time to render it!*/
-    var myData = sinAndCos();   //You need data...
+        .axisLabel('U')
+        .tickFormat(d3.format('.2s'));
 
     svg    //Select the <svg> element you want to render the chart in.   
-        .datum(myData)         //Populate the <svg> element with chart data...
-        .call(chart);          //Finally, render the chart!
+        .datum(data)         //Populate the <svg> element with chart data...
+        .call(chart);        //Finally, render the chart!
 
     //Update the chart when window resizes.
     nv.utils.windowResize(function() { chart.update() });
     return chart;
   });
-}
-
-/**************************************
- * Simple test data generator
- */
-function sinAndCos() {
-  var sin = [],sin2 = [],
-      cos = [];
-
-  //Data is represented as an array of {x,y} pairs.
-  for (var i = 0; i < 100; i++) {
-    sin.push({x: i, y: Math.sin(i/10)});
-    sin2.push({x: i, y: Math.sin(i/10) *0.25 + 0.5});
-    cos.push({x: i, y: .5 * Math.cos(i/10)});
-  }
-
-  //Line chart data should be sent as an array of series objects.
-  return [
-    {
-      values: sin,      //values - represents the array of {x,y} data points
-      key: 'Sine Wave', //key  - the name of the series.
-      color: '#ff7f0e'  //color - optional: choose your own line color.
-    },
-    {
-      values: cos,
-      key: 'Cosine Wave',
-      color: '#2ca02c'
-    },
-    {
-      values: sin2,
-      key: 'Another sine wave',
-      color: '#7777ff',
-      area: true      //area - set to true if you want this line to turn into a filled area chart.
-    }
-  ];
 }
 
 Polymer('dash-tsdb-plot', {
@@ -141,14 +106,14 @@ Polymer('dash-tsdb-plot', {
                      } else {
                        lag = 0;
                      }
-                     console.log("lag: ", lag);
 
                      for (t in dps) {
                        if(dps.hasOwnProperty(t)){
-                         v = [];
                          dp = dps[t];
-                         v[0] = (lag + parseInt(t,10)) * 1000 ;
-                         v[1] = dp;
+                         v = {
+                           x: (lag + parseInt(t,10)) * 1000 ,
+                           y: dp
+                         };
                          cur = dp;
                          if(dp < min){min = dp;};
                          if(dp > max){max = dp;};
@@ -166,12 +131,14 @@ Polymer('dash-tsdb-plot', {
                      s.sum = sum;
                      s.avg = avg;
       
+                     /*
                      s.label = s.label
                        + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',cur) + "</td>"
                        + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',min) + "</td>"
                        + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',avg) + "</td>"
                        + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',max) + "</td>"
                        + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',sum) + "</td></tr><tr>"; 
+                      */
 
                      series.push(s);
                    }
@@ -208,6 +175,7 @@ Polymer('dash-tsdb-plot', {
              leg.container = this.$.legend;
              leg.noColumns = 6;
 
+             /*
              var flotspec = {
                xaxis: { mode: "time", show: true },
              
@@ -229,8 +197,20 @@ Polymer('dash-tsdb-plot', {
                  shadowSize: 0
                }
              };
+             */
 
-             nvd3(this.$.plot, flotspec);
+             var nvspec = []
+             for (s in series) {
+               if(series.hasOwnProperty(s)){
+                 console.log(s)
+                 nvspec.push({
+                   key: series[s].label,
+                   values: series[s].data
+                 })
+               }
+             }
+
+             nvd3(this.$.plot, nvspec);
            },
    intPlotSelect: function(ev, rngs){
              this.fire("plot-select",{event: ev, ranges: rngs});
