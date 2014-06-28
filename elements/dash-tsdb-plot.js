@@ -21,7 +21,7 @@ function nvd3(el, data) {
 
     chart.xAxis     //Chart x-axis settings
         .axisLabel('Time (ms)')
-        .tickFormat(function(d) { return d3.time.format('%x')(new Date(d))})
+        .tickFormat(function(d) { return d3.time.format('%X')(new Date(d))})
 
     chart.xScale(d3.time.scale());
 
