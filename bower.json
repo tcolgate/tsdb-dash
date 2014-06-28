@@ -23,6 +23,7 @@
   "dependencies": {
     "moment": "~2.5.1",
     "history.js": "~1.8",
+    "nvd3": "*",
     "bower": "*",
     "jasmine-ajax": "v2.0.0.rc1",
     "polymer": "Polymer/polymer#~0.3.3",
