@@ -17,8 +17,10 @@
         <core-toolbar></core-toolbar>
         <core-menu theme="core-light-theme" selected="0" selectedItem="{{ cmd }}">
           <core-submenu icon="folder" label="view_host" selectedItem="{{ host }}">
-            <core-item label="cottus.mediagraft.com"></core-item>
-            <core-item label="aeson.mediagraft.com"></core-item>
+            <dash-tsdb-tree tree_id="1" result="{{hostTree}}"></dash-tsdb-tree>
+            <template repeat="{{ h in hostTree.branches}}">
+              <core-item label="{{ h.displayName }}"></core-item>
+            </template>
           </core-submenu>
         </core-menu>
       </core-header-panel>

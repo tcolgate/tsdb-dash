@@ -19,13 +19,6 @@
         on-core-response="{{gotGroups}}">
       </core-ajax>
 
-      <dash-tsdb-tree tree_id="1" result="{{atree}}"></dash-tsdb-tree>
-      <template repeat="{{ at in atree.branches}}">
-        <template if="{{ at.displayName == host }}">
-        <dash-tsdb-tree branch_id={{at.branchId}} on-tree-result="{{gotHTreeResult}}"></dash-tsdb-tree>
-        <template>
-      </template>
-
       <polymer-ui-accordion selected="0">
         <template repeat="{{ act in activeGroups}}">
           <polymer-ui-collapsible>
