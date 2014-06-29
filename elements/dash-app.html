@@ -1,26 +1,47 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
+<link rel="import" href="../bower_components/core-scaffold/core-scaffold.html">
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/core-menu/core-submenu.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
 <link rel="import" href="dash-view-host.html">
 
 <script src="dash-app.js"></script>
 <polymer-element name="dash-app" attributes="routeStr cmd args">
   <template>
     <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
-    <template if="{{ cmd != 'view_host' }}">
-      <h1> no valid view given </h2>
-    </template>
-    <template if="{{ cmd == 'view_host' }}">
-      <dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange>
-      <br/>
-      <template repeat="{{ a,i in args }}">
-        <template if="{{ start_time != null && end_time != null}}">
-          <dash-view-host 
-            host="{{ a }}" 
-            start_time={{start_time}} 
-            end_time={{end_time}}>
-          </dash-view-host>
+    <core-scaffold>
+      <core-header-panel navigation flex mode="seamed">
+        <core-toolbar></core-toolbar>
+        <core-menu theme="core-light-theme" selected="0" selectedItem="{{ cmd }}">
+          <core-submenu icon="folder" label="view_host" selectedItem="{{ host }}">
+            <core-item label="cottus.mediagraft.com"></core-item>
+            <core-item label="aeson.mediagraft.com"></core-item>
+          </core-submenu>
+        </core-menu>
+      </core-header-panel>
+
+      <div tool>
+        TSDB Dashboard
+        <dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange>
+      </div>
+
+      <div>
+        <template if="{{ cmd.label != 'view_host' }}">
+        <h1> no valid view given  {{ cmd.label }} </h2>
         </template>
-      </template>
-    </template>
+        <template if="{{ cmd.label == 'view_host' }}">
+          <template if="{{ start_time != null && end_time != null}}">
+            <dash-view-host 
+              host="{{ host.label }}" 
+              start_time={{start_time}} 
+              end_time={{end_time}}>
+            </dash-view-host>
+          </template>
+        </template>
+      </div>
+    </core-scaffold>
   </template>
 </polymer-element>

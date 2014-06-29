@@ -10,12 +10,7 @@
 <script src="dash-view-host.js"></script>
 <polymer-element name="dash-view-host" attributes="start_time end_time host data groups htree activeGroups">
   <template>
-    <template if="{{ host == undefined }}">
-      <H1>No host set!</h1>
-    </template>
     <template if="{{ host != undefined }}">
-      <H1>Host view: {{host}}</h1>
-
       <core-ajax auto url="../groupings.json" 
         handleAs="json"
         on-core-response="{{gotGroups}}">
