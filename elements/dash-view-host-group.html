@@ -1,0 +1,51 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-collapse/core-collapse.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="dash-tsdb-tree.html">
+<link rel="import" href="dash-tsdb-plotset.html">
+<link rel="import" href="dash-tsdb-plot.html">
+<link rel="import" href="dash-spec.html">
+
+
+<script src="dash-view-host-group.js"></script>
+<polymer-element name="dash-view-host-group" attributes="start_time end_time hosttree group tags">
+  <template>
+    <h2><paper-checkbox checked={{open}}></paper-checkbox> {{group.name}}</h2>
+    <core-collapse opened={{open}}>
+      <div class="content">
+        <template repeat="{{ chart in group.charts}}">
+          <dash-spec
+               specName="{{ chart }}"
+             globaltags="{{ tags }}"
+                   spec="{{ spec }}">
+          </dash-spec>
+
+          <template if="{{ spec != undefined && open == true }}">
+            <dash-tsdb-plotset 
+                width=600,
+               height=300,
+                 spec={{spec}}
+                start={{start_time}}
+                  end={{end_time}}
+              results={{data}}>
+            </dash-tsdb-plotset>
+
+            <template if="{{ data != undefined }}">
+              <template repeat="{{ d in data }}">
+                <dash-tsdb-plot 
+                  style="float: left;"
+                  spec={{spec}}
+                  name={{d.name}}
+                  data={{d.data}}
+                  width=500
+                  height=300>
+                </dash-tsdb-plot>
+              </template>
+            </template>
+          </template>
+          <div style="clear:both;"></div>
+        </template>
+      </div>
+    </core-collapse>
+  </template>
+</polymer-element>

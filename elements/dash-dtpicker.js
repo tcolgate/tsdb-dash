@@ -1,4 +1,5 @@
 Polymer('dash-dtpicker', {
+          label: "",
            time: undefined,
          timeIn: undefined,
           valid: true,

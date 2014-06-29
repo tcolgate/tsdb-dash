@@ -5,6 +5,7 @@ function nvd3(el, data) {
   var padding = 3;
   var width = parseInt(svg.style("width")) - padding;
   var height = parseInt(svg.style("height")) - padding;
+
   var x = d3.scale.linear().range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
 
@@ -30,6 +31,7 @@ function nvd3(el, data) {
         .tickFormat(d3.format('.2s'));
 
     svg    //Select the <svg> element you want to render the chart in.   
+        .style({ 'width': width, 'height': height })
         .datum(data)         //Populate the <svg> element with chart data...
         .call(chart);        //Finally, render the chart!
 

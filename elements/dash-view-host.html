@@ -1,17 +1,18 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
-<link rel="import" href="../bower_components/polymer-ui-accordion/polymer-ui-accordion.html">
-<link rel="import" href="../bower_components/polymer-ui-collapsible/polymer-ui-collapsible.html">
+<link rel="import" href="../bower_components/core-list/core-list.html">
+<link rel="import" href="../bower_components/core-collapse/core-collapse.html">
 <link rel="import" href="dash-dtrange.html">
 <link rel="import" href="dash-tsdb-tree.html">
 <link rel="import" href="dash-tsdb-plotset.html">
 <link rel="import" href="dash-tsdb-plot.html">
 <link rel="import" href="dash-spec.html">
+<link rel="import" href="dash-view-host-group.html">
 
 
 <script src="dash-view-host.js"></script>
-<polymer-element name="dash-view-host" attributes="start_time end_time host data groups htree activeGroups">
+<polymer-element name="dash-view-host" attributes="start_time end_time host data htree groups activeGroups">
   <template>
     <template if="{{ host != undefined }}">
       <core-ajax auto url="../groupings.json" 
@@ -19,48 +20,18 @@
         on-core-response="{{gotGroups}}">
       </core-ajax>
 
-      <polymer-ui-accordion selected="0">
+      <dash-tsdb-tree branch_id={{host.branchId}} result="{{htree}}"></dash-tsdb-tree>
+
+      <core-list>
         <template repeat="{{ act in activeGroups}}">
-          <polymer-ui-collapsible>
-            <div class="polymer-ui-collapsible-header">{{act.name}}</div>
-            <div class="content">
-              <template repeat="{{ chart in act.charts}}">
-                <dash-spec
-                     specName="{{ chart }}"
-                   globaltags="{{ tags }}"
-                         spec="{{ spec }}">
-                </dash-spec>
-
-                <template if="{{ spec != undefined }}">
-                  <dash-tsdb-plotset 
-                      width=600,
-                     height=300,
-                       spec={{spec}}
-                      start={{start_time}}
-                        end={{end_time}}
-                    results={{data}}>
-                  </dash-tsdb-plotset>
-
-                  <template if="{{ data != undefined }}">
-                    <template repeat="{{ d in data }}">
-                      <dash-tsdb-plot 
-                          style="float: left;"
-                          spec={{spec}}
-                          name={{d.name}}
-                          data={{d.data}}
-                         width=500
-                         height=300
-                         on-plot-select="{{ plotSelected }}">
-                      </dash-tsdb-plot>
-                    </template>
-                  </template>
-                </template>
-                <div style="clear:both;"></div>
-              </template>
-            </div>
-          </polymer-ui-collapsible>
+          <dash-view-host-group 
+            start_time="{{start_time}}"
+            end_time="{{end_time}}"
+            hosttree="{{host}}"
+            group="{{act}}">
+          </dash-view-host-group>
         </template>
-      </polymer-ui-accordion>
+      </core-list>
 
     </template>
   </template>

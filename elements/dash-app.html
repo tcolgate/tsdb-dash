@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/core-menu/core-submenu.html">
 <link rel="import" href="../bower_components/core-item/core-item.html">
 <link rel="import" href="dash-view-host.html">
+<link rel="import" href="dash-app-menuitem.html">
 
 <script src="dash-app.js"></script>
 <polymer-element name="dash-app" attributes="routeStr cmd args">
@@ -19,7 +20,7 @@
           <core-submenu icon="folder" label="view_host" selectedItem="{{ host }}">
             <dash-tsdb-tree tree_id="1" result="{{hostTree}}"></dash-tsdb-tree>
             <template repeat="{{ h in hostTree.branches}}">
-              <core-item label="{{ h.displayName }}"></core-item>
+              <dash-app-menuitem label="{{ h.displayName }}" data="{{ h }}"></dash-app-menuitem>
             </template>
           </core-submenu>
         </core-menu>
@@ -37,7 +38,7 @@
         <template if="{{ cmd.label == 'view_host' }}">
           <template if="{{ start_time != null && end_time != null}}">
             <dash-view-host 
-              host="{{ host.label }}" 
+              host="{{ host.data }}" 
               start_time={{start_time}} 
               end_time={{end_time}}>
             </dash-view-host>

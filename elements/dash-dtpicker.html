@@ -1,14 +1,20 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-field/core-field.html">
 
 <script src="dash-dtpicker.js"></script>
-<polymer-element name="dash-dtpicker" attributes="time valid">
+<polymer-element name="dash-dtpicker" attributes="label time valid">
   <template>
     <style>
-      input {
+      paper-input {
         background: white;
       }
     </style> 
-    <input type="text" value="{{timeIn}}" id="dtInput">
+    <core-field>
+      <span> 
+        <label>{{label}}</label>
+        <input type="text" value="{{timeIn}}" id="dtInput"></input>
+      </span>
+    </core-field>
   </template>
 </polymer-element>
 

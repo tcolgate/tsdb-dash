@@ -18,16 +18,12 @@ Polymer('dash-view-host', {
                    }
                  };
                },
-    gotHTreeResult: function(ev,resp){
-                 this.htree = resp;
-               },
  plotSelected: function(ev,evdata){
                  this.start_time = moment(evdata.ranges.xaxis.from)
                  this.end_time = moment(evdata.ranges.xaxis.to)
                },
   hostChanged: function(oldv,newv){
-                 this.tags = [];
-                 this.tags.push("host=" + newv);
+                 this.tags = [ "host=" + newv.displayName ]
                },
  updateGroups: function(oldv,newv){
                  var l, g, ag, leaf, displayName, match, isActive;
