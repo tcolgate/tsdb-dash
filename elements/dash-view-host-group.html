@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-collapse/core-collapse.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="dash-tsdb-tree.html">
 <link rel="import" href="dash-tsdb-plotset.html">
@@ -10,7 +11,15 @@
 <script src="dash-view-host-group.js"></script>
 <polymer-element name="dash-view-host-group" attributes="start_time end_time hosttree group tags">
   <template>
-    <h2><paper-checkbox checked={{open}}></paper-checkbox> {{group.name}}</h2>
+    <style>
+      core-toolbar em {
+        color: green;
+        text-align: right;
+      }
+    </style>
+    <core-toolbar>
+      <paper-checkbox checked={{open}}></paper-checkbox><em>{{group.name}}</em>
+    </core-toolbar>
     <core-collapse opened={{open}}>
       <div class="content">
         <template repeat="{{ chart in group.charts}}">

@@ -36,7 +36,7 @@ function nvd3(el, data) {
         .call(chart);        //Finally, render the chart!
 
     //Update the chart when window resizes.
-    nv.utils.windowResize(function() { chart.update() });
+    //nv.utils.windowResize(function() { chart.update() });
     return chart;
   });
 }
