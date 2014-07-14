@@ -15,7 +15,9 @@
     <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
     <core-scaffold>
       <core-header-panel navigation flex mode="seamed">
-        <core-toolbar></core-toolbar>
+        <core-toolbar>
+          TSDB Dash
+        </core-toolbar>
         <core-menu theme="core-light-theme" selected="0" selectedItem="{{ cmd }}">
           <core-submenu icon="folder" label="view_host" selectedItem="{{ host }}">
             <dash-tsdb-tree tree_id="1" result="{{hostTree}}"></dash-tsdb-tree>
@@ -26,8 +28,7 @@
         </core-menu>
       </core-header-panel>
 
-      <div tool>
-        <b>TSDB Dashboard</b>
+      <div horizontal layout tool>
         <dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange>
       </div>
 
