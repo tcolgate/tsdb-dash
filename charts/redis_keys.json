@@ -3,7 +3,7 @@
       "units": "keys",
        "fill": 0,
   "linewidth": 1,
-     "format": "%.2d",
+     "format": "%.2s",
         "dss": [{"metric": "redis.keys",
                    "tags": ["db=*"]}],
        "ytag": "db"

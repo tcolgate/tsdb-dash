@@ -1,7 +1,7 @@
 {
   "title": "Transactions - ",
   "units": "txns",
- "format": "%.2s%c",
+ "format": ".2s",
 "grouptag": "database",
     "dss": [{"metric": "postgresql.xact_commit", 
               "label": "commits",

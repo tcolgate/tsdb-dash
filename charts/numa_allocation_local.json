@@ -4,7 +4,7 @@
        "fill": 0,
   "linewidth": 1,
         "log": false,
-     "format": "%.2s%c",
+     "format": ".2s",
         "dss": [{"metric": "sys.numa.allocation",
                    "tags": ["type=local","node=*"],
                "rateCtrl": "counter,,4000000000",

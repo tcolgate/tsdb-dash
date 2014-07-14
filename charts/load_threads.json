@@ -1,8 +1,8 @@
 {
-  "title": "Total Threads",
+  "title": "Threads",
   "fill": 0,
   "linewidth": 1,
-  "format": "%d",
+  "format": ".2d",
   "units": "threads",
     "dss": [{"metric": "proc.loadavg.total_threads",
               "label": "Threads",

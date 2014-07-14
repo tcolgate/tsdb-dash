@@ -1,8 +1,8 @@
 {
   "title": "Disk - Bytes - ",
-  "units": "bytes",
+  "units": "Bytes",
    "fill": 1,
- "format": "%.2s%c",
+ "format": ".2s",
 "grouptag": "mount",
     "dss": [{"metric": "df.bytes.free", 
               "label": "Bytes Available",

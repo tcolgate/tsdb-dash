@@ -1,9 +1,9 @@
 {
       "title": "Scaling",
-      "units": "freq",
+      "units": "hz",
        "fill": 0,
   "linewidth": 1,
-     "format": "%.2s%chz",
+     "format": ".2s",
         "dss": [{"metric": "proc.scaling.cur",
                    "tags": ["cpu=*"]}],
        "ytag": "cpu"

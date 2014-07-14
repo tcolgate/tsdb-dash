@@ -1,10 +1,10 @@
 /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
 
-function nvd3(el, data) {
+function nvd3(w, h, el, data, spec) {
   var svg = d3.select(el)
   var padding = 3;
-  var width = parseInt(svg.style("width")) - padding;
-  var height = parseInt(svg.style("height")) - padding;
+  var width = w - padding;
+  var height = h - padding;
 
   var x = d3.scale.linear().range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
@@ -21,17 +21,23 @@ function nvd3(el, data) {
             .color(d3.scale.category10().range())
 
     chart.xAxis     //Chart x-axis settings
-        .axisLabel('Time (ms)')
+        .axisLabel('Times')
         .tickFormat(function(d) { return d3.time.format('%X')(new Date(d))})
 
     chart.xScale(d3.time.scale());
 
     chart.yAxis     //Chart y-axis settings
-        .axisLabel('U')
-        .tickFormat(d3.format('.2s'));
+        .axisLabel(spec.units)
+        .tickFormat(d3.format(spec.format));
+
+    if (spec.log) {
+      chart.yScale(d3.scale.log());
+    }
+
+    console.log(spec.format)
 
     svg    //Select the <svg> element you want to render the chart in.   
-        .style({ 'width': width, 'height': height })
+        .style({ 'max-width': width, 'max-height': height })
         .datum(data)         //Populate the <svg> element with chart data...
         .call(chart);        //Finally, render the chart!
 
@@ -58,18 +64,6 @@ Polymer('dash-tsdb-plot', {
              var d, ds, dps, dp, s, v, vs, t; 
              var cur, min, max, sum, avg, lag;
              var di, ddi;
-
-             var ticks;
-
-             var transform = function(x){return x;};
-
-             var tickformatter = 
-               (function(fmt,lgb){
-                 return function (val) {
-                   var ret = gprintf(fmt,lgb,'.',val);
-                   return ret;
-                 };
-               })(this.spec.format,this.spec.logbase);
 
              for(di in this.data){
                if(this.data.hasOwnProperty(di)){
@@ -133,15 +127,6 @@ Polymer('dash-tsdb-plot', {
                      s.sum = sum;
                      s.avg = avg;
       
-                     /*
-                     s.label = s.label
-                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',cur) + "</td>"
-                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',min) + "</td>"
-                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',avg) + "</td>"
-                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',max) + "</td>"
-                       + "<td>" + gprintf(this.spec.format,this.spec.logbase,'.',sum) + "</td></tr><tr>"; 
-                      */
-
                      series.push(s);
                    }
                  };
@@ -150,61 +135,11 @@ Polymer('dash-tsdb-plot', {
 
  
              if(ds.hasOwnProperty("log") && ds.log){
-               transform = 
-                 (function(lgb){
-                   return function(v){return Math.log(v) / Math.log(lgb);};
-                 })(ds.logbase);
-               ticks = 
-                 (function(lgb,tkf){
-                   return function(axis) {
-                     var res = [];
-                     var mx = Math.ceil(Math.log(axis.max) / Math.log(lgb));
-                     var i = 0;
-                     var vl, txt;
-
-                     do {
-                       vl  = Math.pow(lgb,i);
-                       txt = tkf(vl, axis);
-                       res.push([vl,txt]);
-                       ++i;
-                     } while (i < mx);
- 
-                     return res;
-                   };})(ds.logbase,tickformatter);
              }
-
-             var leg = { show: true, position: "sw" };
-             leg.container = this.$.legend;
-             leg.noColumns = 6;
-
-             /*
-             var flotspec = {
-               xaxis: { mode: "time", show: true },
-             
-               yaxes: [{
-                 position: 'left',
-                   axisLabel: ds.ylabel,
-                   color: "#00000000",
-                   transform: transform,
-                   ticks: ticks,
-                   tickFormatter: tickformatter
-               }],
-
-               grid: { hoverable: true, autoHighlight: false },
-               legend: leg,
-               selection: { mode: "x" },
-               series: {
-                 stack: ds.stack,
-                 lines: { fill: ds.fill, show: true , lineWidth: ds.linewidth},
-                 shadowSize: 0
-               }
-             };
-             */
 
              var nvspec = []
              for (s in series) {
                if(series.hasOwnProperty(s)){
-                 console.log(s)
                  nvspec.push({
                    key: series[s].label,
                    values: series[s].data
@@ -212,7 +147,7 @@ Polymer('dash-tsdb-plot', {
                }
              }
 
-             nvd3(this.$.plot, nvspec);
+             nvd3(this.width, this.height, this.$.plot, nvspec, this.spec);
            },
    intPlotSelect: function(ev, rngs){
              this.fire("plot-select",{event: ev, ranges: rngs});

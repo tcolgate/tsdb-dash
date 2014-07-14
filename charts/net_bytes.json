@@ -4,7 +4,7 @@
        "fill": 0,
   "linewidth": 1,
         "log": false,
-     "format": "%.2s%c",
+     "format": ".2s",
    "grouptag": "iface",
         "dss": [{"metric": "proc.net.bytes",
                    "tags": ["direction=in"],

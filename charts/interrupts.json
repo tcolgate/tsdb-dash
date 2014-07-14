@@ -4,7 +4,7 @@
        "fill": 0,
   "linewidth": 1,
         "log": true,
-     "format": "%.2s%c",
+     "format": ".2s",
         "dss": [{"metric": "proc.interrupts",
                    "tags": ["type=*"],
                    "rate": true,

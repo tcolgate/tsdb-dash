@@ -1,7 +1,7 @@
 {
   "title": "Commands",
-  "units": "cmds",
- "format": "%.2d",
+  "units": "cmd/s",
+ "format": ".2s",
    "fill": 0,
 "linewidth": 1,
     "dss": [{"metric": "redis.total_commands_processed", 

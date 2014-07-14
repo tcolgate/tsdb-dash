@@ -1,7 +1,7 @@
 {
   "title": "Alive connections",
   "units": "conns",
- "format": "%.2s%c",
+ "format": ".2s",
    "fill": 0,
 "linewidth": 1,
     "dss": [{"metric": "zookeeper.zk_num_alive_connections", 

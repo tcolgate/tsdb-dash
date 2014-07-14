@@ -1,7 +1,7 @@
 {
   "title": "Requests - ",
-  "units": "reqs",
- "format": "%.2s%c",
+  "units": "reqs/s",
+ "format": ".2s",
 "grouptag": "dev",
     "dss": [{"metric": "iostat.disk.read_requests", 
               "label": "reads",

@@ -1,7 +1,7 @@
 {
   "title": "Sectors - ",
-  "units": "sects",
- "format": "%.2s%c",
+  "units": "sects/s",
+ "format": ".2s",
 "grouptag": "dev",
     "dss": [{"metric": "iostat.disk.read_sectors", 
                "rate": true,

@@ -2,7 +2,7 @@
   "title": "Runnable processes",
   "fill": 0,
   "linewidth": 1,
-  "format": "%d",
+  "format": ".2d",
   "units": "procs",
     "dss": [{"metric": "proc.loadavg.runnable",
               "label": "Runnable proc",

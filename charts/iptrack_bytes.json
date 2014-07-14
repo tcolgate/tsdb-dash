@@ -4,7 +4,7 @@
        "fill": 0,
   "linewidth": 1,
         "log": false,
-     "format": "%.2s%c",
+     "format": ".2s",
    "grouptag": "name",
         "dss": [{"metric": "iptrack.bytes.in",
                   "label": "in",

@@ -31,7 +31,7 @@
 
           <template if="{{ spec != undefined && open == true }}">
             <dash-tsdb-plotset 
-                width=600,
+                width=300,
                height=300,
                  spec={{spec}}
                 start={{start_time}}
@@ -46,7 +46,7 @@
                   spec={{spec}}
                   name={{d.name}}
                   data={{d.data}}
-                  width=500
+                  width=300
                   height=300>
                 </dash-tsdb-plot>
               </template>

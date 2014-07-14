@@ -1,7 +1,7 @@
 {
   "title": "Latency",
   "units": "ms",
- "format": "%.2fms",
+ "format": ".2f",
    "fill": 0,
 "linewidth": 1,
     "dss": [{"metric": "zookeeper.zk_min_latency", 
