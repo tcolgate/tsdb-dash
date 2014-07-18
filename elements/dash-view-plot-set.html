@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="dash-tsdb-plotset.html">
+<link rel="import" href="dash-tsdb-plot.html">
+
+<script src="dash-view-plot-set.js"></script>
+<polymer-element name="dash-view-plot-set" attributes="start end spec width height">
+  <template>
+      <dash-tsdb-plotset 
+          width={{width}},
+         height={{height}},
+           spec={{spec}}
+          start={{start}}
+            end={{end}}
+        results={{data}}>
+      </dash-tsdb-plotset>
+
+      <template if="{{ data != undefined }}">
+        <div horizontal>
+          <template repeat="{{ d in data }}">
+            <dash-tsdb-plot 
+              spec={{spec}}
+              name={{d.name}}
+              data={{d.data}}
+              width={{width}}
+              height={{height}}>
+            </dash-tsdb-plot>
+          </template>
+        </div>
+      </template>
+  </template>
+</polymer-element>

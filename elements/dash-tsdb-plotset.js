@@ -13,6 +13,7 @@ Polymer('dash-tsdb-plotset', {
 
            },
   created: function(){
+             this.spec = {}
              this.results = [];
            }
 });

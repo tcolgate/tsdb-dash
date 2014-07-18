@@ -3,13 +3,12 @@
   "units": "inodes",
    "fill": 1,
  "format": ".2s",
+  "stack": true,
 "grouptag": "mount",
     "dss": [{"metric": "df.inodes.free", 
               "label": "INodes Available",
-              "stack": 1,
                "rate": false },
             {"metric": "df.inodes.used", 
               "label": "INodes Used",
-              "stack": 1,
                "rate": false }]
 }

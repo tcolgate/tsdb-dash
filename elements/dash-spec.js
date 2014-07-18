@@ -11,6 +11,7 @@ Polymer('dash-spec', {
                        "log": false,
                    "logbase": 10,
                     "format": "%.2s%c",
+                     "stack": false,
                        "dss": [],
                       "ytag": undefined,
                   "grouptag": undefined
@@ -68,6 +69,10 @@ Polymer('dash-spec', {
 
                if(data.ytag){
                  s.ytag = data.ytag;
+               }
+
+               if(data.stack){
+                 s.stack = data.stack;
                }
 
                this.spec = s;

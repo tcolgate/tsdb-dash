@@ -3,9 +3,8 @@
 <link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="dash-tsdb-tree.html">
-<link rel="import" href="dash-tsdb-plotset.html">
-<link rel="import" href="dash-tsdb-plot.html">
 <link rel="import" href="dash-spec.html">
+<link rel="import" href="dash-view-plot-set.html">
 
 
 <script src="dash-view-host-group.js"></script>
@@ -29,30 +28,17 @@
                    spec="{{ spec }}">
           </dash-spec>
 
-          <template if="{{ spec != undefined && open == true }}">
-            <dash-tsdb-plotset 
-                width=300,
-               height=300,
-                 spec={{spec}}
-                start={{start_time}}
-                  end={{end_time}}
-              results={{data}}>
-            </dash-tsdb-plotset>
-
-            <template if="{{ data != undefined }}">
-              <template repeat="{{ d in data }}">
-                <dash-tsdb-plot 
-                  style="float: left;"
-                  spec={{spec}}
-                  name={{d.name}}
-                  data={{d.data}}
-                  width=300
-                  height=300>
-                </dash-tsdb-plot>
-              </template>
+          <div vertical>
+            <template if="{{ spec != undefined && open == true }}">
+              <dash-view-plot-set 
+                  width=650,
+                 height=300,
+                   spec={{spec}}
+                  start={{start_time}}
+                    end={{end_time}}>
+              </dash-view-plot-set>
             </template>
-          </template>
-          <div style="clear:both;"></div>
+          </div>
         </template>
       </div>
     </core-collapse>

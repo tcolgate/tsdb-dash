@@ -3,13 +3,12 @@
   "units": "Bytes",
    "fill": 1,
  "format": ".2s",
+  "stack": true,
 "grouptag": "mount",
     "dss": [{"metric": "df.bytes.free", 
               "label": "Bytes Available",
-              "stack": 1,
                "rate": false },
             {"metric": "df.bytes.used", 
               "label": "Bytes Used",
-              "stack": 1,
                "rate": false }]
 }
