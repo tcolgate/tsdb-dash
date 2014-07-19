@@ -1,11 +1,12 @@
 Polymer('dash-view-plot-set', {
             width: 650,
            height: 300,
+         specName: "",
             start: undefined,
               end: undefined,
           created: function(){
-                     this.spec = {}
-                     this.data = []
+                     this.tags = []
+                     this.S = {}
                    },
             ready: function(){
                    }

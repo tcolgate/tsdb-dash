@@ -5,7 +5,7 @@
   <template if="{{ spec != undefined && data != undefined}}">
     <link type="text/css" rel="stylesheet" href="../bower_components/nvd3/nv.d3.min.css">
     <div style="overflow: visible; width: {{ width }}px;" class="graph">
-      <h6 class="graph"> {{ spec.title }}{{ name  }}</h6>
+      <h4 class="graph"> {{ spec.title }}{{ name  }}</h4>
       <svg id="plot" width="{{width}}" height="{{height}}"></svg>
     </div>
     <div id='legend'></div>

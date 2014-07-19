@@ -21,25 +21,20 @@
     </core-toolbar>
     <core-collapse opened={{open}}>
       <div class="content">
-        <template repeat="{{ chart in group.charts}}">
-          <dash-spec
-               specName="{{ chart }}"
-             globaltags="{{ tags }}"
-                   spec="{{ spec }}">
-          </dash-spec>
-
-          <div vertical>
-            <template if="{{ spec != undefined && open == true }}">
+        <div vertical>
+          <template repeat="{{ chart in group.charts}}">
+            <template if="{{ open == true }}">
               <dash-view-plot-set 
-                  width=650,
-                 height=300,
-                   spec={{spec}}
-                  start={{start_time}}
-                    end={{end_time}}>
+                  width=350
+                 height=250
+               specName="{{ chart }}"
+                   tags="{{ tags }}"
+                  start="{{ start_time }}"
+                    end="{{ end_time }}">
               </dash-view-plot-set>
             </template>
-          </div>
-        </template>
+          </template>
+        </div>
       </div>
     </core-collapse>
   </template>

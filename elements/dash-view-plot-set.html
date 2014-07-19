@@ -3,12 +3,18 @@
 <link rel="import" href="dash-tsdb-plot.html">
 
 <script src="dash-view-plot-set.js"></script>
-<polymer-element name="dash-view-plot-set" attributes="start end spec width height">
+<polymer-element name="dash-view-plot-set" attributes="start end specName tags width height">
   <template>
+      <dash-spec
+           specName="{{ specName }}"
+         globaltags="{{ tags }}"
+               spec="{{ S }}">
+      </dash-spec>
+
       <dash-tsdb-plotset 
           width={{width}},
          height={{height}},
-           spec={{spec}}
+           spec={{S}}
           start={{start}}
             end={{end}}
         results={{data}}>
@@ -18,7 +24,7 @@
         <div horizontal>
           <template repeat="{{ d in data }}">
             <dash-tsdb-plot 
-              spec={{spec}}
+              spec={{S}}
               name={{d.name}}
               data={{d.data}}
               width={{width}}
@@ -27,5 +33,5 @@
           </template>
         </div>
       </template>
-  </template>
+    </template>
 </polymer-element>
