@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
-<link rel="import" href="../bower_components/core-list/core-list.html">
 <link rel="import" href="../bower_components/core-collapse/core-collapse.html">
 <link rel="import" href="dash-dtrange.html">
 <link rel="import" href="dash-tsdb-tree.html">
@@ -22,7 +21,6 @@
 
       <dash-tsdb-tree branch_id={{host.branchId}} result="{{htree}}"></dash-tsdb-tree>
 
-      <core-list>
         <template repeat="{{ act in activeGroups}}">
           <dash-view-host-group 
             start_time="{{start_time}}"
@@ -31,7 +29,6 @@
             group="{{act}}">
           </dash-view-host-group>
         </template>
-      </core-list>
 
     </template>
   </template>
