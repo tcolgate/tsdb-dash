@@ -4,11 +4,13 @@
 <polymer-element name="dash-tsdb-plot" attributes="width height spec name data">
   <template if="{{ spec != undefined && data != undefined}}">
     <link type="text/css" rel="stylesheet" href="../bower_components/nvd3/nv.d3.min.css">
-    <div style="overflow: visible; width: {{ width }}px;" class="graph">
-      <h4 class="graph"> {{ spec.title }}{{ name  }}</h4>
-      <svg id="plot" width="{{width}}" height="{{height}}"></svg>
+    <div style="display: block;">
+      <em>{{ spec.title }}{{ name  }}</em>
+      <div style="overflow: visible; width: {{ width }}px;" class="graph">
+        <svg id="plot" width="{{width}}" height="{{height}}"></svg>
+      </div>
+      <div id='legend'></div>
     </div>
-    <div id='legend'></div>
   </template>
 </polymer-element>
 

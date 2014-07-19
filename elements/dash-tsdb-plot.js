@@ -19,7 +19,7 @@ function nvd3(w, h, el, data, spec) {
       chart = nv.models.lineChart()
     }
 
-    chart.margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+    chart.margin({left: 80})  //Adjust chart margins to give the x-axis some breathing room.
          .interpolate("basis")           // <=== THERE IT IS!
          .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
          .transitionDuration(350)  //how fast do you want the lines to transition?
@@ -29,7 +29,6 @@ function nvd3(w, h, el, data, spec) {
          .color(d3.scale.category10().range())
 
     chart.xAxis     //Chart x-axis settings
-        .axisLabel('Times')
         .tickFormat(function(d) { return d3.time.format('%X')(new Date(d))})
 
     chart.xScale(d3.time.scale());
