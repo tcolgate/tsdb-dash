@@ -27,6 +27,9 @@ Polymer('dash-view-host', {
                },
  updateGroups: function(oldv,newv){
                  var l, g, ag, leaf, displayName, match, isActive;
+
+                 this.activeGroups = [];
+
                  if(! this.htree.leaves){
                    return
                  };
