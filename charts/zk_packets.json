@@ -6,8 +6,10 @@
 "linewidth": 1,
     "dss": [{"metric": "zookeeper.zk_packets_sent", 
               "label": "tx",
+           "rateCtrl": "counter,,4000000000",
                "rate": true }.
             {"metric": "zookeeper.zk_packets_received", 
               "label": "rx",
+           "rateCtrl": "counter,,4000000000",
                "rate": true }]
 }

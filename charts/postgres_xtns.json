@@ -5,8 +5,10 @@
 "grouptag": "database",
     "dss": [{"metric": "postgresql.xact_commit", 
               "label": "commits",
+           "rateCtrl": "counter,,4000000000",
                "rate": true },
             {"metric": "postgresql.xact_rollback", 
               "label": "rollback",
+           "rateCtrl": "counter,,4000000000",
                "rate": true }] 
 }

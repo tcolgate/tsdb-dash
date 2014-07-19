@@ -5,10 +5,12 @@
 "grouptag": "dev",
     "dss": [{"metric": "iostat.disk.read_sectors", 
                "rate": true,
+           "rateCtrl": "counter,,4000000000",
               "label": "read",
                "tags": ["dev=*"]},
             {"metric": "iostat.disk.write_sectors", 
                "rate": true,
+           "rateCtrl": "counter,,4000000000",
               "label": "writes",
                "tags": ["dev=*"]}] 
 }

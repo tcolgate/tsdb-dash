@@ -6,5 +6,6 @@
 "linewidth": 1,
     "dss": [{"metric": "redis.total_commands_processed", 
               "label": "cmds",
+           "rateCtrl": "counter,,4000000000",
                "rate": true }]
 }

@@ -6,9 +6,11 @@
     "dss": [{"metric": "iostat.disk.read_requests", 
               "label": "reads",
                "rate": true,
+           "rateCtrl": "counter,,4000000000",
                "tags": ["dev=*"]},
             {"metric": "iostat.disk.write_requests", 
               "label": "writes",
                "rate": true,
+           "rateCtrl": "counter,,4000000000",
                "tags": ["dev=*"]}] 
 }
