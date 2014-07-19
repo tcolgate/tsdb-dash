@@ -1,15 +1,29 @@
 This is a pure JavaScript implementation of a dashboard for 
 OpenTSDB.
 
-To install, simple move this directory into the "static" directory of your
-OpenTSDB install.
-
 We make use of
-  moment
+  moment.js
+  Polymer
+  NVD3
 
-A TSDB tree is needed on the server side.
+## Install
 
-It can be created as follows....
+To install, simply move this directory into the "static" directory of your
+OpenTSDB install. You should then be able to access it at: http://tsdbhost:4242/s/dash/index.html. Alternatively
+host it elsewhere, and make sure tsdb is configured to serve the appropriate CORS headers.
+
+## Setup 
+
+A TSDB tree is needed on the server side. Make sure you have tree processing enabled. I used the following settings:
+
+```
+tsd.core.meta.enable_realtime_uid = true
+tsd.core.meta.enable_tracking = true
+tsd.core.meta.enable_realtime_ts = true
+tsd.core.tree.enable_processing = true
+```
+
+The tree can be created as follows:
 
 ```sh
 curl -X POST 'http://localhost:4242/api/tree?name=DashByHosts'
@@ -83,4 +97,12 @@ It should look as follows
    "strictMatch" : false,
    "enabled" : true
 }
+```
+
+If you have had tsdb running with tree processing enabled, or have only just added the above tree, you
+will probably need to do a a metasyc and treesync. The following should work, but can take quite a while
+
+```
+# /usr/share/opentsdb/bin/tsdb metasync
+# /usr/share/opentsdb/bin/tsdb treesync
 ```
