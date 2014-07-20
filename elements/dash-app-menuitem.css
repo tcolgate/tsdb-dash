@@ -1,0 +1,26 @@
+/* This is basically stolen from core item, not sure 
+ * how styling should work here
+ */
+
+html /deep/ dash-app-menuitem {
+  display: block;
+  position: relative;
+  min-height: 40px;
+  white-space: nowrap;
+}
+
+html /deep/ dash-app-menuitem.core-selected {
+  font-weight: bold;
+}
+
+html /deep/ dash-app-menuitem::shadow core-icon {
+  margin: 0 16px 0 4px;
+}
+
+html /deep/ dash-app-menuitem::shadow ::content > a {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
