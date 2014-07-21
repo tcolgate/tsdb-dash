@@ -1,7 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../bower_components/flatiron-director/flatiron-director.html">
-<link rel="import" href="../bower_components/core-collapse/core-collapse.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="dash-dtrange.html">
 <link rel="import" href="dash-tsdb-tree.html">
 <link rel="import" href="dash-tsdb-plotset.html">
@@ -21,15 +21,17 @@
 
       <dash-tsdb-tree branch_id={{host.branchId}} result="{{htree}}"></dash-tsdb-tree>
 
+      <paper-tabs selected="{{selected}}">
         <template repeat="{{ act in activeGroups}}">
-          <dash-view-host-group 
-            start_time="{{start_time}}"
-            end_time="{{end_time}}"
-            hosttree="{{host}}"
-            group="{{act}}">
-          </dash-view-host-group>
+          <paper-tab>{{ act.name }}</paper-tab>
         </template>
-
+      </paper-tabs>
+      <dash-view-host-group 
+        start_time="{{start_time}}"
+        end_time="{{end_time}}"
+        hosttree="{{host}}"
+        group="{{ activeGroups[selected] }}">
+      </dash-view-host-group>
     </template>
   </template>
 </polymer-element>

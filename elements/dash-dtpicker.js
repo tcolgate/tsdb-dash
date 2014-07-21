@@ -1,27 +1,24 @@
 Polymer('dash-dtpicker', {
           label: "",
-           time: undefined,
-         timeIn: undefined,
+         timeIn: "",
           valid: true,
-  timeInChanged: function(oldv,newv){
-                   var newdate = moment(newv, "YYYY-MM-DD HH:mm:ss",true);
+        vaidate: function(value){
+                   var newdate = moment(value, "YYYY-MM-DD HH:mm:ss",true);
+                   if (newdate.isValid()){
+                     return true;
+                   } else {
+                     return false;
+                   } 
+                 },
+  timeInChanged: function(){
+                   var newdate = moment(this.timeIn, "YYYY-MM-DD HH:mm:ss",true);
                    if (newdate.isValid()){
                      this.time = newdate;
-                     this.valid = true;
-                   } else {
-                     this.valid = false;
-                   } 
+                   }
                  },
     timeChanged: function(){
                    if(this.valid){
                      this.timeIn = this.time.format("YYYY-MM-DD HH:mm:ss");
-                   }
-                 },
-   validChanged: function(){
-                   if (this.valid){
-                     this.$.dtInput.style.background = "white";
-                   } else {
-                     this.$.dtInput.style.background = "#FFE4E1";
                    }
                  },
         created: function(){

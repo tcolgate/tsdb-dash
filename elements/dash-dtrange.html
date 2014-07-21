@@ -1,11 +1,30 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/iconsets/device-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="dash-dtpicker.html">
 
 <script src="dash-dtrange.js"></script>
 <polymer-element name="dash-dtrange" attributes="start end valid">
   <template>
-    <dash-dtpicker id="start_input" label="Start" time="{{start_in}}"></dash-dtpicker>
-    <dash-dtpicker id="end_input" label="End" time="{{end_in}}"></dash-dtpicker>
+    <style>
+      paper-icon-button /deep/ core-icon {
+        color: white;
+      }
+    </style>
+    <div horizontal layout center wrap>
+      <paper-icon-button fill on-click="{{ back1day }}" icon="arrow-back"></paper-icon-button>
+      <paper-icon-button fill on-click="{{ back1hour }}" icon="chevron-left"></paper-icon-button>
+      <dash-dtpicker id="start_input" label="Start" time="{{start_in}}"></dash-dtpicker>
+      <core-icon icon="more-horiz"></core-icon>
+      <dash-dtpicker id="end_input" disabled="{{ autoUpdate }}" label="End" time="{{end_in}}"></dash-dtpicker>
+      <template if="{{ !autoUpdate }}">
+        <paper-icon-button fill on-click="{{ forward1hour }}" icon="chevron-right"></paper-icon-button>
+        <paper-icon-button fill on-click="{{ forward1day }}" icon="arrow-forward"></paper-icon-button>
+      </template>
+      <span flex></span>
+      <paper-icon-button fill isToggle active="{{ autoUpdate }}" icon="device:access-time"></paper-icon-button>
+    </div>
   </template>
 </polymer-element>
 
