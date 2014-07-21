@@ -20,7 +20,7 @@
     </core-toolbar>
     <core-collapse opened={{open}}>
       <div class="content">
-        <div vertical>
+        <div vertical layout>
           <template repeat="{{ chart in group.charts}}">
             <template if="{{ open == true }}">
               <dash-view-plot-set 

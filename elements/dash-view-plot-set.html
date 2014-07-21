@@ -21,7 +21,7 @@
       </dash-tsdb-plotset>
 
       <template if="{{ data != undefined }}">
-        <div horizontal>
+        <div horizontal layout wrap>
           <template repeat="{{ d in data }}">
             <dash-tsdb-plot 
               spec={{S}}

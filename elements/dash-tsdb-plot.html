@@ -4,7 +4,7 @@
 <polymer-element name="dash-tsdb-plot" attributes="width height spec name data">
   <template if="{{ spec != undefined && data != undefined}}">
     <link type="text/css" rel="stylesheet" href="../bower_components/nvd3/nv.d3.min.css">
-    <div style="display: block;">
+    <div style="display: block; width: {{ width }}px">
       <em>{{ spec.title }}{{ name  }}</em>
       <div style="overflow: visible; width: {{ width }}px;" class="graph">
         <svg id="plot" width="{{width}}" height="{{height}}"></svg>
