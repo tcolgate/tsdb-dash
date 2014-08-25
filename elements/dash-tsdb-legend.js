@@ -3,6 +3,12 @@ Polymer('dash-tsdb-legend', {
    series: undefined,
     chart: undefined,
      open: false,
+  setOpen: function(){
+             this.open = true;
+           },
+  unsetOpen: function(){
+             this.open = false;
+           },
   observe: {
              spec: "render",
              series: "render"
