@@ -1,6 +1,6 @@
 /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
 
-function nvd3(w, h, el, data, spec) {
+function nvd3(w, h, el, data, spec, cb) {
   var svg = d3.select(el)
   var padding = 3;
   var width = w - padding;
@@ -23,7 +23,7 @@ function nvd3(w, h, el, data, spec) {
          .interpolate("basis")           // <=== THERE IT IS!
          .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
          .transitionDuration(350)  //how fast do you want the lines to transition?
-         .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
+         .showLegend(false)       //Show the legend, allowing users to turn on/off line series.
          .showYAxis(true)        //Show the y-axis
          .showXAxis(true)        //Show the x-axis
          .color(d3.scale.category10().range())
@@ -41,17 +41,13 @@ function nvd3(w, h, el, data, spec) {
       chart.yScale(d3.scale.log());
     }
 
-    console.log(spec.format)
-
     svg    //Select the <svg> element you want to render the chart in.   
         .style({ 'max-width': width, 'max-height': height })
         .datum(data)         //Populate the <svg> element with chart data...
         .call(chart);        //Finally, render the chart!
 
-    //Update the chart when window resizes.
-    //nv.utils.windowResize(function() { chart.update() });
     return chart;
-  });
+  },cb);
 }
 
 Polymer('dash-tsdb-plot', {
@@ -60,6 +56,7 @@ Polymer('dash-tsdb-plot', {
      spec: undefined,
      name: undefined,
      data: undefined,
+    chart: undefined,
   observe: {
              spec: "render",
              name: "render",
@@ -154,12 +151,20 @@ Polymer('dash-tsdb-plot', {
                }
              }
 
-             nvd3(this.width, this.height, this.$.plot, nvspec, this.spec);
+             var that = this
+             callback = function(chart){
+               // We'll take a reference to the nvd3
+               // chart so that we can update it externally
+               that.chart = chart
+             }
+
+             nvd3(this.width, this.height, this.$.plot, nvspec, this.spec, callback);
            },
    intPlotSelect: function(ev, rngs){
              this.fire("plot-select",{event: ev, ranges: rngs});
            },
    created: function(){
+             this.chart = {};
              this.tags = [];
            }
 });
