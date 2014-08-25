@@ -1,5 +1,6 @@
 Polymer('dash-tsdb-plotset', {
     width: 600,
+   perpix: 2,
      spec: undefined,
       end: undefined,
     start: undefined,
