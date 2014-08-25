@@ -1,0 +1,10 @@
+{
+  "title": "Stream Format - Bytes",
+  "units": "B/s",
+ "format": ".2s",
+  "stack": false,
+   "ytag": "format",
+    "dss": [{"metric": "nginx.streams.bytes_sent", 
+               "tags": ["format=*"],
+               "rate": true }]
+}

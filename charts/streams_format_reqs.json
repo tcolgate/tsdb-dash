@@ -1,0 +1,10 @@
+{
+  "title": "Stream Format - Requests",
+  "units": "req/s",
+ "format": ".2s",
+  "stack": false,
+   "ytag": "format",
+    "dss": [{"metric": "nginx.streams.requests", 
+               "tags": ["format=*"],
+               "rate": true }]
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Page Faults",
+  "units": "faults/s",
+ "format": ".2s",
+    "dss": [{"metric": "proc.vmstat.pgfault", 
+              "label": "minor",
+               "rate": true,
+           "rateCtrl": "counter,,4000000000"},
+            {"metric": "proc.vmstat.pgmajfault", 
+              "label": "major",
+               "rate": true,
+           "rateCtrl": "counter,,4000000000"}] 
+}

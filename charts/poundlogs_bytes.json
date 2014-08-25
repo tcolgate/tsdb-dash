@@ -1,0 +1,11 @@
+{
+  "title": "Pound Logs - Bytes",
+  "units": "B/s",
+   "fill": 1,
+ "format": ".2s",
+  "stack": true,
+  "ytag" : "api_key",
+   "rate": true,
+    "dss": [{"metric": "poundlogs.bytes_sent", 
+               "tags": ["api_key=*"]]
+}
