@@ -5,6 +5,23 @@ Polymer('dash-dtrange', {
 autoUpdate: false,
   interval: undefined,
      delay: 3000,
+            /* really noddy code, but good stuff broke in ways I don't understand
+               with shared state for start and end */
+   setHour: function(){
+                this.start = moment(this.end - (60 * 60 * 1000))
+            },
+   setDay: function(){
+                this.start = moment(this.end - (24 * 60 * 60 * 1000))
+            },
+   setWeek: function(){
+                this.start = moment(this.end - (7 * 24 * 60 * 60 * 1000))
+            },
+  setMonth: function(){
+                this.start = moment(this.end - (28 * 24 * 60 * 60 * 1000))
+            },
+   setYear: function(){
+                this.start = moment(this.end - (365 * 24 * 60 * 60 * 1000))
+            },
    observe: {
               start_in: "validate",
                 end_in: "validate",

@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/core-icons/iconsets/device-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="dash-dtpicker.html">
 
 <script src="dash-dtrange.js"></script>
@@ -16,11 +17,11 @@
     <div horizontal layout center wrap>
       <dash-dtpicker id="start_input" label="Start" time="{{start_in}}"></dash-dtpicker>
       <paper-menu-button icon="more-horiz">
-        <div>Hour</div>
-        <div>Day</div>
-        <div>Week</div>
-        <div>Month</div>
-        <div>Year</div>
+        <paper-item on-tap="{{setHour}}"><font style="color: black;">Hour</font></paper-item>
+        <paper-item on-tap="{{setDay}}"><font style="color: black;">Day</font></paper-item>
+        <paper-item on-tap="{{setWeek}}"><font style="color: black;">Week</font></paper-item>
+        <paper-item on-tap="{{setMonth}}"><font style="color: black;">Month</font></paper-item>
+        <paper-item on-tap="{{setYear}}"><font style="color: black;">Year</font></paper-item>
       </paper-menu-button>
       <dash-dtpicker id="end_input" disabled="{{ autoUpdate }}" label="End" time="{{end_in}}"></dash-dtpicker>
       <span flex></span>
