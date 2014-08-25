@@ -15,26 +15,17 @@
         height: 2em;
       }
     </style>
-    <core-toolbar>
-      <paper-checkbox checked={{open}}></paper-checkbox><em>{{group.name}}</em>
-    </core-toolbar>
-    <core-collapse opened={{open}}>
-      <div class="content">
-        <div vertical layout>
-          <template repeat="{{ chart in group.charts}}">
-            <template if="{{ open == true }}">
-              <dash-view-plot-set 
-                  width=350
-                 height=250
-               specName="{{ chart }}"
-                   tags="{{ tags }}"
-                  start="{{ start_time }}"
-                    end="{{ end_time }}">
-              </dash-view-plot-set>
-            </template>
-          </template>
-        </div>
-      </div>
-    </core-collapse>
+    <div vertical layout>
+      <template repeat="{{ chart in group.charts}}">
+        <dash-view-plot-set 
+            width=350
+           height=250
+         specName="{{ chart }}"
+             tags="{{ tags }}"
+            start="{{ start_time }}"
+              end="{{ end_time }}">
+        </dash-view-plot-set>
+      </template>
+    </div>
   </template>
 </polymer-element>

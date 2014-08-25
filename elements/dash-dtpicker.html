@@ -2,12 +2,17 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 
 <script src="dash-dtpicker.js"></script>
-<polymer-element name="dash-dtpicker" attributes="label time valid">
+<polymer-element name="dash-dtpicker" attributes="label time ialid">
   <template>
+    <style>
+      paper-input {
+        max-width: 9em;
+      }
+    </style>
+    <paper-input floatingLabel label="{{label}}" inputValue="{{timeIn}}" id="dtInput"></paper-input>
     <!--
-    <paper-input floatingLabel label="{{label}}" type="text" value="{{timeIn}}" id="dtInput"></paper-input>
-    -->
     <label>{{label}}</label><input type="text" value="{{timeIn}}" id="dtInput"></input>
+    -->
   </template>
 </polymer-element>
 

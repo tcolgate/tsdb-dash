@@ -69,7 +69,8 @@
   },
   {
     "name": "VMStat",
-    "regex": "proc\\.vmstat\\..*"
+   "regex": "proc\\.vmstat\\..*",
+  "charts": ["vmstat_faults","vmstat_swap","vmstat_pages"]
   },
   {
     "name": "NetStat",
@@ -97,8 +98,9 @@
     "regex": "memcache\\..*"
   },
   {
-    "name": "PoundLogs",
-    "regex": "poundlogs\\..*"
+    "name": "Pound",
+   "regex": "poundlogs\\..*",
+  "charts": ["poundlogs_reqs","poundlogs_bytes"]
   },
   {
     "name": "CpuFreq",
@@ -115,7 +117,13 @@
   },
   {
     "name": "Streams",
-    "regex": "streams\\..*"
+   "regex": "nginx.streams\\..*",
+  "charts": [
+      "streams_cache_reqs",
+      "streams_cache_bytes",
+      "streams_format_reqs",
+      "streams_format_bytes"
+    ]
   },
   {
     "name": "TCollector",

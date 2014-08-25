@@ -43,7 +43,11 @@ Polymer('dash-tsdb-dataset', {
                      };
 
                      if(!ds.hasOwnProperty("dsmpOp")){
-                       ds.dsmpOp = "sum";
+                       if (ds.rate) {
+                         ds.dsmpOp = "max";
+                       } else {
+                         ds.dsmpOp = "sum";
+                       }
                      };
                      
                      tperpix = Math.ceil(((this.end.valueOf() - this.start.valueOf()) / this.samples) / 1000);
