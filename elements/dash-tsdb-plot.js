@@ -26,7 +26,6 @@ function nvd3(w, h, el, data, spec, cb) {
          .showLegend(false)       //Show the legend, allowing users to turn on/off line series.
          .showYAxis(true)        //Show the y-axis
          .showXAxis(true)        //Show the x-axis
-         .color(d3.scale.category10().range())
 
     chart.xAxis     //Chart x-axis settings
         .tickFormat(function(d) { return d3.time.format('%X')(new Date(d))})
@@ -57,6 +56,7 @@ Polymer('dash-tsdb-plot', {
      name: undefined,
      data: undefined,
     chart: undefined,
+   series: undefined,
   observe: {
              spec: "render",
              name: "render",
@@ -64,10 +64,12 @@ Polymer('dash-tsdb-plot', {
            },
    render: function(){
 
-             var series = [];
+             this.series = [];
              var d, ds, dps, dp, s, v, vs, t; 
              var cur, min, max, sum, avg, lag;
              var di, ddi;
+             var colors = d3.scale.category10()
+             var coli = 0
 
              for(di in this.data){
                if(this.data.hasOwnProperty(di)){
@@ -82,6 +84,8 @@ Polymer('dash-tsdb-plot', {
                      min = 1/0;
                      max = 0;
                      sum = 0;
+                     colour = colors(coli);
+                     coli++
      
                      if (!this.spec.ytag){
                        if (ds.hasOwnProperty("label")){
@@ -107,6 +111,10 @@ Polymer('dash-tsdb-plot', {
                        lag = 0;
                      }
 
+                     if (ds.hasOwnProperty("color")){
+                       colour = ds.color;
+                     }
+
                      for (t in dps) {
                        if(dps.hasOwnProperty(t)){
                          dp = dps[t];
@@ -130,8 +138,9 @@ Polymer('dash-tsdb-plot', {
                      s.max = max;
                      s.sum = sum;
                      s.avg = avg;
+                     s.colour = colour;
       
-                     series.push(s);
+                     this.series.push(s);
                    }
                  };
                }
@@ -142,11 +151,12 @@ Polymer('dash-tsdb-plot', {
              }
 
              var nvspec = []
-             for (s in series) {
-               if(series.hasOwnProperty(s)){
+             for (s in this.series) {
+               if(this.series.hasOwnProperty(s)){
                  nvspec.push({
-                   key: series[s].label,
-                   values: series[s].data
+                   key: this.series[s].label,
+                   values: this.series[s].data,
+                   color: this.series[s].colour,
                  })
                }
              }
@@ -164,6 +174,7 @@ Polymer('dash-tsdb-plot', {
              this.fire("plot-select",{event: ev, ranges: rngs});
            },
    created: function(){
+             this.series = [];
              this.chart = {};
              this.tags = [];
            }
