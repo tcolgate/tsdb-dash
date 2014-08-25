@@ -2,27 +2,14 @@ Polymer('dash-dtrange', {
     end_in: moment(new Date()),
   start_in: moment(new Date()).subtract('days',1),
      valid: true,
+autoUpdate: false,
+  interval: undefined,
+     delay: 3000,
    observe: {
               start_in: "validate",
                 end_in: "validate",
                  start: "update",
                    end: "update"
-            },
- back1hour: function(){
-              console.log("got back hour")
-              this.$.start_input.time = this.$.start_input.time.subtract(1, 'hour');
-            },
-  back1day: function(){
-              console.log("got back day")
-              this.$.start_input.time = this.$.start_input.time.subtract(1, 'day');
-            },
- forward1hour: function(){
-              console.log("got forward hour")
-              this.$.end_input.time = this.$.end_input.time.add(1, 'hour');
-            },
-  forward1day: function(){
-              console.log("got forward day")
-              this.$.end_input.time = this.$.end_input.time.add(1, 'day');
             },
     update: function(){
               this.start_in = this.start;
@@ -53,5 +40,25 @@ Polymer('dash-dtrange', {
                 this.$.start_input.valid = false;
                 this.$.end_input.valid = false;
               }
-            }
+            },
+   created: function(){
+              this.interval = {}
+            },
+autoUpdateChanged: function(){
+              var that = this
+              var updateTime = function (){
+                var diff = that.end_in - that.start_in
+                that.end_in = moment(new Date());
+                start = that.end_in - diff
+                that.start_in = moment(start)
+              }
+              if(this.autoUpdate){
+                this.interval = setInterval(updateTime, this.delay);
+              } else {
+                if (this.interval) {
+                  clearInterval(this.interval)
+                }
+                this.interval = null
+              }
+            } 
 });
