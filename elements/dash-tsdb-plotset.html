@@ -3,13 +3,13 @@
 <link rel="import" href="dash-tsdb-dataset.html">
 
 <script src="dash-tsdb-plotset.js"></script>
-<polymer-element name="dash-tsdb-plotset" attributes="width height start end spec results">
+<polymer-element name="dash-tsdb-plotset" attributes="width height start end spec results perpix">
   <template>
     <template if="{{ spec != undefined }}">
       <dash-tsdb-dataset 
              start="{{ start }}"
                end="{{ end }}"
-           samples="{{ width / 4 }}"
+           samples="{{ width / perpix }}"
               spec="{{ spec }}"
          resultset="{{ results }}">
       </dash-tsdb-dataset>
