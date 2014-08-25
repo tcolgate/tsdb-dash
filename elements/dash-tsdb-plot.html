@@ -2,14 +2,14 @@
 <link rel="import" href="dash-tsdb-legend.html">
 
 <script src="dash-tsdb-plot.js"></script>
-<polymer-element name="dash-tsdb-plot" attributes="width height spec name data">
+<polymer-element name="dash-tsdb-plot" attributes="width height spec name data chart series">
   <template if="{{ spec != undefined && data != undefined}}">
     <link type="text/css" rel="stylesheet" href="../bower_components/nvd3/nv.d3.min.css">
     <div style="display: block; width: {{ width }}px;">
       <em>{{ spec.title }}{{ name  }}</em>
       <div style="overflow: visible; width: {{ width }}px;" class="graph">
         <svg id="plot" width="{{width}}" height="{{height}}"></svg>
-        <dash-tsdb-legend></dash-tsdb-legend>
+        <dash-tsdb-legend spec="{{ spec }}" chart="{{ chart }}" series="{{ series }}"></dash-tsdb-legend>
       </div>
     </div>
   </template>

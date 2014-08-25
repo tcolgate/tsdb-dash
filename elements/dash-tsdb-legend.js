@@ -1,16 +1,17 @@
 Polymer('dash-tsdb-legend', {
      spec: undefined,
-     data: undefined,
+   series: undefined,
     chart: undefined,
+     open: false,
   observe: {
              spec: "render",
-             data: "render"
+             series: "render"
            },
    render: function(){
            },
    created: function(){
              this.spec = {};
-             this.data = {};
+             this.series = {};
              this.chart = {};
            }
 });
