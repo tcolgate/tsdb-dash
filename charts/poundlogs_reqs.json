@@ -1,0 +1,11 @@
+{
+  "title": "Pound Logs - Requests",
+  "units": "req/s",
+   "fill": 1,
+ "format": ".2s",
+  "stack": true,
+  "ytag": "api_key",
+    "dss": [{"metric": "poundlogs.requests", 
+               "tags": ["api_key=*"],
+               "rate": true }]
+}

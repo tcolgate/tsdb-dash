@@ -1,0 +1,13 @@
+{
+  "title": "Paging",
+  "units": "pages/s",
+ "format": ".2s",
+    "dss": [{"metric": "proc.vmstat.pgpgin", 
+              "label": "in",
+               "rate": true,
+           "rateCtrl": "counter,,4000000000"},
+            {"metric": "proc.vmstat.pgpgout", 
+              "label": "out",
+               "rate": true,
+           "rateCtrl": "counter,,4000000000"}] 
+}

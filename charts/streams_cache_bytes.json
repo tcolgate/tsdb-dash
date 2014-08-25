@@ -1,0 +1,10 @@
+{
+  "title": "Stream Cache Status - Bytes",
+  "units": "B/s",
+ "format": ".2s",
+  "stack": false,
+   "ytag": "cache_state",
+    "dss": [{"metric": "nginx.streams.bytes_sent", 
+               "tags": ["cache_state=*"],
+               "rate": true }]
+}

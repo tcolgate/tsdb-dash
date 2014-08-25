@@ -1,0 +1,10 @@
+{
+  "title": "Stream Cache Status - Requests",
+  "units": "req/s",
+ "format": ".2s",
+  "stack": false,
+   "ytag": "cache_state",
+    "dss": [{"metric": "nginx.streams.requests", 
+               "tags": ["cache_state=*"],
+               "rate": true }]
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Swapping",
+  "units": "pages/s",
+ "format": ".2s",
+    "dss": [{"metric": "proc.vmstat.pswpin", 
+              "label": "in",
+               "rate": true,
+           "rateCtrl": "counter,,4000000000"},
+            {"metric": "proc.vmstat.pswpout", 
+              "label": "out",
+               "rate": true,
+           "rateCtrl": "counter,,4000000000"}] 
+}
