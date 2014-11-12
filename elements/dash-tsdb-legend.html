@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="dash-tsdb-legend-item.html">
+<link rel="import" href="dash-tsdb-legend-handle.html">
 <script src="dash-tsdb-legend.js"></script>
 
 <polymer-element name="dash-tsdb-legend" attributes="spec series chart open">
@@ -11,14 +11,50 @@
       <template if="{{ ! open }}">
         <em on-click="{{ setOpen }}">+</em>
       </template>
-      <template repeat="{{ s,sid in series }}">
-        <dash-tsdb-legend-item
-          seriesId="{{ sid }}"
-          spec="{{ spec }}"
-          series="{{ s }}"
-          chart="{{ chart }}"
-          open="{{ open }}">
-        </dash-tsdb-legend-item>
+      <template if="{{ open }}">
+        <table>
+          <thead>
+            <tr>
+            <th></th>
+            <th>cur</th>
+            <th>min</th>
+            <th>avg</th>
+            <th>max</th>
+            <th>sum</th>
+            </tr>
+          </thead>
+          <tbody>
+          <template repeat="{{ s in summary }}">
+            <tr>
+              <template if="{{ s.spec != undefined && s.series != undefined}}">
+                <td> 
+                  <dash-tsdb-legend-handle
+                    seriesId="{{ s.sid }}"
+                    series="{{ s.series }}"
+                    chart="{{ chart }}">
+                  </dash-tsdb-legend-handle>
+                </td>
+                <td>{{ s.cur }} </td>
+                <td>{{ s.min }} </td>
+                <td>{{ s.avg }} </td>
+                <td>{{ s.max }} </td>
+                <td>{{ s.sum }} </td>
+              </template>
+            </tr>
+          </template>
+          </tbody>
+        </table>
+      </template>
+      <template if="{{ ! open }}">
+        <template repeat="{{ s in summary }}">
+          <template if="{{ s.spec != undefined && s.series != undefined}}">
+              <dash-tsdb-legend-handle
+                seriesId="{{ s.sid }}"
+                series="{{ s.series }}"
+                chart="{{ chart }}">
+              </dash-tsdb-legend-handle>
+          </template>
+        </template>
       </template>
     </template>
   </template>

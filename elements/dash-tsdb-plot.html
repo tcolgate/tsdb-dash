@@ -6,7 +6,7 @@
   <template if="{{ spec != undefined && data != undefined}}">
     <link type="text/css" rel="stylesheet" href="../bower_components/nvd3/nv.d3.min.css">
     <div style="display: block; width: {{ width }}px;">
-      <em>{{ spec.title }}{{ name  }}</em>
+      <div layout horizontal center-justified><h4>{{ spec.title }}{{ name  }}</h4></div
       <div style="overflow: visible; width: {{ width }}px;" class="graph">
         <svg id="plot" width="{{width}}" height="{{height}}"></svg>
         <dash-tsdb-legend spec="{{ spec }}" chart="{{ chart }}" series="{{ series }}"></dash-tsdb-legend>

@@ -116,13 +116,25 @@
     "regex": "voldemort\\..*"
   },
   {
-    "name": "Streams",
-   "regex": "nginx.streams\\..*",
+    "name": "Nginx Streams",
+   "regex": "^nginx\\.streams\\..*",
   "charts": [
       "streams_cache_reqs",
       "streams_cache_bytes",
       "streams_format_reqs",
       "streams_format_bytes"
+    ]
+  },
+  {
+    "name": "Stream logs",
+   "regex": "^streams\\..*",
+  "charts": [
+      "streamlogs_requests_comparison",
+      "streamlogs_requests_by_key",
+      "streamlogs_requests_by_source",
+      "streamlogs_users_by_key",
+      "streamlogs_users_by_source",
+      "streamlogs_duration"
     ]
   },
   {
