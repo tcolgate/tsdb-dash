@@ -1,37 +1,40 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="dash-tsdb-plotset.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="dash-tsdb-plot.html">
+<link rel="import" href="dash-tsdb-plotset.html">
 
-<script src="dash-view-plot-set.js"></script>
 <polymer-element name="dash-view-plot-set" attributes="start end specName tags width height">
   <template>
-      <dash-spec
-           specName="{{ specName }}"
-         globaltags="{{ tags }}"
-               spec="{{ S }}">
-      </dash-spec>
+    <dash-spec
+         specName="{{ specName }}"
+       globaltags="{{ tags }}"
+             spec="{{ S }}">
+    </dash-spec>
 
-      <dash-tsdb-plotset 
-          width={{width}}
-         height={{height}}
-           spec={{S}}
-          start={{start}}
-            end={{end}}
-        results={{data}}>
-      </dash-tsdb-plotset>
+    <dash-tsdb-plotset 
+        width={{width}}
+       height={{height}}
+         spec={{S}}
+        start={{start}}
+          end={{end}}
+      results={{data}}>
+    </dash-tsdb-plotset>
 
-      <template if="{{ data != undefined }}">
-        <div horizontal layout wrap>
-          <template repeat="{{ d in data }}">
-            <dash-tsdb-plot 
-              spec={{S}}
-              name={{d.name}}
-              data={{d.data}}
-              width={{width}}
-              height={{height}}>
-            </dash-tsdb-plot>
-          </template>
-        </div>
-      </template>
+    <template if="{{ data != undefined }}">
+      <div horizontal layout wrap>
+        <template repeat="{{ d in data }}">
+          <dash-tsdb-plot 
+            spec={{S}}
+            name={{d.name}}
+            data={{d.data}}
+            width={{width}}
+            height={{height}}>
+          </dash-tsdb-plot>
+          <paper-fab mini icon="search"></paper-fab>
+        </template>
+      </div>
     </template>
+  </template>
+  <script src="dash-view-plot-set.js"></script>
 </polymer-element>

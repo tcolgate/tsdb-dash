@@ -1,6 +1,6 @@
-Polymer('dash-dtrange', {
-    end_in: moment(new Date()),
-  start_in: moment(new Date()).subtract('days',1),
+Polymer({
+    end_in: undefined,
+  start_in: undefined,
      valid: true,
 autoUpdate: false,
   interval: undefined,
@@ -60,6 +60,8 @@ autoUpdate: false,
             },
    created: function(){
               this.interval = {}
+              this.end_in = moment(new Date())
+              this.start_in = moment(new Date()).subtract('days',1)
             },
 autoUpdateChanged: function(){
               var that = this
@@ -75,7 +77,10 @@ autoUpdateChanged: function(){
                 if (this.interval) {
                   clearInterval(this.interval)
                 }
-                this.interval = null
+                this.interval = undefined
               }
-            } 
+            } ,
+     ready: function() {
+              console.log(this)
+            }
 });

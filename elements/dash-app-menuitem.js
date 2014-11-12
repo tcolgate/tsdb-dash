@@ -1,6 +1,8 @@
-Polymer('dash-app-menuitem', {
+Polymer({
      data: undefined,
   created: function () {
              this.data = {}
+           },
+    ready: function() {
            }
 });

@@ -9,7 +9,6 @@
 <link rel="import" href="dash-view-host.html">
 <link rel="import" href="dash-app-menuitem.html">
 
-<script src="dash-app.js"></script>
 <polymer-element name="dash-app" attributes="routeStr cmd args">
   <template>
     <flatiron-director route="{{routeStr}}" autoHash></flatiron-director>
@@ -37,10 +36,10 @@
         <h1> no valid view given  {{ cmd.label }} </h2>
         </template>
         <template if="{{ cmd.label == 'view_host' }}">
-          <template if="{{ start_time != null && end_time != null}}">
-            <dash-view-host 
-              host="{{ host.data }}" 
-              start_time={{start_time}} 
+          <template if="{{ start_time != undefined && end_time != undefined}}">
+            <dash-view-host
+              host="{{ host.data }}"
+              start_time={{start_time}}
               end_time={{end_time}}>
             </dash-view-host>
           </template>
@@ -48,4 +47,5 @@
       </div>
     </core-scaffold>
   </template>
+  <script src="dash-app.js"></script>
 </polymer-element>

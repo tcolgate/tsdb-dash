@@ -2,11 +2,13 @@
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="dash-tsdb-query.html">
 
-<script src="dash-tsdb-dataset.js"></script>
 <polymer-element name="dash-tsdb-dataset" attributes="start end samples spec tags specData resultset">
   <template>
+    hrmmphhh2222
+<!--
     <template if="{{ spec != undefined }}">
       <template repeat="{{ ds,i in specData.dss }}">
+      hmmm
         <dash-tsdb-query 
              metric="{{ ds.metric }}" 
                tags="{{ ds.tags }}" 
@@ -20,7 +22,9 @@
                 dsi="{{ i }}"
     on-query-result="{{ gotDsResult }}">
         </dash-tsdb-query>
-      <template>
+    <template>
+    -->
   </template>
+  <script src="dash-tsdb-dataset.js"></script>
 </polymer-element>
 

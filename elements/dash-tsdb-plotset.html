@@ -2,7 +2,6 @@
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="dash-tsdb-dataset.html">
 
-<script src="dash-tsdb-plotset.js"></script>
 <polymer-element name="dash-tsdb-plotset" attributes="width height start end spec results perpix">
   <template>
     <template if="{{ spec != undefined }}">
@@ -15,5 +14,6 @@
       </dash-tsdb-dataset>
     </template>
   </template>
+  <script src="dash-tsdb-plotset.js"></script>
 </polymer-element>
 

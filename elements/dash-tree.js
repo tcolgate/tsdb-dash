@@ -1,4 +1,4 @@
-Polymer('dash-tree', {
+Polymer({
      gotTrees: function(ev,resp){
                  this.trees = resp.response;
                },
@@ -9,5 +9,7 @@ Polymer('dash-tree', {
       created: function () {
                  this.trees = [];
                  this.groups = [];
+               },
+        ready: function() {
                }
 });

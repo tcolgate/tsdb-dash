@@ -1,4 +1,4 @@
-Polymer('dash-dtpicker', {
+Polymer({
           label: "",
          timeIn: "",
           valid: true,
@@ -23,5 +23,7 @@ Polymer('dash-dtpicker', {
                  },
         created: function(){
                    this.time = moment(new Date());
+                 },
+          ready: function() {
                  }
 });

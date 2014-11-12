@@ -1,4 +1,4 @@
-Polymer('dash-spec', {
+Polymer({
    specName: undefined,
        spec: undefined, 
     gotSpec: function(ev,resp){
@@ -79,5 +79,7 @@ Polymer('dash-spec', {
              },
     changed: function(){
                this.globaltags = [];
+             },
+      ready: function() {
              }
 });

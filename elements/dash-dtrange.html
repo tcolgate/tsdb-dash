@@ -1,12 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
-<link rel="import" href="../bower_components/core-icons/iconsets/device-icons.html">
+<link rel="import" href="../bower_components/core-icons/device-icons.html">
+<link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/paper-dropdown/paper-dropdown.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="dash-dtpicker.html">
 
-<script src="dash-dtrange.js"></script>
 <polymer-element name="dash-dtrange" attributes="start end valid autoUpdate">
   <template>
     <style>
@@ -16,18 +17,24 @@
     </style>
     <div horizontal layout center wrap>
       <dash-dtpicker id="start_input" label="Start" time="{{start_in}}"></dash-dtpicker>
-      <paper-menu-button icon="more-horiz">
-        <paper-item on-tap="{{setHour}}"><font style="color: black;">Hour</font></paper-item>
-        <paper-item on-tap="{{setDay}}"><font style="color: black;">Day</font></paper-item>
-        <paper-item on-tap="{{setWeek}}"><font style="color: black;">Week</font></paper-item>
-        <paper-item on-tap="{{setMonth}}"><font style="color: black;">Month</font></paper-item>
-        <paper-item on-tap="{{setYear}}"><font style="color: black;">Year</font></paper-item>
+      <paper-menu-button>
+        <paper-icon-button icon="more-horiz" noink></paper-icon-button>
+        <paper-dropdown class="dropdown">
+          <core-menu class="menu">
+            <paper-item on-tap="{{setHour}}"><font style="color: black;">Hour</font></paper-item>
+            <paper-item on-tap="{{setDay}}"><font style="color: black;">Day</font></paper-item>
+            <paper-item on-tap="{{setWeek}}"><font style="color: black;">Week</font></paper-item>
+            <paper-item on-tap="{{setMonth}}"><font style="color: black;">Month</font></paper-item>
+            <paper-item on-tap="{{setYear}}"><font style="color: black;">Year</font></paper-item>
+          </core-menu>
+        </paper-dropdown>
       </paper-menu-button>
       <dash-dtpicker id="end_input" disabled="{{ autoUpdate }}" label="End" time="{{end_in}}"></dash-dtpicker>
       <span flex></span>
       <paper-icon-button fill isToggle active="{{ autoUpdate }}" icon="device:access-time"></paper-icon-button>
     </div>
   </template>
+  <script src="dash-dtrange.js"></script>
 </polymer-element>
 
 

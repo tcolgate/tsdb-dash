@@ -1,4 +1,4 @@
-Polymer('dash-tsdb-dataset', {
+Polymer({
          spec: undefined,
           end: undefined,
         start: undefined,
@@ -118,5 +118,7 @@ Polymer('dash-tsdb-dataset', {
       created: function(){
                  this.tags = [];
                  this.resultset = [];
+               },
+        ready: function() {
                }
 });

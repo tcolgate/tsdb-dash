@@ -1,4 +1,4 @@
-Polymer('dash-tsdb-plotset', {
+Polymer({
     width: 600,
    perpix: 2,
      spec: undefined,
@@ -16,5 +16,7 @@ Polymer('dash-tsdb-plotset', {
   created: function(){
              this.spec = {}
              this.results = [];
+           },
+    ready: function() {
            }
 });

@@ -1,4 +1,4 @@
-Polymer('dash-view-host-group', {
+Polymer({
        start_time: undefined,
          end_time: undefined,
          hosttree: undefined,

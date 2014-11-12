@@ -1,4 +1,4 @@
-Polymer('dash-tsdb-legend', {
+Polymer({
      spec: undefined,
    series: undefined,
     chart: undefined,
@@ -58,5 +58,7 @@ toggleSeries: function(){
              this.series = {};
              this.chart = {};
              this.summary = [];
+           },
+    ready: function() {
            }
 });

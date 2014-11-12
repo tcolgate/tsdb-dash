@@ -4,13 +4,10 @@
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="dash-dtrange.html">
 <link rel="import" href="dash-tsdb-tree.html">
-<link rel="import" href="dash-tsdb-plotset.html">
-<link rel="import" href="dash-tsdb-plot.html">
 <link rel="import" href="dash-spec.html">
+<link rel="import" href="dash-tsdb-plot.html">
 <link rel="import" href="dash-view-host-group.html">
 
-
-<script src="dash-view-host.js"></script>
 <polymer-element name="dash-view-host" attributes="start_time end_time host data htree groups activeGroups">
   <template>
     <template if="{{ host != undefined }}">
@@ -34,4 +31,5 @@
       </dash-view-host-group>
     </template>
   </template>
+  <script src="dash-view-host.js"></script>
 </polymer-element>

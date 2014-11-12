@@ -1,4 +1,4 @@
-Polymer('dash-app', {
+Polymer({
          routeStr: undefined,
               cmd: undefined,
              args: undefined,
@@ -24,5 +24,7 @@ Polymer('dash-app', {
                      this.routeStr = this.cmd + argStr;
                    },
           created: function () {
+                   },
+            ready: function () {
                    }
 });

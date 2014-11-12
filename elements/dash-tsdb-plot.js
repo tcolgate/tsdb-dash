@@ -49,7 +49,7 @@ function nvd3(w, h, el, data, spec, cb) {
   },cb);
 }
 
-Polymer('dash-tsdb-plot', {
+Polymer({
     width: 600,
    height: 400,
      spec: undefined,
@@ -177,5 +177,7 @@ Polymer('dash-tsdb-plot', {
              this.series = [];
              this.chart = {};
              this.tags = [];
+           },
+    ready: function() {
            }
 });

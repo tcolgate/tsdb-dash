@@ -1,0 +1,19 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="dash-tsdb-legend-handle" attributes="spec series seriesId chart open enabled">
+  <template>
+    <span on-click="{{ toggleSeries }}">
+      <font style="color: {{ series.colour }};">
+        <template if="{{ enabled }}">
+          &#10004;
+        </template>
+        <template if="{{ ! enabled }}">
+          &#10008;
+        </template>
+      </font>
+      {{ series.label }}
+    </span>
+  </template>
+  <script src="dash-tsdb-legend-handle.js"></script>
+</polymer-element>
+

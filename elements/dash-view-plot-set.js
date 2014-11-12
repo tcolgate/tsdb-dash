@@ -1,4 +1,4 @@
-Polymer('dash-view-plot-set', {
+Polymer({
             width: 650,
            height: 300,
          specName: "",

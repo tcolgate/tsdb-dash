@@ -1,4 +1,4 @@
-Polymer('dash-tsdb-query', {
+Polymer({
         base: '/api/query',
         rate: false,
     rateCtrl: undefined,
@@ -77,6 +77,8 @@ Polymer('dash-tsdb-query', {
      created: function(){
                 this.tags = [];
                 this.result = [];
+              },
+       ready: function() {
               }
 });
 

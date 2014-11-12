@@ -1,4 +1,4 @@
-Polymer('dash-tsdb-tree', {
+Polymer({
     tree_id: undefined,
   branch_id: undefined,
   resultChanged: function(oldv,newv){
@@ -9,5 +9,7 @@ Polymer('dash-tsdb-tree', {
              },
     created: function(){
                this.result = {};
+             },
+      ready: function() {
              }
 });

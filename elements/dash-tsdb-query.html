@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 
-<script src="dash-tsdb-query.js"></script>
 <polymer-element name="dash-tsdb-query" attributes="start end base metric tags rate rateCtrl aggrOp dsmp lag result dsid">
   <template>
     <template if="{{ url != undefined }}">
@@ -11,5 +10,6 @@
       </core-ajax>
     </template>
   </template>
+  <script src="dash-tsdb-query.js"></script>
 </polymer-element>
 
