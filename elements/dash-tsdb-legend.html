@@ -5,16 +5,10 @@
   <template>
     <template if="{{ spec != undefined && series != undefined}}">
       <template if="{{ open }}">
-        <em on-click="{{ unsetOpen }}">-</em>
-      </template>
-      <template if="{{ ! open }}">
-        <em on-click="{{ setOpen }}">+</em>
-      </template>
-      <template if="{{ open }}">
         <table>
           <thead>
             <tr>
-            <th></th>
+            <th align="left"><em on-click="{{ unsetOpen }}">-</em></th>
             <th>cur</th>
             <th>min</th>
             <th>avg</th>
@@ -45,6 +39,7 @@
         </table>
       </template>
       <template if="{{ ! open }}">
+        <em on-click="{{ setOpen }}">+</em>
         <template repeat="{{ s in summary }}">
           <template if="{{ s.spec != undefined && s.series != undefined}}">
               <dash-tsdb-legend-handle
