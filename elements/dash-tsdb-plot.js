@@ -1,6 +1,6 @@
 /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
 
-function nvd3(w, h, el, data, spec, cb) {
+function nvd3(w, h, guides, el, data, spec, cb) {
   var svg = d3.select(el)
   var padding = 3;
   var width = w - padding;
@@ -21,7 +21,8 @@ function nvd3(w, h, el, data, spec, cb) {
 
     chart.margin({left: 80})  //Adjust chart margins to give the x-axis some breathing room.
          .interpolate("basis")           // <=== THERE IT IS!
-         .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+         .useInteractiveGuideline(guides)  //We want nice looking tooltips and a guideline!
+         .tooltips(guides)  //We want nice looking tooltips and a guideline!
          .transitionDuration(350)  //how fast do you want the lines to transition?
          .showLegend(false)       //Show the legend, allowing users to turn on/off line series.
          .showYAxis(true)        //Show the y-axis
@@ -52,6 +53,7 @@ function nvd3(w, h, el, data, spec, cb) {
 Polymer({
     width: 600,
    height: 400,
+   guides: false,
      spec: undefined,
      name: undefined,
      data: undefined,
@@ -168,7 +170,7 @@ Polymer({
                that.chart = chart
              }
 
-             nvd3(this.width, this.height, this.$.plot, nvspec, this.spec, callback);
+             nvd3(this.width, this.height, this.guides, this.$.plot, nvspec, this.spec, callback);
            },
    intPlotSelect: function(ev, rngs){
              this.fire("plot-select",{event: ev, ranges: rngs});

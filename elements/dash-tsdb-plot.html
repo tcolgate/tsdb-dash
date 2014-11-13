@@ -1,7 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="dash-tsdb-legend.html">
 
-<polymer-element name="dash-tsdb-plot" attributes="width height spec name data chart series">
+<polymer-element name="dash-tsdb-plot" attributes="width height guides spec name data chart series">
   <template if="{{ spec != undefined && data != undefined}}">
     <link type="text/css" rel="stylesheet" href="../bower_components/nvd3/nv.d3.min.css">
     <div style="display: block; width: {{ width }}px;">
