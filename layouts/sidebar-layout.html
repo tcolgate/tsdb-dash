@@ -1,0 +1,23 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-scaffold/core-scaffold.html">
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+
+<polymer-element name="sidebar-layout" attributes="selected" noscript>
+  <template>
+    <core-scaffold>
+      <core-header-panel navigation flex mode="seamed">
+        <core-toolbar>TSDB Dash</core-toolbar>
+        <core-item icon="home" label="Summary" active?="{{selected == 'summary'}}"><a href="../#/summary"></a></core-item>
+        <core-item icon="home" label="Host" active?="{{selected == 'host'}}"><a href="../#/host"></a></core-item>
+      </core-header-panel>
+      <div tool>
+        <content select=".title"></content>
+      </div>
+      <div class="content">
+        <content></content>
+      </div>
+    </core-scaffold>
+  </template>
+</polymer-element>
