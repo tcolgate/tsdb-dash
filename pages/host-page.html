@@ -1,14 +1,33 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../layouts/sidebar-layout.html">
+<link rel="import" href="../elements/dash-dtrange.html">
+<link rel="import" href="../elements/dash-tsdb-tree.html">
 
-<polymer-element name="host-page" noscript>
+<polymer-element name="host-page" attributes="host start_time end_time">
   <template>
     <sidebar-layout selected="home">
-      <div class="title">Host</div>
+      <dash-tsdb-tree tree_id="1" result="{{hostTree}}"></dash-tsdb-tree>
 
-      <h2>Host View</h2>
+      <template if="{{ host == '' }}">
+        <div class="title">Hosts<dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange></div>
+        Host list
+        <template repeat="{{ h in hostTree.branches}}">
+          <a href="#/host/{{h.displayName}}">{{h.displayName}}</a><br>
+        </template>
+      </template>
 
-      <p>Hello world!</p>
+      <template if="{{ host != '' }}">
+      <div class="title">{{host}}<dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange></div>
+        <template if="{{ start_time != undefined && end_time != undefined}}">
+          <dash-view-host
+            host="{{ host.data }}"
+            start_time={{start_time}}
+            end_time={{end_time}}>
+          </dash-view-host>
+        </template>
+      </template>
+
     </sidebar-layout>
   </template>
+  <script src="host-page.js"></script>
 </polymer-element>

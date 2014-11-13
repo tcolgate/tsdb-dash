@@ -1,14 +1,14 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../layouts/sidebar-layout.html">
+<link rel="import" href="../elements/dash-dtrange.html">
 
-<polymer-element name="summary-page" noscript>
+<polymer-element name="summary-page" attributes="start_time end_time">
   <template>
     <sidebar-layout selected="summary">
-      <div class="title">Summary</div>
+      <div class="title">Summary<dash-dtrange start={{start_time}} end={{end_time}}></dash-dtrange></div>
 
-      <h2>Platform Summary</h2>
-
-      <p>Hello world!</p>
+      <p>Info about {{ start_time }} and {{ end_time }}</p>
     </sidebar-layout>
   </template>
+  <script src="summary-page.js"></script>
 </polymer-element>
